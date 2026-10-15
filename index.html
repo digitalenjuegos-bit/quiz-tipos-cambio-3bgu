@@ -1,0 +1,2838 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tipos de cambio · 3BGU · Evaluación ADA</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%231B2A5A'/><text x='50' y='70' font-size='55' text-anchor='middle' fill='%23D9B14B' font-family='Georgia'>E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+/* ═══ PALETA IB ACTUALIZADA (patrón aprendido) ═══ */
+--bg:#f8f6f1;--bg-2:#eee9df;--paper:#ffffff;--ink:#1a1a1a;--ink-soft:#3a4a44;
+--muted:#5a6478;--gold:#b8842a;--gold-bright:#d9a23e;--forest:#1e7a3c;
+--forest-deep:#1b2a5a;--sage:#5d8a6b;--red:#b5453a;--error-soft:#f8eaea;
+--ok:#1e7a3c;--ok-soft:#e8f5e9;--border:#e0ddd4;--shadow:0 18px 50px -20px rgba(28,43,39,.18);
+--demand:#1e40af;--supply:#b45309;--world:#2e7d32;--surplus:#7b2cbf;
+/* ═══ NUEVOS COLORES IB ═══ */
+--navy:#1b2a5a;--burgundy:#8e1b3a;--green-brand:#1e7a3c;--gold-brand:#d9b14b;
+--hairline:#e5e8ef;--label-gray:#5a6478;--cream:#fdf8e8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--bg);background-image:none;min-height:100vh;overflow-x:hidden;line-height:1.15;font-size:11pt}
+body::before{content:"";position:fixed;inset:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.05 0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");opacity:.5;pointer-events:none;z-index:0;mix-blend-mode:multiply}
+.container{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:32px 24px 80px}
+.brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-bottom:18px;border-bottom:2px solid var(--navy)}
+.brand-left{display:flex;align-items:center;gap:14px}
+.brand-mark{width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--gold-bright),var(--gold) 70%,#6b4a16);display:grid;place-items:center;color:#fbf6ea;font-family:'Fraunces',serif;font-weight:900;font-size:20px;box-shadow:0 6px 18px -6px rgba(184,132,42,.55),inset 0 -3px 8px rgba(0,0,0,.2)}
+.brand-text{font-family:'Fraunces',serif;line-height:1.1}
+.brand-text.t1{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);font-family:'Outfit',sans-serif;font-weight:500}
+.brand-text.t2{font-size:20px;font-weight:700;color:var(--navy)}
+.brand-right{font-size:12px;color:var(--muted);text-align:right;font-family:'Outfit',sans-serif;letter-spacing:.05em}
+.brand-right strong{color:var(--forest);font-weight:600}
+.screen{display:none;animation:fadeUp.55s cubic-bezier(.2,.7,.2,1) both}
+.screen.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.welcome-card{background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:54px 48px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.welcome-card::before{content:"";position:absolute;top:-120px;right:-120px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(217,177,75,.2),transparent 70%);pointer-events:none}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(27,42,90,.08);border:1px solid rgba(27,42,90,.18);color:var(--navy);padding:6px 14px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;margin-bottom:24px}
+.welcome-title{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(28px,4vw,42px);line-height:1.02;color:var(--navy);letter-spacing:-.02em;margin-bottom:18px}
+.welcome-title em{font-style:italic;color:var(--gold);font-weight:700}
+.welcome-sub{font-size:17px;color:var(--ink-soft);max-width:620px;margin-bottom:24px}
+.skills-box{background:rgba(27,42,90,.03);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:36px;max-width:620px}
+.skills-title{font-size:12px;font-weight:600;color:var(--navy);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.skills-list{list-style:none;font-size:14px;color:var(--ink-soft)}
+.skills-list li{margin-bottom:6px;padding-left:18px;position:relative}
+.skills-list li::before{content:"\f00c";font-family:"Font Awesome 6 Free";font-weight:900;color:var(--gold-brand);font-size:10px;position:absolute;left:0;top:5px}
+.welcome-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px}
+.meta-item{background:rgba(255,255,255,.5);border:1px solid var(--border);border-radius:8px;padding:16px 18px}
+.meta-item.num{font-family:'Fraunces',serif;font-weight:700;font-size:28px;color:var(--navy);line-height:1}
+.meta-item.lb{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-top:4px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:13px;font-weight:600;color:var(--navy);margin-bottom:6px;letter-spacing:.04em}
+.form-group select,.form-group input{width:100%;padding:14px 16px;border:1px solid var(--border);border-radius:8px;font-family:'Outfit',sans-serif;font-size:15px;color:var(--ink);background:rgba(255,255,255,.6);transition:border .2s}
+.form-group select:focus,.form-group input:focus{outline:none;border-color:var(--gold-brand);box-shadow:0 0 0 3px rgba(217,177,75,.15)}
+.name-error{display:none;color:var(--red);font-size:13px;margin-top:6px;padding:8px 12px;background:var(--error-soft);border-radius:8px}
+.name-error.show{display:block}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:600;font-size:15px;cursor:pointer;transition:all .2s}
+.btn-primary{background:var(--navy);color:#fff;box-shadow:0 4px 14px -4px rgba(27,42,90,.45)}
+.btn-primary:hover{background:#141f42;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--border)}
+.btn-ghost:hover{background:rgba(27,42,90,.06)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.quiz-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.progress-wrap{flex:1;margin:0 20px}
+.progress-bar{height:6px;background:var(--bg-2);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold-brand),var(--navy));border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.progress-text{font-size:12px;color:var(--muted);text-align:center;margin-top:4px}
+.timer-badge{display:flex;align-items:center;gap:6px;background:rgba(27,42,90,.08);border:1px solid rgba(27,42,90,.15);padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--navy)}
+.timer-badge i{font-size:12px}
+.question-card{background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:40px 36px;box-shadow:var(--shadow);margin-bottom:20px}
+.question-num{font-size:11px;font-weight:600;color:var(--gold-brand);text-transform:uppercase;letter-spacing:.14em;margin-bottom:10px}
+.question-text{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--navy);line-height:1.35;margin-bottom:28px}
+.question-scenario{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 16px;padding:12px 16px;background:rgba(31,74,61,.05);border-left:3px solid var(--gold-brand);border-radius:0 10px 10px 0}
+.options{display:flex;flex-direction:column;gap:12px}
+.option{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.6)}
+.option:hover{border-color:var(--gold);background:var(--cream)}
+.option.selected{border-color:var(--navy);background:rgba(27,42,90,.05)}
+.option.correct{border-color:var(--ok);background:var(--ok-soft)}
+.option.wrong{border-color:var(--red);background:var(--error-soft)}
+.option-letter{width:32px;height:32px;border-radius:50%;background:var(--bg-2);display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--ink-soft);flex-shrink:0}
+.option.selected .option-letter{background:var(--navy);color:#fff}
+.option.correct .option-letter{background:var(--ok);color:#fff}
+.option.wrong .option-letter{background:var(--red);color:#fff}
+.option-text{font-size:15px;line-height:1.45;padding-top:4px}
+.actions{display:flex;justify-content:flex-end;gap:12px;margin-top:24px}
+.results-card{background:var(--paper);border:1px solid var(--border);border-radius:8px;padding:48px 40px;box-shadow:var(--shadow);text-align:center}
+.score-circle{width:180px;height:180px;margin:0 auto 24px;position:relative}
+.score-circle svg{width:100%;height:100%}
+.score-circle .track{fill:none;stroke:var(--bg-2);stroke-width:12}
+.score-circle .fill{fill:none;stroke:var(--navy);stroke-width:12;stroke-linecap:round;stroke-dasharray:565.48;stroke-dashoffset:565.48;transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)}
+.score-inner{position:absolute;inset:20px;border-radius:50%;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid var(--border)}
+.score-value{font-family:'Fraunces',serif;font-weight:900;font-size:42px;color:var(--navy);line-height:1}
+.score-value.slash{font-size:20px;color:var(--muted);font-weight:400}
+.score-value.max{font-size:18px;color:var(--muted);font-weight:400}
+.results-name{font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.results-course{font-size:14px;color:var(--muted);margin-bottom:20px}
+.save-status{font-size:13px;color:var(--ok);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:6px}
+.penalty-note{font-size:13px;color:var(--red);margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:6px}
+.results-actions{display:flex;justify-content:center;gap:12px;margin-top:24px;flex-wrap:wrap}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.stat-item{background:rgba(255,255,255,.5);border:1px solid var(--border);border-radius:8px;padding:16px}
+.stat-num{font-family:'Fraunces',serif;font-weight:700;font-size:24px;color:var(--navy)}
+.stat-lb{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
+.review-box{margin:16px 0 4px;text-align:left;border:1px solid var(--border);border-radius:8px;padding:16px;background:#fafafa}
+.review-head{font-family:"Lora",serif;color:var(--navy);font-size:1.05rem;margin-bottom:12px}
+.review-item{padding:12px 0;border-bottom:1px solid var(--border)}
+.review-item:last-child{border-bottom:none}
+.review-q{font-weight:600;color:var(--ink);margin-bottom:8px}
+.review-row{font-size:.9rem;color:var(--ink-soft);margin:4px 0}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:6px;margin-right:6px}
+.tag.bad{background:#fbeaea;color:var(--red)}
+.tag.good{background:#eef6f1;color:var(--ok)}
+.review-empty{color:var(--ok);font-weight:600;text-align:center;padding:8px}
+.btn-ghost.full{width:100%;margin-top:14px}
+.btn-excel{color:var(--ok);border-color:#cfe6da}.btn-excel:hover{background:#eef6f1}
+/* Panel docente */
+.teacher-panel-opener{position:fixed;right:20px;bottom:20px;width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;opacity:.3;z-index:100}
+.teacher-panel-opener:hover{opacity:1;background:var(--gold)}
+.teacher-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
+.teacher-overlay.open{display:flex}
+.teacher-modal{background:var(--paper);border-radius:22px;padding:36px;max-width:900px;width:95%;max-height:85vh;overflow-y:auto;box-shadow:0 24px 80px -20px rgba(0,0,0,.4)}
+.teacher-modal h2{font-family:'Fraunces',serif;color:var(--forest-deep);margin-bottom:16px}
+.teacher-key-input{display:flex;gap:10px;margin-bottom:20px}
+.teacher-key-input input{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Outfit',sans-serif}
+.teacher-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+#teacher-table-wrap{overflow-x:auto}
+#teacher-table-wrap table{width:100%;border-collapse:collapse;font-size:13px}
+#teacher-table-wrap th{text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);color:var(--forest);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+#teacher-table-wrap td{padding:8px 10px;border-bottom:1px solid var(--border)}
+#teacher-table-wrap tr:hover td{background:rgba(31,74,61,.03)}
+.btn-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;padding:4px 8px;border-radius:6px}
+.btn-del:hover{background:var(--error-soft)}
+.btn-del-all{background:var(--red);color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px}
+.btn-del-all:hover{opacity:.85}
+.filter-input{padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;width:100%;margin-bottom:12px}
+
+/* ═══ PARÁMETROS E INFORME (panel docente) ═══ */
+.params-panel h3,.report-panel h3{font-family:'Fraunces',serif;font-size:17px;color:var(--forest-deep);margin-bottom:8px}
+.params-note{font-size:12.5px;color:var(--ink-soft);line-height:1.6;margin-bottom:16px}
+.params-note code{background:rgba(31,74,61,.08);padding:1px 5px;border-radius:4px;font-size:12px}
+.params-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:18px}
+.params-grid label{display:flex;flex-direction:column;gap:6px;font-size:12.5px;font-weight:600;color:var(--navy)}
+.params-grid input{padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit}
+.params-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.report-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px}
+.report-kpi{background:rgba(31,74,61,.05);border:1px solid var(--hairline);border-radius:12px;padding:14px;text-align:center}
+.kpi-num{display:block;font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:var(--navy)}
+.kpi-lbl{display:block;font-size:11.5px;color:var(--ink-soft);margin-top:4px}
+.report-panel h4{font-family:'Fraunces',serif;font-size:14px;color:var(--navy);margin:18px 0 8px}
+.report-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:8px}
+.report-table th{background:rgba(31,74,61,.07);color:var(--navy);text-align:left;padding:8px 10px;font-weight:700;border-bottom:1px solid var(--hairline)}
+.report-table td{padding:7px 10px;border-bottom:1px solid var(--hairline);color:var(--ink-soft)}
+
+/* ═══ RESULTS COMPONENT REDESIGN ═══ */
+:root{
+  --navy:#1B2A5B;--gold-brand:#B8891F;--burgundy:#8B1E3F;--cream:#FDF8E8;
+  --hairline:#E5E8EF;--label-gray:#5A6478;--green-brand:#1E7B4F;--icon-gray:#C4C9D4;
+}
+.results-card{background:var(--cream,#FDF8E8);border:1px solid var(--hairline);border-radius:22px;padding:48px 40px;box-shadow:var(--shadow);text-align:center}
+.score-value{font-family:'Fraunces',serif;font-weight:900;font-size:42px;color:var(--navy);line-height:1}
+.score-value.slash{font-size:20px;color:var(--muted);font-weight:400}
+.score-value.max{font-size:18px;color:var(--muted);font-weight:400}
+.score-circle .fill{stroke:var(--green-brand)}
+
+/* ── IB conversion ── */
+.ib-conversion{margin:6px 0 20px;display:inline-flex;align-items:center;gap:8px;background:rgba(27,42,91,.06);border:1px solid rgba(27,42,91,.15);border-radius:10px;padding:8px 16px}
+.ib-label{font-size:11px;font-weight:600;color:var(--label-gray);text-transform:uppercase;letter-spacing:.08em}
+.ib-band{font-family:'Fraunces',serif;font-weight:700;font-size:20px;color:var(--navy)}
+.ib-desc{font-size:12px;color:var(--muted);margin-left:4px}
+
+/* ── Result progress bar (with 50%/70% marks) ── */
+.result-progress{margin:16px auto 24px;max-width:340px}
+.result-progress-label{font-size:11px;font-weight:600;color:var(--label-gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;text-align:left}
+.result-progress-track{position:relative;height:8px;background:var(--hairline);border-radius:99px;overflow:visible}
+.result-progress-fill{height:100%;border-radius:99px;transition:width 1.2s cubic-bezier(.4,0,.2,1);position:relative;z-index:2}
+.result-progress-mark{position:absolute;top:-3px;width:1px;height:14px;background:rgba(27,42,91,.25);z-index:1}
+.result-progress-mark-label{position:absolute;top:-18px;font-size:9px;color:var(--label-gray);transform:translateX(-50%);font-weight:600}
+
+/* ── Meta grid (3 columns, no vertical borders) ── */
+.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline);border-radius:12px;overflow:hidden;margin:20px 0;text-align:left}
+.meta-cell{background:var(--cream,#FDF8E8);padding:14px 18px}
+.meta-label{font-size:11px;font-weight:600;color:var(--label-gray);text-transform:uppercase;letter-spacing:.08em}
+.meta-value{font-size:15px;color:var(--navy);font-weight:600;margin-top:4px}
+
+/* ── Distribution cells ── */
+.dist-section{margin:20px 0;text-align:left}
+.dist-title{font-size:11px;font-weight:600;color:var(--label-gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.dist-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dist-cell{background:rgba(255,255,255,.5);border:1px solid var(--hairline);border-radius:10px;padding:10px 8px;text-align:center}
+.dist-letter{font-family:'Fraunces',serif;font-weight:700;font-size:18px;color:var(--navy)}
+.dist-ratio{font-size:12px;color:var(--label-gray);margin-top:2px}
+
+/* ── Review section redesign ── */
+.review-box{margin:24px 0 4px;text-align:left;border:1px solid var(--hairline);border-radius:16px;padding:24px 28px;background:var(--cream,#FDF8E8)}
+.review-head{font-family:'Fraunces',serif;color:var(--navy);font-size:1.05rem;margin-bottom:16px;font-weight:700}
+.review-item{padding:24px 0;border-bottom:1px solid var(--hairline);break-inside:avoid;page-break-inside:avoid}
+.review-item:last-child{border-bottom:none}
+.review-q-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.review-q-num{font-size:18px;font-weight:700;color:var(--navy);line-height:1}
+.review-badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 10px;border-radius:6px;letter-spacing:.04em}
+.review-badge.bad{background:rgba(139,30,63,.1);color:var(--burgundy)}
+.review-badge.good{background:rgba(30,123,79,.1);color:var(--green-brand)}
+.review-q-text{font-size:14px;color:var(--ink);line-height:1.5;margin-top:8px;margin-bottom:12px}
+.option-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0}
+.option-icon{flex-shrink:0;margin-top:1px}
+.option-content{flex:1;display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap}
+.option-letter-label{font-size:12px;font-weight:700;color:var(--ink-soft);min-width:18px}
+.option-text{font-size:13px;color:var(--ink-soft);line-height:1.45;flex:1}
+.option-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0}
+.option-tag.user{background:rgba(139,30,63,.1);color:var(--burgundy)}
+.option-tag.correct-tag{background:rgba(30,123,79,.1);color:var(--green-brand)}
+.option-tag.match{background:rgba(30,123,79,.15);color:var(--green-brand)}
+.explanation-block{margin-top:12px;padding:14px 18px;background:rgba(27,42,91,.04);border:1px solid var(--hairline);border-radius:10px}
+.explanation-label{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.explanation-text{font-size:13px;color:var(--ink-soft);line-height:1.5}
+
+/* ═══ DIAGRAMAS SVG ═══ */
+.diagram-box{margin:0 0 22px;padding:14px;background:#fdfcf9;border:1px solid var(--hairline);border-radius:12px;text-align:center}
+.diagram-box svg{max-width:100%;height:auto}
+.diagram-box img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--hairline);display:block;margin:0 auto}
+.diagram-caption{font-size:11px;color:var(--label-gray);margin-top:8px;line-height:1.5}
+
+/* ═══ MODAL PERSONALIZADO (sin alert ni confirm nativos) ═══ */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--paper);border-radius:16px;padding:28px 30px;max-width:460px;width:92%;box-shadow:0 24px 80px -20px rgba(0,0,0,.4)}
+.modal-title{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--navy);margin-bottom:10px}
+.modal-message{font-size:14px;color:var(--ink-soft);line-height:1.5;margin-bottom:22px}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.modal-btn{padding:10px 20px;border-radius:8px;border:none;font-family:'Outfit',sans-serif;font-weight:600;font-size:14px;cursor:pointer;transition:all .2s}
+.modal-btn.primary{background:var(--navy);color:#fff}
+.modal-btn.primary:hover{background:#141f42}
+.modal-btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--border)}
+.modal-btn.ghost:hover{background:rgba(27,42,90,.06)}
+.modal-btn.danger{background:var(--red);color:#fff}
+.modal-btn.danger:hover{opacity:.85}
+
+/* ═══ TOAST (penalización) ═══ */
+.toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-90px);background:var(--red);color:#fff;padding:12px 22px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 10px 30px -8px rgba(0,0,0,.35);z-index:400;transition:transform .35s cubic-bezier(.2,.7,.2,1);max-width:92%;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ═══ RANKING (panel docente) ═══ */
+.rank-pos{display:inline-flex;align-items:center;gap:6px;font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--navy)}
+.rank-name{font-size:13px;color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-grade{font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:var(--navy);white-space:nowrap}
+.medal{font-size:16px}
+.medal.gold{color:var(--gold-brand)}
+.medal.silver{color:#9AA3B2}
+.medal.bronze{color:#A9713B}
+.rank-empty{font-size:13px;color:var(--muted);padding:12px 0}
+.teacher-rank-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.teacher-rank-head h3{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--navy)}
+.btn-back-table{padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--navy);font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;cursor:pointer}
+.btn-back-table:hover{background:rgba(27,42,91,.06)}
+.teacher-rank-row{display:grid;grid-template-columns:46px 1fr auto 64px;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--border)}
+.teacher-rank-row:last-child{border-bottom:none}
+.teacher-rank-row:hover{background:rgba(31,74,61,.03)}
+.teacher-rank-date{font-size:12px;color:var(--muted);white-space:nowrap}
+
+@media(max-width:720px){.container{padding:20px 14px 60px}.welcome-card,.results-card{padding:32px 22px}.welcome-meta,.stats-grid{grid-template-columns:1fr;gap:8px}.question-card{padding:26px 22px}.question-text{font-size:19px}.quiz-header{flex-direction:column;align-items:flex-start}.brand-right{display:none}.actions{flex-direction:column-reverse;gap:10px}.actions .btn{width:100%}}
+@media print{body{background:#fff}body::before{display:none}.brand,.welcome-screen,.quiz-screen,.results-actions,.teacher-panel-opener{display:none !important}.results-card{box-shadow:none;border:none;padding:24px 20px}.container{max-width:100%;padding:0}.score-circle svg circle{fill:var(--green-brand) !important}.score-circle .track{fill:var(--cream) !important}.score-value{color:var(--navy) !important;font-weight:700 !important}.review-item{break-inside:avoid;page-break-inside:avoid}.review-box{border:none;padding:0}.meta-grid{border:1px solid var(--hairline)}.dist-cell{border:1px solid var(--hairline)}body{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}}
+</style>
+</head>
+<body>
+<div class="container">
+<!-- BRAND -->
+<div class="brand">
+  <div class="brand-left">
+    <div class="brand-mark">E</div>
+    <div class="brand-text">
+      <div class="brand-text t1">Economía · 3BGU</div>
+      <div class="brand-text t2">Tipos de cambio</div>
+    </div>
+  </div>
+  <div class="brand-right">Macroeconomía · Economía abierta<br><strong>ADA · Tipos de cambio</strong></div>
+</div>
+
+<!-- ═══════ SCREEN: INTRO ═══════ -->
+<section id="welcome-screen" class="screen active">
+<div class="welcome-card">
+  <div class="eyebrow"><i class="fa-solid fa-shield-halved"></i> Evaluación formativa</div>
+  <h1 class="welcome-title">Tipos de cambio</h1>
+  <p class="welcome-sub">Preguntas con cadena causal sobre el mercado de divisas: qué es el tipo de cambio, cómo se aprecia y cómo se deprecia una moneda, qué desplaza la oferta y la demanda de divisas, los efectos sobre exportadores e importadores, los sistemas de tipo de cambio fijo y flotante, y la lectura de dos modelos de oferta y demanda de divisas para identificar qué moneda se aprecia y cuál se deprecia.</p>
+  <div class="skills-box">
+    <div class="skills-title"><i class="fa-solid fa-brain"></i> Competencias evaluadas</div>
+    <ul class="skills-list">
+      <li>Concepto de tipo de cambio como precio de una moneda expresado en otra</li>
+      <li>Apreciación y depreciación de una moneda, y su diferencia con revaluación y devaluación</li>
+      <li>Oferta y demanda de divisas: qué factores desplazan cada curva</li>
+      <li>Efectos de la apreciación y la depreciación sobre exportadores, importadores, inflación y balanza comercial</li>
+      <li>Sistemas de tipo de cambio fijo, flotante y por bandas, con sus ventajas y desventajas</li>
+      <li>Lectura de modelos de oferta y demanda de divisas para identificar qué moneda se aprecia y cuál se deprecia</li>
+    </ul>
+  </div>
+  <div class="welcome-meta">
+    <div class="meta-item"><div class="meta-item num" id="totalQDisplay">20</div><div class="meta-item lb">Preguntas</div></div>
+    <div class="meta-item"><div class="meta-item num">/10</div><div class="meta-item lb">Puntaje</div></div>
+    <div class="meta-item"><div class="meta-item num">1 intento</div><div class="meta-item lb">Por estudiante</div></div>
+  </div>
+  <div class="form-group">
+    <label for="studentName"><i class="fa-solid fa-user"></i> Selecciona tu nombre</label>
+    <select id="studentName">
+      <option value="">Selecciona...</option>
+    </select>
+    <div id="nameError" class="name-error"></div>
+  </div>
+  <button class="btn btn-primary" onclick="startQuiz()" style="width:100%"><i class="fa-solid fa-play"></i> Comenzar evaluación</button>
+</div>
+</section>
+
+<!-- ═══════ SCREEN: QUIZ ═══════ -->
+<section id="quiz-screen" class="screen">
+<div class="quiz-header">
+  <div class="brand-left" style="gap:10px">
+    <div class="brand-mark" style="width:36px;height:36px;font-size:15px">E</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-text" id="progressText">1 / 20</div>
+  </div>
+  <div class="timer-badge"><i class="fa-solid fa-clock"></i> <span id="timerDisplay">90s</span></div>
+</div>
+<div id="questionArea"></div>
+<div class="actions">
+  <button class="btn btn-ghost" id="prevBtn" onclick="prevQuestion()" disabled><i class="fa-solid fa-arrow-left"></i> Anterior</button>
+  <button class="btn btn-primary" id="nextBtn">Siguiente <i class="fa-solid fa-arrow-right"></i></button>
+</div>
+</section>
+
+<!-- ═══════ SCREEN: RESULTS ═══════ -->
+<section id="results-screen" class="screen">
+<div class="results-card">
+  <div class="score-circle">
+    <svg viewBox="0 0 220 220">
+      <circle class="track" cx="110" cy="110" r="90"/>
+      <circle class="fill" id="scoreRing" cx="110" cy="110" r="90"/>
+    </svg>
+    <div class="score-inner">
+      <div class="score-value" id="scoreValue">0</div>
+      <div class="score-value slash">/</div>
+      <div class="score-value max">10</div>
+    </div>
+  </div>
+  <div class="results-name" id="resultsName"></div>
+  <div class="results-course" id="resultsCourse"></div>
+  <div class="save-status" id="saveStatus"><i class="fa-solid fa-spinner fa-spin"></i> Guardando resultado...</div>
+  <div class="penalty-note" id="penaltyNote" style="display:none"></div>
+
+  <!-- IB Conversion -->
+  <div class="ib-conversion" id="ibConversion" style="display:none">
+    <span class="ib-label">Escala IB</span>
+    <span class="ib-band" id="ibBand"></span>
+    <span class="ib-desc" id="ibDesc"></span>
+  </div>
+
+  <!-- Result progress bar -->
+  <div class="result-progress">
+    <div class="result-progress-track">
+      <div class="result-progress-fill" id="resultProgressFill" style="width:0%"></div>
+      <div class="result-progress-mark" style="left:50%"><span class="result-progress-mark-label">50%</span></div>
+      <div class="result-progress-mark" style="left:70%"><span class="result-progress-mark-label">70%</span></div>
+    </div>
+  </div>
+
+  <!-- Stats grid -->
+  <div class="stats-grid">
+    <div class="stat-item"><div class="stat-num" id="statCorrect">0</div><div class="stat-lb">Correctas</div></div>
+    <div class="stat-item"><div class="stat-num" id="statTotal">0</div><div class="stat-lb">Total</div></div>
+    <div class="stat-item"><div class="stat-num" id="statTime">0:00</div><div class="stat-lb">Duración</div></div>
+  </div>
+
+  <!-- Metadata grid -->
+  <div class="meta-grid">
+    <div class="meta-cell"><div class="meta-label">Estudiante</div><div class="meta-value" id="metaStudent"></div></div>
+    <div class="meta-cell"><div class="meta-label">Curso</div><div class="meta-value" id="metaCourse"></div></div>
+    <div class="meta-cell"><div class="meta-label">Fecha</div><div class="meta-value" id="metaDate"></div></div>
+  </div>
+
+  <!-- Distribution -->
+  <div class="dist-section">
+    <div class="dist-title">Aciertos por clave de respuesta</div>
+    <div class="dist-grid">
+      <div class="dist-cell"><div class="dist-letter">A</div><div class="dist-ratio" id="distA">0 / 0</div></div>
+      <div class="dist-cell"><div class="dist-letter">B</div><div class="dist-ratio" id="distB">0 / 0</div></div>
+      <div class="dist-cell"><div class="dist-letter">C</div><div class="dist-ratio" id="distC">0 / 0</div></div>
+      <div class="dist-cell"><div class="dist-letter">D</div><div class="dist-ratio" id="distD">0 / 0</div></div>
+    </div>
+  </div>
+
+  <div class="results-actions">
+    <button class="btn btn-ghost" onclick="printPDF()"><i class="fa-solid fa-print"></i> Imprimir / PDF</button>
+    <button class="btn btn-ghost" id="btn-review" onclick="toggleReview()"><i class="fa-solid fa-magnifying-glass"></i> Ver retroalimentación</button>
+  </div>
+  <div id="review-box" class="review-box" style="display:none"></div>
+</div>
+</section>
+
+<!-- PANEL DOCENTE (invisible) -->
+<div class="teacher-panel-opener" id="teacherOpener" onclick="openTeacherPanel()"></div>
+</div>
+
+<!-- OVERLAY DOCENTE -->
+<div class="teacher-overlay" id="teacherOverlay">
+<div class="teacher-modal">
+  <h2><i class="fa-solid fa-chalkboard-user"></i> Panel Docente</h2>
+  <div class="teacher-key-input">
+    <input type="password" id="teacherKeyInput" placeholder="Clave docente...">
+    <button class="btn btn-primary" onclick="authenticateTeacher()" style="padding:10px 20px"><i class="fa-solid fa-right-to-bracket"></i></button>
+  </div>
+  <div id="teacherContent" style="display:none">
+    <div class="teacher-controls">
+      <button class="btn btn-ghost" onclick="loadTeacher()"><i class="fa-solid fa-rotate"></i> Actualizar</button>
+      <button class="btn btn-ghost btn-excel" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> Excel</button>
+      <button class="btn btn-ghost" onclick="loadTeacherRanking()"><i class="fa-solid fa-ranking-star"></i> Ranking</button>
+      <button class="btn-del-all" onclick="clearAllGrades()"><i class="fa-solid fa-trash"></i> Borrar todo</button>
+      <button class="btn btn-ghost" onclick="toggleQuizStatus()"><i class="fa-solid fa-lock-open" id="statusIcon"></i> <span id="statusText">Abrir quiz</span></button>
+      <button class="btn btn-ghost" onclick="openParamsPanel()"><i class="fa-solid fa-sliders"></i> Parámetros</button>
+      <button class="btn btn-ghost" onclick="loadTeacherReport()"><i class="fa-solid fa-chart-line"></i> Informe</button>
+    </div>
+    <input type="text" class="filter-input" id="teacherFilter" placeholder="Filtrar por nombre..." oninput="filterTeacher()">
+    <div id="teacher-table-wrap"></div>
+  </div>
+  <div style="text-align:right;margin-top:16px">
+    <button class="btn btn-ghost" onclick="closeTeacherPanel()"><i class="fa-solid fa-xmark"></i> Cerrar</button>
+  </div>
+</div>
+</div>
+
+<!-- MODAL PERSONALIZADO -->
+<div class="modal-overlay" id="modalOverlay">
+<div class="modal-box">
+  <div class="modal-title" id="modalTitle">Aviso</div>
+  <div class="modal-message" id="modalMessage"></div>
+  <div class="modal-actions" id="modalActions"></div>
+</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+ BANCO DE PREGUNTAS · TIPOS DE CAMBIO (Economía 3BGU)
+ Macroeconomía de una economía abierta: mercado de divisas,
+ apreciación y depreciación, sistemas de tipo de cambio.
+ Fuente académica: Hoang, Wray y Chakraborty (2020), capítulo 31.
+ ============================================================ */
+const QUESTION_BANK = [
+  /* ══════════ RC · LECTURA DE MODELOS Y DATOS (15) ══════════ */
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Mercado de divisas: desplazamiento de la demanda',
+    scenario: 'El modelo presenta dos paneles del mismo mercado. El panel izquierdo muestra el mercado del dólar australiano con el tipo de cambio medido en libras esterlinas por dólar australiano. El panel derecho muestra el mercado de la libra esterlina con el tipo de cambio medido en dólares australianos por libra esterlina.',
+    question: 'En el panel izquierdo la curva de demanda se desplaza de la posición D1 a la posición D2 mientras la curva de oferta (S) se mantiene en su lugar. ¿Qué ocurre con el tipo de cambio del dólar australiano?',
+    options: [
+      'Sube, porque a cada nivel de oferta los compradores están dispuestos a pagar más libras esterlinas por dólar australiano.',
+      'Baja, porque al desplazarse la demanda hacia la derecha el precio de equilibrio disminuye.',
+      'No cambia, porque la curva de oferta de dólares australianos permanece constante.',
+      'Sube y la cantidad intercambiada disminuye, porque la oferta no responde al cambio de precio.'
+    ],
+    answer: 0,
+    explanation: 'Al desplazarse la demanda de D1 a D2, el nuevo equilibrio se alcanza a un tipo de cambio mayor. El dólar australiano se aprecia y la cantidad intercambiada también aumenta, porque el ajuste ocurre a lo largo de la curva de oferta.',
+    diagram: 'modelo1',
+    diagramCaption: 'Modelo de apreciación del dólar australiano (Hoang, Wray y Chakraborty, 2020, figura 31.3).',
+    type: 'RC',
+    always: true
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Mercado de divisas: desplazamiento de la oferta',
+    scenario: 'El modelo de dos paneles muestra el mismo mercado de divisas. El panel izquierdo presenta el mercado del dólar australiano y el panel derecho el mercado de la libra esterlina.',
+    question: 'En el panel izquierdo la curva de oferta se desplaza de la posición S1 a la posición S2 mientras la curva de demanda (D) se mantiene en su lugar. ¿Qué ocurre con el tipo de cambio del dólar australiano?',
+    options: [
+      'Baja, porque a cada tipo de cambio los tenedores ofrecen más dólares australianos que antes.',
+      'Sube, porque desplazar la oferta hacia la derecha eleva el precio de equilibrio.',
+      'No cambia, porque la curva de demanda permanece constante.',
+      'Baja y la cantidad intercambiada también disminuye con respecto al equilibrio inicial.'
+    ],
+    answer: 0,
+    explanation: 'El desplazamiento de la oferta de S1 a S2 lleva el equilibrio a un tipo de cambio menor: el dólar australiano se deprecia. La cantidad intercambiada aumenta, porque el movimiento ocurre a lo largo de la curva de demanda.',
+    diagram: 'modelo2',
+    diagramCaption: 'Modelo de depreciación del dólar australiano. Elaboración propia a partir de Hoang, Wray y Chakraborty (2020).',
+    type: 'RC',
+    always: true
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Lectura del panel simétrico',
+    scenario: 'Un modelo de dos paneles representa el mercado del dólar australiano y el de la libra esterlina. En el panel de la libra esterlina, la curva de oferta de libras se desplaza hacia la derecha y la curva de demanda de libras no cambia.',
+    question: '¿Qué ocurre en el mercado de la libra esterlina con ese desplazamiento?',
+    options: [
+      'El precio de la libra baja, es decir, la libra esterlina se deprecia frente al dólar australiano.',
+      'El precio de la libra sube, es decir, la libra esterlina se aprecia frente al dólar australiano.',
+      'El precio de la libra no cambia, porque la curva de demanda permanece igual.',
+      'El precio de la libra sube y la cantidad de libras intercambiada disminuye.'
+    ],
+    answer: 0,
+    explanation: 'Al desplazarse la oferta de libras hacia la derecha con demanda constante, el precio de la libra baja. La libra esterlina se deprecia. Es la imagen simétrica de la apreciación del dólar australiano.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Interpretación de datos reales',
+    scenario: 'Entre 2020 y 2021 el tipo de cambio del dólar australiano pasó de 0,52 a 0,58 libras esterlinas por dólar australiano. El movimiento coincidió con un aumento de las exportaciones australianas de mineral de hierro y carbón.',
+    question: '¿Cómo se interpreta ese cambio para el dólar australiano?',
+    options: [
+      'Se apreció, porque ahora se necesitan más libras esterlinas para comprar un dólar australiano.',
+      'Se depreció, porque el número que expresa el tipo de cambio aumentó de valor.',
+      'Se devaluó, porque el banco central de Australia intervino en el mercado de divisas.',
+      'No cambió, porque la cantidad de dólares australianos intercambiada no varió.'
+    ],
+    answer: 0,
+    explanation: 'Cuando se necesitan más libras esterlinas para comprar un dólar australiano, el precio del dólar australiano sube y hay apreciación. La variación fue de 0,06 libras esterlinas, cerca del 11,5 por ciento.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Tipo de cambio recíproco',
+    scenario: 'Si un dólar australiano cuesta 0,52 libras esterlinas, entonces una libra esterlina cuesta aproximadamente 1,92 dólares australianos.',
+    question: 'Si el dólar australiano se aprecia hasta 0,58 libras esterlinas, ¿qué ocurre con el precio de la libra esterlina expresado en dólares australianos?',
+    options: [
+      'Baja a aproximadamente 1,72 dólares australianos, porque la libra esterlina se deprecia.',
+      'Sube a aproximadamente 2,12 dólares australianos, porque la libra esterlina se aprecia.',
+      'Se mantiene en 1,92 dólares australianos, porque son dos formas de expresar la misma relación.',
+      'Baja a 0,58 dólares australianos, porque el tipo de cambio es recíproco.'
+    ],
+    answer: 0,
+    explanation: 'Al apreciarse el dólar australiano, la libra esterlina se deprecia en la misma proporción. El recíproco de 0,58 es aproximadamente 1,72 dólares australianos por libra esterlina.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Causa de un desplazamiento',
+    scenario: 'Un informe señala que inversionistas extranjeros aumentaron sus compras de bonos del gobierno australiano porque las tasas de interés de Australia subieron respecto a las del Reino Unido.',
+    question: '¿Qué curva se desplaza en el mercado del dólar australiano y por qué razón?',
+    options: [
+      'La curva de demanda, porque para comprar bonos australianos los inversionistas extranjeros necesitan dólares australianos.',
+      'La curva de oferta, porque los residentes australianos compran más bonos británicos con sus libras esterlinas.',
+      'La curva de demanda, porque aumenta la oferta de bonos australianos en el mercado financiero.',
+      'Ninguna curva, porque las tasas de interés no afectan al mercado de divisas.'
+    ],
+    answer: 0,
+    explanation: 'Para comprar activos australianos hay que demandar dólares australianos. Un aumento de la demanda, con oferta constante, aprecia la moneda del país.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Causa de un desplazamiento',
+    scenario: 'Las familias australianas aumentaron con fuerza sus compras de automóviles importados del Reino Unido, que se pagan en libras esterlinas.',
+    question: '¿Qué efecto tiene esa decisión en el mercado del dólar australiano?',
+    options: [
+      'Aumenta la oferta de dólares australianos, porque los importadores los venden para obtener libras esterlinas.',
+      'Aumenta la demanda de dólares australianos, porque hay más importaciones de automóviles.',
+      'Disminuye la oferta de dólares australianos, porque suben las importaciones de automóviles.',
+      'No tiene efecto, porque las importaciones se pagan directamente en libras esterlinas.'
+    ],
+    answer: 0,
+    explanation: 'Para pagar importaciones los residentes ofrecen su propia moneda a cambio de divisas. Aumenta la oferta de dólares australianos y el dólar australiano se deprecia.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Lectura de datos y causalidad',
+    scenario: 'Un cuadro de datos muestra que el tipo de cambio del dólar australiano pasó de 0,55 a 0,50 libras esterlinas y que las exportaciones de mineral de hierro cayeron en el mismo período.',
+    question: '¿Qué lectura es coherente con esos datos?',
+    options: [
+      'La caída de las exportaciones redujo la demanda de dólares australianos y el dólar australiano se depreció.',
+      'La caída de las exportaciones aumentó la demanda de dólares australianos y el dólar australiano se apreció.',
+      'La caída de las exportaciones aumentó la oferta de dólares australianos y el tipo de cambio subió.',
+      'El tipo de cambio bajó porque la oferta de libras esterlinas disminuyó en el mercado.'
+    ],
+    answer: 0,
+    explanation: 'Los compradores extranjeros de mineral de hierro necesitan dólares australianos. Al caer las exportaciones, cae la demanda de dólares australianos y el tipo de cambio baja.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Intervención del banco central',
+    scenario: 'El banco central de Australia decide vender dólares australianos en el mercado de divisas para evitar que su moneda se aprecie demasiado.',
+    question: '¿Qué efecto directo tiene esa intervención?',
+    options: [
+      'Aumenta la oferta de dólares australianos y frena la apreciación de la moneda.',
+      'Aumenta la demanda de dólares australianos y refuerza la apreciación de la moneda.',
+      'Reduce la oferta de dólares australianos y acelera la apreciación de la moneda.',
+      'No tiene efecto, porque el banco central no participa en el mercado de divisas.'
+    ],
+    answer: 0,
+    explanation: 'Vender la propia moneda equivale a aumentar su oferta en el mercado de divisas. Con demanda constante, el tipo de cambio baja y la apreciación se frena.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Consecuencias para el exportador',
+    scenario: 'El dólar australiano se aprecia frente a la libra esterlina. Una empresa australiana exporta vinos a Londres y sus precios están fijados en libras esterlinas.',
+    question: '¿Qué consecuencia enfrenta esa empresa exportadora?',
+    options: [
+      'Sus vinos resultan más caros para los compradores británicos y sus ventas pueden disminuir.',
+      'Sus vinos resultan más baratos para los compradores británicos y sus ventas aumentan.',
+      'Sus costos en libras esterlinas suben y su margen de ganancia mejora.',
+      'No hay ningún efecto, porque el contrato está fijado en libras esterlinas.'
+    ],
+    answer: 0,
+    explanation: 'Con el dólar australiano más caro, cada unidad exportada cuesta más libras esterlinas al comprador británico. La cantidad demandada de exportaciones tiende a caer.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Consecuencias para el residente',
+    scenario: 'El dólar australiano se aprecia frente a la libra esterlina. Un turista australiano planea un viaje a Londres y pagará sus gastos en libras esterlinas.',
+    question: '¿Qué efecto tiene la apreciación sobre el costo de ese viaje?',
+    options: [
+      'Le resulta más barato, porque con cada dólar australiano obtiene más libras esterlinas.',
+      'Le resulta más caro, porque cada libra esterlina cuesta más dólares australianos.',
+      'Le resulta igual, porque el precio de los pasajes no depende del tipo de cambio.',
+      'Le resulta más caro, porque la oferta de libras esterlinas en el mercado disminuye.'
+    ],
+    answer: 0,
+    explanation: 'Al apreciarse el dólar australiano, cada dólar australiano compra más libras esterlinas. Los bienes y servicios británicos se abaratan para el residente australiano.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Defensa de una paridad fija',
+    scenario: 'Un país mantiene un tipo de cambio fijo y su moneda empieza a presionar a la baja. Para sostener el valor anunciado, el banco central compra su propia moneda en el mercado de divisas.',
+    question: '¿Cómo actúa el banco central para sostener el tipo de cambio fijo?',
+    options: [
+      'Compra su propia moneda, con lo que reduce su oferta y sostiene su precio.',
+      'Vende su propia moneda, con lo que aumenta su oferta y eleva su precio.',
+      'Emite más moneda local para elevar su valor en el mercado de divisas.',
+      'Prohíbe a los residentes comprar cualquier divisa extranjera.'
+    ],
+    answer: 0,
+    explanation: 'Para sostener una paridad el banco central opera en sentido contrario a la presión del mercado. Si la moneda presiona a la baja, compra su propia moneda y reduce la oferta.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Inflación importada',
+    scenario: 'La moneda de un país se deprecia de forma pronunciada y ese país importa la mayor parte de sus alimentos y combustibles.',
+    question: '¿Qué efecto es más probable sobre la inflación interna?',
+    options: [
+      'Aumenta, porque las importaciones se encarecen en moneda local, lo que se conoce como inflación importada.',
+      'Disminuye, porque las importaciones se abaratan en moneda local.',
+      'No cambia, porque la inflación depende solo de la demanda interna.',
+      'Aumenta, porque las exportaciones se encarecen para los compradores extranjeros.'
+    ],
+    answer: 0,
+    explanation: 'Con la moneda depreciada, cada unidad importada cuesta más moneda local. Ese encarecimiento se traslada a los precios internos y se conoce como inflación importada.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Lectura conjunta de los dos paneles',
+    scenario: 'Un modelo señala que la demanda de dólares australianos aumentó y que, en el mercado de la libra esterlina, la oferta de libras aumentó en la misma medida.',
+    question: '¿Qué relación existe entre los dos desplazamientos?',
+    options: [
+      'Son las dos caras de la misma operación, porque comprar dólares australianos es vender libras esterlinas.',
+      'Son hechos independientes que no guardan relación entre sí.',
+      'Son contradictorios, porque una moneda se aprecia y la otra también.',
+      'Ninguno de los dos desplazamientos afecta al tipo de cambio de equilibrio.'
+    ],
+    answer: 0,
+    explanation: 'Cada transacción en el mercado de divisas tiene dos lados. Comprar dólares australianos con libras esterlinas es a la vez demandar dólares australianos y ofrecer libras esterlinas, así que los dos paneles cuentan la misma historia.',
+    type: 'RC'
+  },
+  {
+    topic: 'Lectura de modelos y datos',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Cálculo de la variación porcentual',
+    scenario: 'El tipo de cambio del dólar australiano pasó de 0,50 a 0,55 libras esterlinas por dólar australiano.',
+    question: '¿Cuál es la variación porcentual aproximada del tipo de cambio y qué significa?',
+    options: [
+      'Cerca del 10 por ciento de aumento, lo que corresponde a una apreciación del dólar australiano.',
+      'Cerca del 5 por ciento de aumento, lo que corresponde a una depreciación del dólar australiano.',
+      'Cerca del 10 por ciento de disminución, lo que corresponde a una depreciación del dólar australiano.',
+      'Cerca del 50 por ciento de aumento, lo que corresponde a una apreciación del dólar australiano.'
+    ],
+    answer: 0,
+    explanation: 'La variación es de 0,05 sobre 0,50, es decir, un 10 por ciento. Como el tipo de cambio sube, el dólar australiano se aprecia.',
+    type: 'RC'
+  },
+  /* ══════════ CC · CADENA CAUSAL Y TEORÍA (33) ══════════ */
+  {
+    topic: 'Tipo de cambio: concepto',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Tipo de cambio nominal',
+    question: '¿Qué expresa el tipo de cambio nominal entre dos monedas?',
+    options: [
+      'El precio de una moneda expresado en unidades de otra moneda.',
+      'La cantidad de bienes y servicios que se pueden comprar con una unidad de moneda.',
+      'El total de reservas internacionales que mantiene el banco central de un país.',
+      'La diferencia entre el valor de las exportaciones y el de las importaciones.'
+    ],
+    answer: 0,
+    explanation: 'El tipo de cambio nominal es un precio relativo: indica cuántas unidades de una moneda se necesitan para obtener una unidad de otra.',
+    type: 'CC'
+  },
+  {
+    topic: 'Tipo de cambio: concepto',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Tipo de cambio real',
+    question: '¿Qué mide el tipo de cambio real?',
+    options: [
+      'La relación entre los precios de los bienes nacionales y los bienes extranjeros expresados en una misma moneda.',
+      'El precio de la moneda nacional en el mercado informal de divisas.',
+      'La cantidad de moneda extranjera que el banco central mantiene en reserva.',
+      'El tipo de cambio que el gobierno anuncia oficialmente cada día.'
+    ],
+    answer: 0,
+    explanation: 'El tipo de cambio real ajusta el tipo de cambio nominal por la diferencia de precios entre países, así que refleja la competitividad de precio de los bienes nacionales.',
+    type: 'CC'
+  },
+  {
+    topic: 'Tipo de cambio: concepto',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Eje del modelo de divisas',
+    question: 'En el modelo de oferta y demanda de divisas, ¿qué variable se representa en el eje vertical?',
+    options: [
+      'El precio de la moneda, expresado como la cantidad de la otra moneda por una unidad.',
+      'La cantidad de moneda nacional que circula en la economía.',
+      'El nivel general de precios del país.',
+      'El saldo de la balanza comercial del país.'
+    ],
+    answer: 0,
+    explanation: 'En el modelo del mercado de divisas el eje vertical es el tipo de cambio, es decir, el precio de una moneda expresado en la otra. El eje horizontal es la cantidad de esa moneda.',
+    type: 'CC'
+  },
+  {
+    topic: 'Apreciación y depreciación',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Concepto de apreciación',
+    question: '¿Qué significa que una moneda se aprecie frente a otra?',
+    options: [
+      'Que su precio sube, es decir, se necesitan más unidades de la otra moneda para comprarla.',
+      'Que su precio baja, es decir, se necesitan menos unidades de la otra moneda para comprarla.',
+      'Que el gobierno fija un precio más alto mediante un decreto.',
+      'Que aumenta la cantidad de moneda en circulación dentro del país.'
+    ],
+    answer: 0,
+    explanation: 'La apreciación es un aumento del precio de la moneda en el mercado de divisas: hace falta más moneda extranjera para comprar una unidad de la moneda nacional.',
+    type: 'CC'
+  },
+  {
+    topic: 'Apreciación y depreciación',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Concepto de depreciación',
+    question: '¿Qué significa que una moneda se deprecie frente a otra?',
+    options: [
+      'Que su precio baja, es decir, se necesitan menos unidades de la otra moneda para comprarla.',
+      'Que su precio sube, es decir, se necesitan más unidades de la otra moneda para comprarla.',
+      'Que el banco central devalúa la moneda por decisión administrativa.',
+      'Que el país abandona su participación en el mercado de divisas.'
+    ],
+    answer: 0,
+    explanation: 'La depreciación es una caída del precio de la moneda en el mercado de divisas. La devaluación, en cambio, es una decisión oficial dentro de un régimen de tipo de cambio fijo.',
+    type: 'CC'
+  },
+  {
+    topic: 'Revaluación y devaluación',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Revaluación frente a apreciación',
+    question: '¿Cuál es la diferencia entre revaluación y apreciación?',
+    options: [
+      'La revaluación es una decisión oficial en un tipo de cambio fijo y la apreciación es un resultado del mercado en un tipo de cambio flotante.',
+      'La revaluación es un resultado del mercado y la apreciación es una decisión del banco central.',
+      'Son términos equivalentes y se usan de manera indistinta en cualquier régimen cambiario.',
+      'La revaluación se refiere a los precios internos y la apreciación al comercio exterior.'
+    ],
+    answer: 0,
+    explanation: 'La revaluación y la devaluación son actos administrativos propios de un régimen cambiario fijo. La apreciación y la depreciación son resultados del mercado cuando el tipo de cambio fluctúa.',
+    type: 'CC'
+  },
+  {
+    topic: 'Revaluación y devaluación',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Régimen en que aplica la devaluación',
+    question: '¿En qué régimen cambiario tiene sentido hablar de devaluación?',
+    options: [
+      'En un tipo de cambio fijo, porque el banco central modifica el precio oficial de la moneda.',
+      'En un tipo de cambio flotante, porque el mercado fija el precio cada día.',
+      'En cualquier régimen, porque devaluación y depreciación son términos equivalentes.',
+      'Solo cuando el país aplica controles de capital a los residentes.'
+    ],
+    answer: 0,
+    explanation: 'La devaluación implica que la autoridad monetaria cambia el valor oficial de la moneda. En un régimen flotante ese precio lo determina el mercado, así que corresponde hablar de depreciación.',
+    type: 'CC'
+  },
+  {
+    topic: 'Revaluación y devaluación',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Efectos de la devaluación',
+    question: 'En un régimen de tipo de cambio fijo, una devaluación tiende a producir que...',
+    options: [
+      'se reduzca el valor oficial de la moneda, mejore la competitividad de las exportaciones y se encarezcan las importaciones.',
+      'se eleve el valor oficial de la moneda, se abaraten las importaciones y se encarezcan las exportaciones.',
+      'no exista efecto alguno, porque el precio de la moneda ya estaba fijado por el gobierno.',
+      'aumente el valor de la moneda sin que se altere el comercio exterior del país.'
+    ],
+    answer: 0,
+    explanation: 'Devaluar es abaratar oficialmente la moneda. Las exportaciones se vuelven más competitivas en precio y las importaciones más caras, con el consiguiente efecto sobre la inflación.',
+    type: 'CC'
+  },
+  {
+    topic: 'Oferta y demanda de divisas',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Quiénes demandan divisas',
+    question: '¿Quiénes demandan dólares australianos en el mercado de divisas?',
+    options: [
+      'Los extranjeros que compran exportaciones australianas, los que invierten en activos australianos y los que especulan con una apreciación.',
+      'Los residentes australianos que compran bienes importados del Reino Unido.',
+      'Los residentes australianos que viajan al exterior y pagan sus gastos en libras esterlinas.',
+      'Los residentes australianos que pagan sus impuestos en moneda local.'
+    ],
+    answer: 0,
+    explanation: 'Demandan dólares australianos quienes necesitan pagar algo en Australia: compradores de exportaciones, inversionistas y especuladores. Los residentes que importan o viajan al exterior ofrecen dólares australianos.',
+    type: 'CC'
+  },
+  {
+    topic: 'Oferta y demanda de divisas',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Quiénes ofrecen divisas',
+    question: '¿Quiénes ofrecen dólares australianos en el mercado de divisas?',
+    options: [
+      'Los residentes australianos que compran importaciones, los que invierten en el exterior y el banco central cuando interviene vendiendo su moneda.',
+      'Los extranjeros que compran bonos y acciones australianos.',
+      'Los exportadores australianos que reciben sus pagos en libras esterlinas.',
+      'Los turistas extranjeros que llegan a Australia y gastan en dólares australianos.'
+    ],
+    answer: 0,
+    explanation: 'Ofrecen dólares australianos quienes necesitan moneda extranjera: importadores, inversionistas que envían capital al exterior y el banco central cuando vende su propia moneda.',
+    type: 'CC'
+  },
+  {
+    topic: 'Oferta y demanda de divisas',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Desplazamiento frente a movimiento',
+    question: '¿Qué distingue un desplazamiento de la curva de demanda de divisas de un movimiento a lo largo de esa curva?',
+    options: [
+      'El desplazamiento lo causa un factor distinto del tipo de cambio y el movimiento a lo largo lo causa un cambio en el propio tipo de cambio.',
+      'El desplazamiento ocurre solo en el corto plazo y el movimiento a lo largo solo en el largo plazo.',
+      'Son expresiones equivalentes y solo cambia el nombre según el manual que se consulte.',
+      'El movimiento a lo largo lo causa el ingreso de los consumidores y el desplazamiento la cantidad demandada.'
+    ],
+    answer: 0,
+    explanation: 'La regla es general: la curva se desplaza cuando cambia un determinante distinto del precio, como el ingreso, las preferencias, las tasas de interés o las expectativas. La cantidad cambia cuando cambia el precio, que aquí es el tipo de cambio.',
+    type: 'CC'
+  },
+  {
+    topic: 'Oferta y demanda de divisas',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Dos caras de una operación',
+    question: '¿Por qué el mercado del dólar australiano y el mercado de la libra esterlina son las dos caras de una misma operación?',
+    options: [
+      'Porque comprar dólares australianos con libras esterlinas es a la vez demandar dólares australianos y ofrecer libras esterlinas.',
+      'Porque los dos países comparten la misma moneda en sus transacciones.',
+      'Porque ambos mercados son fijados por el mismo banco central.',
+      'Porque el tipo de cambio entre las dos monedas nunca cambia.'
+    ],
+    answer: 0,
+    explanation: 'Cada transacción en el mercado de divisas involucra dos monedas. Por eso un mismo hecho aparece como desplazamiento de la demanda en un panel y de la oferta en el otro.',
+    type: 'CC'
+  },
+  {
+    topic: 'Oferta y demanda de divisas',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Cantidad intercambiada en el nuevo equilibrio',
+    question: 'Cuando la demanda de dólares australianos aumenta y la oferta no cambia, ¿qué ocurre con la cantidad intercambiada?',
+    options: [
+      'Aumenta, porque el nuevo equilibrio se alcanza en un punto más alto de la misma curva de oferta.',
+      'Disminuye, porque la oferta se reduce cuando sube el precio.',
+      'No cambia, porque la curva de oferta permanece constante.',
+      'Aumenta solo si el banco central interviene en el mercado.'
+    ],
+    answer: 0,
+    explanation: 'La curva de oferta no se mueve, así que el ajuste ocurre a lo largo de ella. Al subir el tipo de cambio, la cantidad ofrecida aumenta hasta el nuevo equilibrio.',
+    type: 'CC'
+  },
+  {
+    topic: 'Efectos en exportaciones e importaciones',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Apreciación y exportaciones',
+    question: '¿Cómo afecta una apreciación de la moneda nacional a las exportaciones del país?',
+    options: [
+      'Las encarece para los compradores extranjeros, por lo que tienden a disminuir.',
+      'Las abarata para los compradores extranjeros, por lo que tienden a aumentar.',
+      'No las afecta, porque los precios de exportación se fijan en moneda nacional.',
+      'Las encarece y por eso aumentan, porque el país gana poder de compra en el exterior.'
+    ],
+    answer: 0,
+    explanation: 'Con la moneda apreciada, cada unidad exportada cuesta más moneda extranjera. Las exportaciones pierden competitividad de precio y tienden a caer.',
+    type: 'CC'
+  },
+  {
+    topic: 'Efectos en exportaciones e importaciones',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Apreciación e importaciones',
+    question: '¿Cómo afecta una apreciación de la moneda nacional a las importaciones del país?',
+    options: [
+      'Las abarata para los residentes, por lo que tienden a aumentar.',
+      'Las encarece para los residentes, por lo que tienden a disminuir.',
+      'No las afecta, porque los importadores pagan siempre en moneda nacional.',
+      'Las abarata y por eso disminuyen, porque cae el ingreso de los residentes.'
+    ],
+    answer: 0,
+    explanation: 'Con la moneda apreciada, cada unidad importada cuesta menos moneda local. Las importaciones se abaratan y tienden a aumentar.',
+    type: 'CC'
+  },
+  {
+    topic: 'Efectos en exportaciones e importaciones',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Apreciación y balanza comercial',
+    question: 'Si una moneda se aprecia de forma sostenida, ¿qué efecto tiende a producirse en la balanza comercial?',
+    options: [
+      'Un deterioro, porque las exportaciones se encarecen y las importaciones se abaratan.',
+      'Una mejora, porque las exportaciones se abaratan y las importaciones se encarecen.',
+      'Ningún cambio, porque la balanza comercial no depende del tipo de cambio.',
+      'Una mejora, porque el país puede importar más bienes de capital para producir.'
+    ],
+    answer: 0,
+    explanation: 'La apreciación encarece las exportaciones y abarata las importaciones. Con todo lo demás constante, la balanza comercial tiende a deteriorarse.',
+    type: 'CC'
+  },
+  {
+    topic: 'Efectos en exportaciones e importaciones',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Demanda mundial de exportaciones',
+    question: 'Un aumento de la demanda mundial de las exportaciones de un país tiende a producir que...',
+    options: [
+      'aumente la demanda de su moneda y la moneda se aprecie.',
+      'aumente la oferta de su moneda y la moneda se deprecie.',
+      'caiga la demanda de su moneda y la moneda se deprecie.',
+      'no cambie su tipo de cambio si las exportaciones se cobran en dólares.'
+    ],
+    answer: 0,
+    explanation: 'Los compradores extranjeros necesitan pagar en la moneda del país exportador, así que demandan esa moneda. La demanda aumenta y el tipo de cambio sube.',
+    type: 'CC'
+  },
+  {
+    topic: 'Inflación y balanza comercial',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Inflación importada',
+    question: '¿Por qué una depreciación de la moneda nacional tiende a aumentar la inflación interna?',
+    options: [
+      'Porque encarece las importaciones y, con ellas, los insumos y los bienes finales que se compran en el exterior.',
+      'Porque abarata las importaciones y aumenta la competencia entre las empresas locales.',
+      'Porque reduce la demanda agregada y eso presiona los precios al alza.',
+      'Porque aumenta la recaudación tributaria del gobierno sobre el comercio exterior.'
+    ],
+    answer: 0,
+    explanation: 'Con la moneda depreciada cada importación cuesta más en moneda local, incluidos los insumos y los combustibles. Ese aumento de costos se traslada a los precios internos.',
+    type: 'CC'
+  },
+  {
+    topic: 'Inflación y balanza comercial',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Curva en J',
+    question: '¿Qué describe la curva en J en el comercio internacional?',
+    options: [
+      'Que después de una depreciación la balanza comercial puede deteriorarse primero y mejorar más adelante.',
+      'Que las exportaciones aumentan de inmediato cada vez que la moneda se deprecia.',
+      'Que el tipo de cambio se aprecia y se deprecia en ciclos regulares y previsibles.',
+      'Que la inversión extranjera directa aumenta de forma sostenida en el largo plazo.'
+    ],
+    answer: 0,
+    explanation: 'Los contratos de comercio se fijan con antelación, así que en el corto plazo una depreciación encarece las importaciones sin aumentar todavía las exportaciones. La mejora llega cuando los volúmenes se ajustan.',
+    type: 'CC'
+  },
+  {
+    topic: 'Sistemas de tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Tipo de cambio fijo',
+    question: '¿Qué caracteriza a un régimen de tipo de cambio fijo?',
+    options: [
+      'El banco central se compromete a mantener un precio determinado de la moneda y interviene para lograrlo.',
+      'El precio de la moneda lo determina únicamente la oferta y la demanda del mercado.',
+      'El gobierno prohíbe a los residentes comprar cualquier divisa extranjera.',
+      'El precio de la moneda cambia según un calendario que se anuncia con antelación.'
+    ],
+    answer: 0,
+    explanation: 'En un régimen fijo la autoridad monetaria anuncia un valor y lo defiende comprando o vendiendo divisas, y ajustando las tasas de interés cuando es necesario.',
+    type: 'CC'
+  },
+  {
+    topic: 'Sistemas de tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Tipo de cambio flotante',
+    question: '¿Qué caracteriza a un régimen de tipo de cambio flotante?',
+    options: [
+      'El precio de la moneda se determina por la oferta y la demanda en el mercado de divisas, sin intervención sistemática.',
+      'El banco central fija el precio de la moneda cada mañana.',
+      'El precio de la moneda solo cambia cuando el gobierno lo autoriza expresamente.',
+      'El precio se mantiene dentro de un rango anunciado con intervención permanente del banco central.'
+    ],
+    answer: 0,
+    explanation: 'En un régimen flotante el mercado determina el tipo de cambio. La opción que describe un rango con intervención permanente corresponde a las bandas cambiarias.',
+    type: 'CC'
+  },
+  {
+    topic: 'Sistemas de tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Bandas cambiarias',
+    question: '¿Qué es una banda cambiaria?',
+    options: [
+      'Un rango dentro del cual se permite fluctuar al tipo de cambio, con intervención del banco central en los extremos.',
+      'Un impuesto que se aplica a las transacciones con moneda extranjera.',
+      'Un acuerdo por el cual un país usa como propia la moneda de otro país.',
+      'Un tipo de cambio fijo que por definición nunca se modifica.'
+    ],
+    answer: 0,
+    explanation: 'La banda cambiaria combina elementos de los dos regímenes: el mercado fija el precio dentro de un rango y el banco central interviene cuando el valor se acerca a los límites.',
+    type: 'CC'
+  },
+  {
+    topic: 'Sistemas de tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Ventaja del tipo de cambio fijo',
+    question: '¿Cuál es una ventaja de un régimen de tipo de cambio fijo?',
+    options: [
+      'Aporta estabilidad y previsibilidad a las transacciones internacionales y ayuda a contener la inflación.',
+      'Permite absorber los choques externos mediante ajustes automáticos del tipo de cambio.',
+      'Deja la política monetaria completamente libre para atender objetivos internos.',
+      'Elimina la necesidad de que el banco central mantenga reservas internacionales.'
+    ],
+    answer: 0,
+    explanation: 'La estabilidad del tipo de cambio reduce la incertidumbre para exportadores e inversionistas y ayuda a anclar las expectativas de precios. Su costo es la pérdida de autonomía de la política monetaria.',
+    type: 'CC'
+  },
+  {
+    topic: 'Sistemas de tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Costo del tipo de cambio fijo',
+    question: '¿Cuál es un costo de mantener un régimen de tipo de cambio fijo?',
+    options: [
+      'El banco central pierde autonomía para usar la tasa de interés con fines internos y debe mantener reservas internacionales.',
+      'La incertidumbre cambiaria aumenta de manera significativa para los exportadores.',
+      'El gobierno queda impedido de intervenir en el mercado de divisas.',
+      'La inflación se vuelve incontrolable en el corto plazo.'
+    ],
+    answer: 0,
+    explanation: 'Defender una paridad obliga a mover la tasa de interés en función del objetivo externo y a sostener reservas internacionales. Ambas cosas reducen el margen de la política monetaria interna.',
+    type: 'CC'
+  },
+  {
+    topic: 'Sistemas de tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Ventaja del tipo de cambio flotante',
+    question: '¿Cuál es una ventaja de un régimen de tipo de cambio flotante?',
+    options: [
+      'La política monetaria recupera autonomía y el propio tipo de cambio absorbe parte de los choques externos.',
+      'Elimina por completo la incertidumbre en el comercio internacional.',
+      'Impide toda actividad especulativa en el mercado de divisas.',
+      'Garantiza el equilibrio de la balanza comercial en el largo plazo.'
+    ],
+    answer: 0,
+    explanation: 'Con tipo de cambio flotante la tasa de interés puede orientarse a objetivos internos, como la inflación o el desempleo, mientras el tipo de cambio se ajusta ante los choques.',
+    type: 'CC'
+  },
+  {
+    topic: 'Sistemas de tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Adopción de una moneda extranjera',
+    question: '¿Qué implica que un país adopte como propia la moneda de otro país?',
+    options: [
+      'Renuncia a su política monetaria propia y a la posibilidad de modificar el tipo de cambio.',
+      'Conserva su política monetaria y además gana estabilidad cambiaria.',
+      'Aumenta su autonomía para fijar la tasa de interés interna.',
+      'Mantiene un tipo de cambio flexible frente a la moneda que adopta.'
+    ],
+    answer: 0,
+    explanation: 'Al adoptar una moneda extranjera el país deja de emitir la suya y pierde los instrumentos de política monetaria y cambiaria. Gana estabilidad y credibilidad, a cambio de ese margen de acción.',
+    type: 'CC'
+  },
+  {
+    topic: 'Determinantes del tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Tasas de interés',
+    question: 'Un aumento de las tasas de interés internas respecto a las del exterior tiende a producir que...',
+    options: [
+      'ingresen capitales, aumente la demanda de la moneda nacional y la moneda se aprecie.',
+      'salgan capitales, aumente la oferta de la moneda nacional y la moneda se deprecie.',
+      'caiga la demanda de la moneda nacional y la moneda se deprecie.',
+      'no cambie el mercado de divisas, porque las tasas de interés son un instrumento puramente interno.'
+    ],
+    answer: 0,
+    explanation: 'Tasas internas más altas elevan el rendimiento esperado de los activos locales. Los inversionistas extranjeros demandan la moneda nacional para comprarlos y la moneda se aprecia.',
+    type: 'CC'
+  },
+  {
+    topic: 'Determinantes del tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Especulación',
+    question: '¿Cómo actúa la especulación en el mercado de divisas?',
+    options: [
+      'Compra la moneda que espera que se aprecie y vende la que espera que se deprecie, con lo que refuerza el movimiento esperado.',
+      'Compra únicamente la moneda que ya se apreció, sin anticipar movimientos futuros.',
+      'Elimina por completo la volatilidad del tipo de cambio.',
+      'Opera solo a través del banco central y de las reservas internacionales.'
+    ],
+    answer: 0,
+    explanation: 'La especulación consiste en anticipar el precio futuro. Si muchos agentes esperan una apreciación, compran ahora y esa compra misma presiona el precio al alza.',
+    type: 'CC'
+  },
+  {
+    topic: 'Determinantes del tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Intervención del banco central',
+    question: '¿Qué ocurre cuando un banco central vende su propia moneda en el mercado de divisas?',
+    options: [
+      'Aumenta la oferta de esa moneda y presiona su precio a la baja.',
+      'Aumenta la demanda de esa moneda y presiona su precio al alza.',
+      'Reduce la oferta de esa moneda y presiona su precio al alza.',
+      'No altera el mercado, porque opera únicamente con reservas propias.'
+    ],
+    answer: 0,
+    explanation: 'Vender la propia moneda equivale a aumentar su oferta en el mercado de divisas. Con demanda constante, el tipo de cambio baja.',
+    type: 'CC'
+  },
+  {
+    topic: 'Determinantes del tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Salida de capitales',
+    question: 'Una salida de capitales de un país tiende a producir que...',
+    options: [
+      'aumente la oferta de la moneda nacional y la moneda se deprecie.',
+      'aumente la demanda de la moneda nacional y la moneda se aprecie.',
+      'caiga la oferta de la moneda nacional y la moneda se aprecie.',
+      'no cambie el tipo de cambio, porque el capital financiero no pasa por el mercado de divisas.'
+    ],
+    answer: 0,
+    explanation: 'Cuando los inversionistas retiran capital, convierten activos locales en divisas: ofrecen moneda nacional para obtener moneda extranjera. La oferta aumenta y la moneda se deprecia.',
+    type: 'CC'
+  },
+  {
+    topic: 'Determinantes del tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Paridad del poder adquisitivo',
+    question: '¿Qué sostiene la teoría de la paridad del poder adquisitivo?',
+    options: [
+      'Que en el largo plazo el tipo de cambio tiende a igualar el poder de compra de dos monedas.',
+      'Que el tipo de cambio fijo es superior al tipo de cambio flotante.',
+      'Que la inflación no tiene ningún efecto sobre el tipo de cambio.',
+      'Que el tipo de cambio lo fija el banco central según el nivel de reservas.'
+    ],
+    answer: 0,
+    explanation: 'La paridad del poder adquisitivo es una referencia de largo plazo: si un país tiene una inflación más alta, su moneda tiende a depreciarse para mantener un poder de compra comparable.',
+    type: 'CC'
+  },
+  {
+    topic: 'Determinantes del tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Paridad de las tasas de interés',
+    question: 'Según la paridad de las tasas de interés, una moneda con tasas más bajas tiende a...',
+    options: [
+      'depreciarse frente a la moneda con tasas más altas, para compensar la diferencia de rendimiento.',
+      'apreciarse, porque las tasas bajas atraen capital especulativo del exterior.',
+      'mantenerse igual, porque el mercado solo observa la balanza comercial.',
+      'revaluarse por decisión del banco central del país.'
+    ],
+    answer: 0,
+    explanation: 'La paridad de tasas vincula el diferencial de rendimiento con la variación esperada del tipo de cambio. La moneda de menor tasa debe depreciarse para igualar el retorno esperado en la moneda de mayor tasa.',
+    type: 'CC'
+  },
+  {
+    topic: 'Determinantes del tipo de cambio',
+    unit: 'ADA · Tipos de cambio',
+    syllabus: 'Precio de las materias primas',
+    question: '¿Por qué un auge en los precios de las materias primas que exporta un país tiende a apreciar su moneda?',
+    options: [
+      'Porque aumentan los ingresos por exportaciones y la demanda de su moneda para pagarlas.',
+      'Porque se reducen las importaciones y con ellas la oferta de su moneda.',
+      'Porque el banco central vende su propia moneda al recibir las divisas.',
+      'Porque bajan las tasas de interés internas del país.'
+    ],
+    answer: 0,
+    explanation: 'Un auge de precios de las materias primas eleva el valor de las exportaciones. Los compradores extranjeros demandan más la moneda del país para pagar, y la moneda se aprecia. Es el caso del dólar australiano con el hierro y el carbón.',
+    type: 'CC'
+  },
+];
+
+/* ═══════ DIAGRAMAS (modelos de oferta y demanda de divisas) ═══════ */
+const SVG_DIAGRAMS = {
+  /* Modelo 1: la curva de demanda de dólares australianos se desplaza a la derecha
+     y el tipo de cambio sube, es decir, el dólar australiano se aprecia. */
+  modelo1: function(){
+    return `<img class="diagram-img" src="img/modelo1-apreciacion-aud.png" alt="Modelo de apreciación del dólar australiano: la curva de demanda se desplaza a la derecha y el tipo de cambio sube">`;
+  },
+  /* Modelo 2: la curva de oferta de dólares australianos se desplaza a la derecha
+     y el tipo de cambio baja, es decir, el dólar australiano se deprecia. */
+  modelo2: function(){
+    return `<img class="diagram-img" src="img/modelo2-depreciacion-aud.png" alt="Modelo de depreciación del dólar australiano: la curva de oferta se desplaza a la derecha y el tipo de cambio baja">`;
+  }
+};
+
+/* ═══════ STATE & CONFIG ═══════ */
+const STATE = {studentName:"", studentLastname:"", selectedQuestions:[], currentIndex:0, userAnswers:[], answered:false, shuffledAnswers:[], shuffledOptions:[], timePerQuestion:90, timer:null, timerSeconds:0, perQuestionTimer:null, perQuestionTimeLeft:90, startTime:null};
+const TOTAL_QUESTIONS = 20;
+const EXAM_ID = 'tipos-cambio-3bgu';
+/* ═══ SUPABASE (guardado de notas) ═══
+   Proyecto Supabase compartido con quiz-comercio-internacional.
+   Las notas se guardan en la tabla quiz_results con exam_id propio. */
+const SUPABASE_URL = 'https://iitjrrnndfxqjzkggtog.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_90BfL8Ncg9WyceCdTE5Wzg_9kj14ubv';
+const SUPABASE_CONFIGURED = SUPABASE_URL.indexOf('tu-proyecto') === -1 && SUPABASE_ANON_KEY.indexOf('tu-anon-key') === -1 && SUPABASE_URL.indexOf('PEGAR') === -1 && SUPABASE_ANON_KEY.indexOf('PEGAR') === -1;
+function supabaseHeaders(){ return { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer '+SUPABASE_ANON_KEY, 'Content-Type': 'application/json' }; }
+function supabaseGet(path){ return fetch(SUPABASE_URL+'/rest/v1/'+path, { headers: supabaseHeaders(), cache: 'no-store' }); }
+function supabaseSend(path, method, body, prefer){
+  const h = supabaseHeaders();
+  if(prefer) h['Prefer'] = prefer;
+  return fetch(SUPABASE_URL+'/rest/v1/'+path, { method: method, headers: h, body: body ? JSON.stringify(body) : undefined });
+}
+const TEACHER_KEY = 'DOCENTE2026';
+const LETTERS = ['A','B','C','D'];
+
+/* ═══ SVG ICONS (inline, no emoji, no font-icon) ═══ */
+const SVG_ICONS = {
+  correct: '<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="9" fill="#1E7B4F"/><path d="M5.5 9.5l2.5 2.5 5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  wrong: '<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="9" fill="#8B1E3F"/><path d="M6 6l6 6M12 6l-6 6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+  neutral: '<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="8" fill="none" stroke="#C4C9D4" stroke-width="1.5"/></svg>'
+};
+
+/* ═══ IB GRADE CONVERSION (configurable) ═══ */
+const IB_BANDS = [
+  {min:0.80, grade:7, desc:'Logro excepcional'},
+  {min:0.70, grade:6, desc:'Logro importante'},
+  {min:0.55, grade:5, desc:'Logro medio'},
+  {min:0.40, grade:4, desc:'Satisfactorio'},
+  {min:0.25, grade:3, desc:'Medianamente satisfactorio'},
+  {min:0.10, grade:2, desc:'Limitado'},
+  {min:0,    grade:1, desc:'Muy limitado'}
+];
+function getIBGrade(pct){
+  for(var i=0;i<IB_BANDS.length;i++){
+    if(pct>=IB_BANDS[i].min) return IB_BANDS[i];
+  }
+  return IB_BANDS[IB_BANDS.length-1];
+}
+
+/* ═══ PARÁMETROS CONFIGURABLES (Supabase con respaldo local) ═══
+   Si la tabla quiz_params no existe todavía, la app usa los valores
+   por defecto y los guarda en el navegador del docente. */
+const DEFAULT_PARAMS = { totalQuestions:20, rcCount:7, ccCount:13, timePerQuestion:90 };
+let QUIZ_PARAMS = Object.assign({}, DEFAULT_PARAMS);
+const PARAMS_LOCAL_KEY = 'quiz_params_' + EXAM_ID;
+
+function applyParams(cfg){
+  if(!cfg) return;
+  ['totalQuestions','rcCount','ccCount','timePerQuestion'].forEach(function(k){
+    const v = parseInt(cfg[k], 10);
+    if(!isNaN(v) && v > 0) QUIZ_PARAMS[k] = v;
+  });
+}
+
+function loadParamsLocal(){
+  try{
+    const raw = localStorage.getItem(PARAMS_LOCAL_KEY);
+    if(raw) applyParams(JSON.parse(raw));
+  }catch(e){}
+}
+
+function loadParams(){
+  loadParamsLocal();
+  if(!SUPABASE_CONFIGURED) return Promise.resolve(QUIZ_PARAMS);
+  return supabaseGet('quiz_params?exam_id=eq.'+encodeURIComponent(EXAM_ID)+'&select=config')
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(rows){
+      if(rows && rows.length && rows[0].config){
+        applyParams(rows[0].config);
+        try{ localStorage.setItem(PARAMS_LOCAL_KEY, JSON.stringify(QUIZ_PARAMS)); }catch(e){}
+      }
+      return QUIZ_PARAMS;
+    })
+    .catch(function(){ return QUIZ_PARAMS; });
+}
+
+function saveParams(cfg){
+  applyParams(cfg);
+  try{ localStorage.setItem(PARAMS_LOCAL_KEY, JSON.stringify(QUIZ_PARAMS)); }catch(e){}
+  if(!SUPABASE_CONFIGURED) return Promise.resolve({ local:true });
+  return supabaseSend('quiz_params?on_conflict=exam_id', 'POST',
+    { exam_id: EXAM_ID, config: QUIZ_PARAMS, updated_at: new Date().toISOString() },
+    'resolution=merge-duplicates,return=representation')
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
+}
+
+/* ═══════ ROSTER ═══════ */
+const ROSTER = [
+  "AGUILERA TERRANOVA, ALEJANDRO","ANDRADE GAROFALO, EDUARDO","BRIONES PONCE, OLENKA",
+  "CABRERA ALVEAR, KAMILA","FLORES SANCHEZ, PAULINA","GARCES CABEZAS, FIORELLA",
+  "GARCIA GALARZA, FRANCISCO","GARRIDO LUNA, MARTYN","GAUNA CHAVEZ, VALERIE",
+  "GOMEZ MARRIOTT, ESTEFANO","GUEDES LOOR, RENATA","IÑIGUEZ FAJARDO, ISABELLA",
+  "ITURRALDE CUMBA, SANTIAGO","PERALTA AVILA, SAMANTHA","PLUA JARRIN, CESAR",
+  "POZO CAJAS, DAVID","TEJADA RUIZ, EMMILY","TORRES MALDONADO, EMILIA",
+  "VELASCO SANTOS, ALISSON","VIZCAINO MACANCELA, AMIR","ZAMBRANO RIVERA, DIANA",
+  "ZAMORA RODRIGUEZ, GABRIEL","ZAMORA WONG, KYLIE","ZUÑIGA BETTY, DOMENICA"
+];
+
+/* ═══════ MODAL PERSONALIZADO (sin alert ni confirm nativos) ═══════ */
+function showModal(title, message, buttons){
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalMessage').innerHTML = message;
+  const actions = document.getElementById('modalActions');
+  actions.innerHTML = '';
+  (buttons||[{label:'Aceptar', style:'primary'}]).forEach(function(b){
+    const btn = document.createElement('button');
+    btn.className = 'modal-btn ' + (b.style||'primary');
+    btn.innerHTML = b.label;
+    btn.onclick = function(){ closeModal(); if(b.onClick) b.onClick(); };
+    actions.appendChild(btn);
+  });
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); }
+function alertModal(message, title){ showModal(title||'Aviso', message, [{label:'Aceptar', style:'primary'}]); }
+function confirmModal(message, onConfirm, title){
+  showModal(title||'Confirmar', message, [
+    {label:'Cancelar', style:'ghost'},
+    {label:'Confirmar', style:'danger', onClick: onConfirm}
+  ]);
+}
+
+/* ═══════ TOAST ═══════ */
+let toastTimer = null;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 4000);
+}
+
+/* ═══════ PENALIZACIÓN POR CAMBIO DE VENTANA ═══════ */
+let penaltyCount = 0;
+let windowLeaveCount = 0;
+document.addEventListener('visibilitychange', function(){
+  const quizActive = document.getElementById('quiz-screen').classList.contains('active');
+  if(document.hidden && quizActive){
+    windowLeaveCount++;
+    if(windowLeaveCount === 1){
+      showToast('Recordatorio: has cambiado de ventana. Si vuelves a salir, se restarán 0.5 puntos de tu nota.');
+    } else {
+      penaltyCount++;
+      showToast('Cambio de ventana detectado. Se restan 0.5 puntos de tu nota final.');
+    }
+  }
+});
+
+/* ═══════ INIT ═══════ */
+(function init(){
+  const sel = document.getElementById('studentName');
+  const sorted = [...new Set(ROSTER)].sort((a,b)=>a.localeCompare(b,'es'));
+  sorted.forEach(n=>{ const o=document.createElement('option'); o.value=n; o.textContent=n; sel.appendChild(o); });
+  document.getElementById('totalQDisplay').textContent = TOTAL_QUESTIONS;
+  document.getElementById('prevBtn').addEventListener('click', prevQuestion);
+  document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+  checkQuizStatus();
+  loadParams().then(function(p){
+    const n = (p.rcCount||0) + (p.ccCount||0);
+    if(n > 0) document.getElementById('totalQDisplay').textContent = n;
+  });
+})();
+
+/* ═══════ HELPERS ═══════ */
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function shuffleWithOptions(opts, correctIdx){
+  const indexed = opts.map((text,i)=>({text, originalIdx:i}));
+  const shuffled = shuffle([...indexed]);
+  const newCorrectIdx = shuffled.findIndex(item=>item.originalIdx===correctIdx);
+  return { options:shuffled.map(item=>item.text), answerIdx:newCorrectIdx };
+}
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function formatTime(secs){ const m=Math.floor(secs/60); const s=secs%60; return m+':'+String(s).padStart(2,'0'); }
+
+/* ═══════ QUIZ STATUS ═══════ */
+function checkQuizStatus(){
+  if(!SUPABASE_CONFIGURED) return;
+  supabaseGet('quiz_config?exam_id=eq.'+EXAM_ID+'&select=open')
+    .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(rows=>{
+      if(rows.length && rows[0].open === false){
+        document.querySelector('.welcome-card').innerHTML='<div style="text-align:center;padding:40px"><i class="fa-solid fa-lock" style="font-size:48px;color:var(--gold);margin-bottom:16px;display:block"></i><h2 style="font-family:Fraunces,serif;color:var(--forest-deep)">Evaluación cerrada</h2><p style="color:var(--muted);margin-top:8px">El docente abrirá la evaluación cuando esté listo. Espera instrucciones.</p></div>';
+      }
+    }).catch(()=>{ /* backend no disponible: no bloquear el quiz */ });
+}
+
+/* ═══════ START ═══════ */
+function startQuiz(){
+  const sel = document.getElementById('studentName');
+  const errorEl = document.getElementById('nameError');
+  const fullName = sel.value.trim();
+  if(!fullName){ errorEl.innerHTML='<i class="fa-solid fa-circle-exclamation"></i> Selecciona tu nombre para comenzar.'; errorEl.classList.add('show'); sel.focus(); return; }
+  errorEl.classList.remove('show');
+
+  // Gate local (localStorage): un intento por estudiante en este dispositivo
+  const normalizedName = fullName.toUpperCase().trim();
+  const localKey = 'quiz_'+EXAM_ID+'_'+fullName;
+  if(localStorage.getItem(localKey)){
+    errorEl.innerHTML='<i class="fa-solid fa-circle-exclamation"></i> Ya existe un registro con tu nombre en este dispositivo. Solo se permite un intento.';
+    errorEl.classList.add('show');
+    return;
+  }
+
+  // Gate remoto (Supabase) · un reintento y luego falla cerrada: sin verificar no hay intento.
+  if(!SUPABASE_CONFIGURED){ launchQuiz(fullName); return; }
+  const checkRemote = () => supabaseGet('quiz_results?exam_id=eq.'+EXAM_ID+'&select=student_name,student_lastname')
+    .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(rows=>{
+      const existing = rows.find(r=>{
+        const rn = ((r.student_lastname||r.studentLastname||r.lastname||'')+', '+(r.student_name||r.studentName||r.name||'')).toUpperCase().trim();
+        const rnAlt = ((r.student_name||r.studentName||r.name||'')+' '+(r.student_lastname||r.studentLastname||r.lastname||'')).toUpperCase().trim();
+        return rn === normalizedName || rnAlt === normalizedName;
+      });
+      if(existing){
+        errorEl.innerHTML='<i class="fa-solid fa-circle-exclamation"></i> Ya existe un registro con tu nombre. Solo se permite un intento.';
+        errorEl.classList.add('show');
+        return false;
+      }
+      launchQuiz(fullName);
+      return true;
+    });
+  checkRemote()
+    .catch(()=> new Promise(res=>setTimeout(res,1500)).then(checkRemote)) // reintento único
+    .catch(()=>{
+      errorEl.innerHTML='<i class="fa-solid fa-circle-exclamation"></i> No se pudo verificar si ya rendiste tu intento. Revisa tu conexión e inténtalo de nuevo.';
+      errorEl.classList.add('show');
+    });
+}
+
+function launchQuiz(fullName){
+  // Format: "APELLIDO1 APELLIDO2, NOMBRE"
+  const parts = fullName.split(', ');
+  if(parts.length > 1){
+    STATE.studentLastname = parts[0].trim();
+    STATE.studentName = parts[1].trim();
+  } else {
+    const nameParts = fullName.split(' ');
+    STATE.studentLastname = nameParts.length > 1 ? nameParts.pop() : '';
+    STATE.studentName = nameParts.join(' ');
+  }
+  STATE.studentFullName = fullName;
+  STATE.timePerQuestion = QUIZ_PARAMS.timePerQuestion;
+  const _fixed = QUESTION_BANK.filter(q => q.always);
+  const _fixedRC = _fixed.filter(q => q.type === "RC").length;
+  const _fixedCC = _fixed.filter(q => q.type === "CC").length;
+  const _rc = shuffle(QUESTION_BANK.filter(q => q.type === "RC" && !q.always)).slice(0, Math.max(0, QUIZ_PARAMS.rcCount - _fixedRC));
+  const _cc = shuffle(QUESTION_BANK.filter(q => q.type === "CC" && !q.always)).slice(0, Math.max(0, QUIZ_PARAMS.ccCount - _fixedCC));
+  STATE.selectedQuestions = shuffle([..._fixed, ..._rc, ..._cc]);
+  STATE.currentIndex = 0;
+  STATE.userAnswers = new Array(STATE.selectedQuestions.length).fill(null);
+  STATE.shuffledAnswers = new Array(STATE.selectedQuestions.length).fill(null);
+  STATE.shuffledOptions = new Array(STATE.selectedQuestions.length).fill(null);
+  STATE.answered = false;
+  STATE.startTime = Date.now();
+  STATE.timerSeconds = 0;
+  penaltyCount = 0;
+  windowLeaveCount = 0;
+  startGlobalTimer();
+  renderQuestion();
+  showScreen('quiz-screen');
+}
+
+/* ═══════ TIMER (por pregunta + global) ═══════ */
+function startPerQuestionTimer(){
+  clearInterval(STATE.perQuestionTimer);
+  STATE.perQuestionTimeLeft = STATE.timePerQuestion;
+  updatePerQuestionDisplay();
+  STATE.perQuestionTimer = setInterval(()=>{
+    STATE.perQuestionTimeLeft--;
+    updatePerQuestionDisplay();
+    if(STATE.perQuestionTimeLeft <= 0){
+      clearInterval(STATE.perQuestionTimer);
+      handleTimeout();
+    }
+  },1000);
+}
+function updatePerQuestionDisplay(){
+  const el = document.getElementById('timerDisplay');
+  el.textContent = STATE.perQuestionTimeLeft + 's';
+  const badge = document.querySelector('.timer-badge');
+  if(STATE.perQuestionTimeLeft <= 10){
+    badge.style.color = 'var(--red)';
+    badge.style.background = 'rgba(181,69,58,.10)';
+    badge.style.borderColor = 'rgba(181,69,58,.25)';
+  } else {
+    badge.style.color = 'var(--forest)';
+    badge.style.background = 'rgba(31,74,61,.08)';
+    badge.style.borderColor = 'rgba(31,74,61,.15)';
+  }
+}
+function clearPerQuestionTimer(){
+  clearInterval(STATE.perQuestionTimer);
+}
+function handleTimeout(){
+  const idx = STATE.currentIndex;
+  if(STATE.userAnswers[idx] !== null) return;
+  STATE.userAnswers[idx] = -1;
+  renderQuestion();
+  setTimeout(()=>{ nextQuestion(); }, 2500);
+}
+function startGlobalTimer(){
+  clearInterval(STATE.timer);
+  STATE.timer = setInterval(()=>{
+    STATE.timerSeconds++;
+  },1000);
+}
+
+/* ═══════ RENDER ═══════ */
+function renderQuestion(){
+  const q = STATE.selectedQuestions[STATE.currentIndex];
+  const shuffled = shuffleWithOptions(q.options, q.answer);
+  // Store the correct answer index and shuffled options (only if not already stored)
+  if(STATE.shuffledAnswers[STATE.currentIndex] === null || STATE.shuffledAnswers[STATE.currentIndex] === undefined){
+    STATE.shuffledAnswers[STATE.currentIndex] = shuffled.answerIdx;
+    STATE.shuffledOptions[STATE.currentIndex] = shuffled.options;
+  }
+  const currentCorrect = STATE.shuffledAnswers[STATE.currentIndex];
+  const currentOptions = STATE.shuffledOptions[STATE.currentIndex];
+  const total = STATE.selectedQuestions.length;
+  const idx = STATE.currentIndex;
+
+  document.getElementById('progressFill').style.width = ((idx+1)/total*100)+'%';
+  document.getElementById('progressText').textContent = (idx+1)+' / '+total;
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').textContent = idx === total-1 ? 'Finalizar' : 'Siguiente';
+  document.getElementById('nextBtn').innerHTML = idx === total-1 ? 'Finalizar <i class="fa-solid fa-flag-checkered"></i>' : 'Siguiente <i class="fa-solid fa-arrow-right"></i>';
+
+  const selected = STATE.userAnswers[idx];
+  let optionsHtml = currentOptions.map((opt,i)=>{
+    let cls = 'option';
+    if(selected !== null){
+      if(i === currentCorrect) cls += ' correct';
+      else if(i === selected) cls += ' wrong';
+    } else if(i === selected) cls += ' selected';
+    return `<div class="${cls}" data-idx="${i}" onclick="selectOption(${i})">
+      <div class="option-letter">${LETTERS[i]}</div>
+      <div class="option-text">${escapeHtml(opt)}</div>
+    </div>`;
+  }).join('');
+
+  const diagramHtml = (q.diagram && SVG_DIAGRAMS[q.diagram]) ? `<div class="diagram-box">${SVG_DIAGRAMS[q.diagram]()}<div class="diagram-caption">${escapeHtml(q.diagramCaption||'')}</div></div>` : '';
+  const scenarioHtml = q.scenario ? `<div class="question-scenario">${escapeHtml(q.scenario)}</div>` : '';
+
+  document.getElementById('questionArea').innerHTML = `
+    <div class="question-card">
+      <div class="question-num">Pregunta ${idx+1} de ${total} · ${escapeHtml(q.topic)}</div>
+      ${diagramHtml}
+      ${scenarioHtml}
+      <div class="question-text">${escapeHtml(q.question)}</div>
+      <div class="options">${optionsHtml}</div>
+      ${selected !== null ? `<div style="margin-top:16px;padding:12px 16px;background:rgba(31,74,61,.05);border:1px solid var(--border);border-radius:10px;font-size:13px;color:var(--ink-soft)"><strong style="color:var(--forest)">Explicación:</strong> ${escapeHtml(q.explanation)}</div>` : ''}
+    </div>`;
+  if(selected === null){ startPerQuestionTimer(); } else { clearPerQuestionTimer(); }
+}
+
+function selectOption(idx){
+  if(STATE.userAnswers[STATE.currentIndex] !== null) return;
+  clearPerQuestionTimer();
+  STATE.userAnswers[STATE.currentIndex] = idx;
+  renderQuestion();
+}
+
+/* ═══════ NAVIGATION ═══════ */
+function nextQuestion(){
+  clearPerQuestionTimer();
+  if(STATE.currentIndex < STATE.selectedQuestions.length - 1){
+    STATE.currentIndex++;
+    renderQuestion();
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else {
+    finishQuiz();
+  }
+}
+function prevQuestion(){
+  clearPerQuestionTimer();
+  if(STATE.currentIndex > 0){
+    STATE.currentIndex--;
+    renderQuestion();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+
+/* ═══════ FINISH ═══════ */
+function finishQuiz(){
+  clearPerQuestionTimer();
+  clearInterval(STATE.timer);
+  let correct = 0;
+  STATE.selectedQuestions.forEach((q,i)=>{
+    const correctIdx = STATE.shuffledAnswers[i];
+    if(STATE.userAnswers[i] === correctIdx) correct++;
+  });
+  const total = STATE.selectedQuestions.length;
+  const penaltyTotal = penaltyCount * 0.5;
+  const rawScore10 = correct / total * 10;
+  const score10 = Math.max(0, rawScore10 - penaltyTotal).toFixed(1);
+  const pctAdjusted = Math.max(0, correct / total - penaltyTotal / 10);
+  const duration = STATE.timerSeconds;
+
+  // Update UI
+  document.getElementById('resultsName').textContent = STATE.studentFullName;
+  document.getElementById('resultsCourse').textContent = '3BGU · Economía';
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statTime').textContent = formatTime(duration);
+
+  // Metadata
+  document.getElementById('metaStudent').textContent = STATE.studentFullName;
+  document.getElementById('metaCourse').textContent = '3BGU · Economía';
+  document.getElementById('metaDate').textContent = new Date().toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'});
+
+  // Penalización
+  const penaltyNote = document.getElementById('penaltyNote');
+  if(penaltyCount > 0){
+    penaltyNote.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Penalización por cambio de ventana: ' + penaltyCount + ' × 0.5 = ' + penaltyTotal.toFixed(1) + ' puntos restados de tu nota.';
+    penaltyNote.style.display = 'flex';
+  } else {
+    penaltyNote.style.display = 'none';
+  }
+
+  // IB conversion (sobre la nota ajustada)
+  var ibGrade = getIBGrade(pctAdjusted);
+  document.getElementById('ibConversion').style.display = 'inline-flex';
+  document.getElementById('ibBand').textContent = ibGrade.grade + ' / 7';
+  document.getElementById('ibDesc').textContent = ibGrade.desc;
+
+  // Progress bar (conditional color)
+  var progFill = document.getElementById('resultProgressFill');
+  var progColor = pctAdjusted >= 0.7 ? '#1E7B4F' : pctAdjusted >= 0.5 ? '#B8891F' : '#8B1E3F';
+  setTimeout(function(){
+    progFill.style.width = (pctAdjusted * 100) + '%';
+    progFill.style.background = progColor;
+  },100);
+
+  // Distribution: "Aciertos por clave de respuesta" as A: X/Y
+  var counts = {0:0,1:0,2:0,3:0};
+  var hits = {0:0,1:0,2:0,3:0};
+  STATE.selectedQuestions.forEach(function(q,i){
+    var ci = STATE.shuffledAnswers[i];
+    counts[ci] = (counts[ci]||0) + 1;
+    if(STATE.userAnswers[i] === ci) hits[ci] = (hits[ci]||0) + 1;
+  });
+  ['A','B','C','D'].forEach(function(letter,idx){
+    var el = document.getElementById('dist'+letter);
+    if(el) el.textContent = hits[idx] + ' / ' + counts[idx];
+  });
+
+  // Score ring animation
+  const ring = document.getElementById('scoreRing');
+  const circumference = 2 * Math.PI * 90;
+  const offset = circumference - pctAdjusted * circumference;
+  setTimeout(function(){
+    ring.style.strokeDashoffset = offset;
+    document.getElementById('scoreValue').textContent = score10;
+  },100);
+
+  showScreen('results-screen');
+
+  // Save to Supabase (con fallback a localStorage)
+  const payload = {
+    studentName: STATE.studentName,
+    studentLastname: STATE.studentLastname,
+    course: '3BGU',
+    subject: 'Economía IB NM',
+    examId: EXAM_ID,
+    correct: correct,
+    total: STATE.selectedQuestions.length,
+    score_10: parseFloat(score10),
+    penalties: penaltyCount,
+    penaltyTotal: penaltyTotal,
+    answers: STATE.selectedQuestions.map((q,i)=>({
+      question: q.question,
+      selected: STATE.userAnswers[i],
+      correct: STATE.shuffledAnswers[i],
+      options: STATE.shuffledOptions[i],
+      topic: q.topic,
+      ok: STATE.userAnswers[i] === STATE.shuffledAnswers[i]
+    })),
+    timestamp: new Date().toISOString(),
+    startTimestamp: new Date(STATE.startTime).toISOString(),
+    endTimestamp: new Date().toISOString(),
+    totalDurationSeconds: duration
+  };
+
+  const sbRow = {
+    student_name: STATE.studentName,
+    student_lastname: STATE.studentLastname,
+    course: '3BGU',
+    exam_id: EXAM_ID,
+    score: correct,
+    total: STATE.selectedQuestions.length,
+    grade: parseFloat(score10),
+    timestamp: new Date().toISOString(),
+    attempt: 1,
+    answers: payload.answers
+  };
+  const saveStatusEl = document.getElementById('saveStatus');
+  const localMarkerKey = 'quiz_'+EXAM_ID+'_'+STATE.studentFullName;
+  function saveLocalFallback(){
+    localStorage.setItem(localMarkerKey, JSON.stringify(payload));
+    saveStatusEl.innerHTML='<i class="fa-solid fa-triangle-exclamation"></i> Sin conexión con el servidor. El resultado se guardó solo en este dispositivo.';
+    saveStatusEl.style.color='var(--red)';
+  }
+  function saveOK(){
+    localStorage.setItem(localMarkerKey, JSON.stringify(payload)); // marca SIEMPRE: un intento por dispositivo
+    saveStatusEl.innerHTML='<i class="fa-solid fa-circle-check"></i> Resultado guardado correctamente.';
+  }
+  if(!SUPABASE_CONFIGURED){
+    saveLocalFallback();
+  } else {
+    // Dedup en el momento de escribir: si ya existe registro remoto de este estudiante, no duplicar.
+    const nm = ((STATE.studentLastname||'')+', '+(STATE.studentName||'')).toUpperCase().trim();
+    const nmAlt = (((STATE.studentName||'')+' '+(STATE.studentLastname||'')).toUpperCase().trim());
+    supabaseGet('quiz_results?exam_id=eq.'+EXAM_ID+'&select=student_name,student_lastname')
+      .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(rows=>{
+        const dup = (rows||[]).find(r=>{
+          const rn = ((r.student_lastname||'')+', '+(r.student_name||'')).toUpperCase().trim();
+          const rnAlt = ((r.student_name||'')+' '+(r.student_lastname||'')).toUpperCase().trim();
+          return rn === nm || rnAlt === nm || rn === nmAlt || rnAlt === nmAlt;
+        });
+        if(dup){
+          localStorage.setItem(localMarkerKey, JSON.stringify(payload));
+          saveStatusEl.innerHTML='<i class="fa-solid fa-triangle-exclamation"></i> Ya existe un registro con tu nombre en el servidor. No se guardó un segundo intento.';
+          saveStatusEl.style.color='var(--red)';
+          return null;
+        }
+        return supabaseSend('quiz_results', 'POST', sbRow).then(res=>{
+          if(!res.ok) throw new Error('HTTP '+res.status);
+          saveOK();
+        });
+      })
+      .catch(err=>{
+        // Si la verificación falló, aún así marcamos localmente para no permitir reintentos en este dispositivo
+        saveLocalFallback();
+        console.warn('Guardado Supabase:', err);
+      });
+  }
+}
+
+/* ═══════ RETROALIMENTACIÓN ═══════ */
+function toggleReview(){
+  const box = document.getElementById('review-box');
+  const btn = document.getElementById('btn-review');
+  if(box.style.display !== 'none'){
+    box.style.display = 'none';
+    btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Ver retroalimentación';
+    return;
+  }
+  var wrong = STATE.selectedQuestions
+    .map(function(q,i){return {q:q,i:i,sel:STATE.userAnswers[i]};})
+    .filter(function(x){return x.sel !== STATE.shuffledAnswers[x.i];});
+  if(!wrong.length){
+    box.innerHTML = '<p class="review-empty">Respondiste todas correctamente. Excelente trabajo.</p>';
+  } else {
+    var items = wrong.map(function(item){
+      var q = item.q, i = item.i, sel = item.sel;
+      var correctIdx = STATE.shuffledAnswers[i];
+      var opts = STATE.shuffledOptions[i];
+      var isCorrect = sel === correctIdx;
+
+      // Build option rows with SVG icons and explicit labels
+      var optionsHtml = opts.map(function(opt,oi){
+        var isC = oi === correctIdx;
+        var isS = oi === sel && !isCorrect;
+        var icon, tagHtml = '';
+
+        if(isC && isS){
+          icon = SVG_ICONS.correct;
+          tagHtml = '<span class="option-tag match">CORRECTA</span>';
+        } else if(isC){
+          icon = SVG_ICONS.correct;
+          tagHtml = '<span class="option-tag correct-tag">RESPUESTA CORRECTA</span>';
+        } else if(isS){
+          icon = SVG_ICONS.wrong;
+          tagHtml = '<span class="option-tag user">TU RESPUESTA</span>';
+        } else {
+          icon = SVG_ICONS.neutral;
+        }
+
+        return '<div class="option-row">' +
+          '<div class="option-icon">' + icon + '</div>' +
+          '<div class="option-content">' +
+            '<span class="option-letter-label">' + LETTERS[oi] + '.</span>' +
+            '<span class="option-text">' + escapeHtml(opt) + '</span>' +
+            tagHtml +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      // Lookup explanation from QUESTION_BANK
+      var explanation = '';
+      if(typeof QUESTION_BANK !== 'undefined'){
+        var found = QUESTION_BANK.find(function(bq){return bq.question === q.question;});
+        if(found && found.explanation) explanation = found.explanation;
+      }
+
+      var explanationHtml = explanation ?
+        '<div class="explanation-block">' +
+          '<div class="explanation-label">Explicación</div>' +
+          '<div class="explanation-text">' + escapeHtml(explanation) + '</div>' +
+        '</div>' : '';
+
+      return '<div class="review-item">' +
+        '<div class="review-q-header">' +
+          '<span class="review-q-num">' + (i+1) + '.</span>' +
+          '<span class="review-badge bad">Incorrecta</span>' +
+        '</div>' +
+        '<div class="review-q-text">' + escapeHtml(q.question) + '</div>' +
+        optionsHtml +
+        explanationHtml +
+      '</div>';
+    }).join('');
+
+    box.innerHTML = '<h3 class="review-head">Retroalimentación · ' + wrong.length + ' pregunta(s) a repasar</h3>' + items;
+  }
+  box.style.display = 'block';
+  btn.innerHTML = '<i class="fa-solid fa-chevron-up"></i> Ocultar retroalimentación';
+}
+
+/* ═══════ PRINT PDF ═══════ */
+function printPDF(){
+  try {
+  if(!window.jspdf || !window.jspdf.jsPDF){ alertModal('jsPDF no se cargó. Verifica tu conexión a internet.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:'mm',format:'a4'});
+  const W=210, ML=14, MR=196, CW=MR-ML;
+  const name = STATE.studentFullName;
+  const correct = STATE.userAnswers.filter((a,i)=> a === STATE.shuffledAnswers[i]).length;
+  const total = STATE.selectedQuestions.length;
+  const penaltyTotal = penaltyCount * 0.5;
+  const score10 = Math.max(0, correct / total * 10 - penaltyTotal).toFixed(1);
+  const wrong = STATE.selectedQuestions
+    .map((q,i)=>({q,i,sel:STATE.userAnswers[i],cIdx:STATE.shuffledAnswers[i],opts:STATE.shuffledOptions[i]}))
+    .filter(x=>x.sel !== x.cIdx);
+  const LETTERS = ['A','B','C','D'];
+
+  /* ── Color palette (from template) ── */
+  const C = {
+    navy:[31,42,90], burgundy:[142,27,58], gold:[217,177,75], blue:[46,116,181],
+    gris:[242,244,248], linea:[201,210,227], dark:[26,26,26],
+    verde:[30,122,60], verdeBg:[231,244,235], ambar:[154,106,0], ambarBg:[251,243,220],
+    rojo:[165,35,52], rojoBg:[251,233,236], white:[255,255,255]
+  };
+
+  /* ── Vector icon for options (replaces broken Unicode) ── */
+  function dibujarIconoOpcion(doc, cx, cy, r, tipo) {
+    var colores = { correcta:[30,123,79], incorrecta:[139,30,63], neutro:[196,201,212] };
+    var rgb = colores[tipo];
+    doc.setFillColor(rgb[0], rgb[1], rgb[2]);
+    doc.circle(cx, cy, r, tipo === 'neutro' ? 'D' : 'F');
+    if (tipo !== 'neutro') {
+      doc.setDrawColor(255, 255, 255);
+      doc.setLineWidth(Math.max(0.6, r * 0.18));
+      if (tipo === 'correcta') {
+        doc.line(cx - r*0.5, cy, cx - r*0.1, cy + r*0.4);
+        doc.line(cx - r*0.1, cy + r*0.4, cx + r*0.5, cy - r*0.4);
+      } else {
+        doc.line(cx - r*0.4, cy - r*0.4, cx + r*0.4, cy + r*0.4);
+        doc.line(cx - r*0.4, cy + r*0.4, cx + r*0.4, cy - r*0.4);
+      }
+    }
+  }
+
+  let y = 0;
+  let pageNum = 0;
+
+  function newPage(){
+    if(pageNum > 0){ doc.addPage(); }
+    pageNum++;
+    y = 0;
+    // Footer
+    doc.setDrawColor(...C.blue); doc.setLineWidth(1.2);
+    doc.line(ML, 280, MR, 280);
+    doc.setFontSize(7.5); doc.setFont('helvetica','bold');
+    doc.setTextColor(...C.blue);
+    doc.text('Economía IB Nivel Medio – Mr. Alberto Ottati / Derechos reservados', ML, 284);
+    doc.setFont('helvetica','normal');
+    doc.setTextColor(120,120,120);
+    doc.text('Generado con el Sistema Hermes · ' + new Date().toLocaleDateString('es-EC'), MR, 284, {align:'right'});
+    // Page number
+    doc.text('Página ' + pageNum, W/2, 284, {align:'center'});
+  }
+
+  function checkPage(needed){
+    if(y + needed > 270){ newPage(); y = 20; }
+  }
+
+  function sectionTitle(num, title){
+    checkPage(14);
+    doc.setDrawColor(...C.gold); doc.setLineWidth(0.8);
+    doc.line(ML, y+11, MR, y+11);
+    doc.setFontSize(11); doc.setFont('helvetica','bold');
+    doc.setTextColor(...C.navy);
+    doc.text(title, ML+20, y+9);
+    // Burgundy circle with number
+    doc.setFillColor(...C.burgundy);
+    doc.circle(ML+6, y+7, 4, 'F');
+    doc.setFontSize(8); doc.setTextColor(255,255,255);
+    doc.text(String(num), ML+6, y+7, {align:'center', baseline:'middle'});
+    y += 14;
+  }
+
+  function metaRow(label, value, x, w){
+    doc.setFillColor(...C.gris);
+    doc.rect(x, y, w, 7, 'F');
+    doc.setDrawColor(...C.linea); doc.setLineWidth(0.3);
+    doc.rect(x, y, w, 7, 'S');
+    doc.setFontSize(8.5); doc.setFont('helvetica','bold');
+    doc.setTextColor(...C.navy);
+    doc.text(label, x+2, y+5);
+    doc.setFont('helvetica','normal');
+    doc.setTextColor(...C.dark);
+    doc.text(value, x+w*0.38, y+5);
+  }
+
+  function chip(text, type){
+    // Returns chip width for positioning
+    doc.setFontSize(7.5); doc.setFont('helvetica','bold');
+    const tw = doc.getTextWidth(text) + 6;
+    if(type==='ok'){ doc.setFillColor(...C.verdeBg); doc.setDrawColor(...C.verde); doc.setTextColor(...C.verde); }
+    else if(type==='par'){ doc.setFillColor(...C.ambarBg); doc.setDrawColor(...C.ambar); doc.setTextColor(...C.ambar); }
+    else { doc.setFillColor(...C.rojoBg); doc.setDrawColor(...C.rojo); doc.setTextColor(...C.rojo); }
+    doc.roundedRect(0, 0, tw, 5.5, 2, 2, 'FD');
+    doc.text(text, 3, 4);
+    return tw;
+  }
+
+  /* ═══════ PAGE 1: HEADER ═══════ */
+  newPage();
+  // Navy header bar
+  doc.setFillColor(...C.navy); doc.rect(0, 0, W, 26, 'F');
+  doc.setFontSize(15); doc.setFont('helvetica','bold');
+  doc.setTextColor(255,255,255);
+  doc.text('Informe de Retroalimentación', ML, 11);
+  doc.setFontSize(9); doc.setFont('helvetica','normal');
+  doc.setTextColor(...C.gold);
+  doc.text('ADA · Tipos de cambio · 2026 – 2027', ML, 17);
+  doc.setFontSize(8);
+  doc.setTextColor(200,210,230);
+  doc.text('Economía · 3BGU', ML, 23);
+
+  // Gold accent line
+  doc.setDrawColor(...C.gold); doc.setLineWidth(1.5);
+  doc.line(0, 26, W, 26);
+  y = 32;
+
+  // Subtitle bar
+  doc.setFillColor(...C.navy);
+  doc.setFontSize(9.5); doc.setFont('helvetica','bold');
+  doc.setTextColor(255,255,255);
+  const subH = 9;
+  doc.roundedRect(ML, y-2, CW, subH, 2, 2, 'F');
+  doc.text('Resultado de la Evaluación · Tipos de cambio', ML+5, y+4);
+  y += subH + 4;
+
+  // Metadata table (3 columns)
+  const colW = CW/3;
+  metaRow('Estudiante', name, ML, colW);
+  metaRow('Curso', '3BGU · Economía', ML+colW, colW);
+  metaRow('Fecha', new Date().toLocaleDateString('es-EC'), ML+colW*2, colW);
+  y += 10;
+
+  // ═══════ SECTION 1: RESULTADO GENERAL ═══════
+  sectionTitle(1, 'Resumen del resultado');
+
+  // Score box (gold background)
+  const boxW = 70, boxH = 28;
+  const boxX = ML + (CW - boxW) / 2;
+  doc.setFillColor(253,249,238);
+  doc.setDrawColor(...C.gold); doc.setLineWidth(0.8);
+  doc.roundedRect(boxX, y, boxW, boxH, 4, 4, 'FD');
+
+  doc.setFontSize(26); doc.setFont('helvetica','bold');
+  doc.setTextColor(...C.navy);
+  doc.text(score10 + ' / 10', boxX + boxW/2, y+14, {align:'center'});
+  doc.setFontSize(9); doc.setFont('helvetica','normal');
+  doc.setTextColor(...C.burgundy);
+  doc.text(correct + ' correcta' + (correct!==1?'s':'') + ' de ' + total + ' preguntas', boxX + boxW/2, y+21, {align:'center'});
+
+  // Progress bar
+  const barX = boxX + 8, barW = boxW - 16, barY = y + 23.5, barH = 2;
+  doc.setFillColor(...C.gris); doc.roundedRect(barX, barY, barW, barH, 1, 1, 'F');
+  const pct = Math.max(0, correct / total - penaltyTotal / 10);
+  const col = pct >= 0.7 ? C.verde : pct >= 0.4 ? C.ambar : C.rojo;
+  doc.setFillColor(...col); doc.roundedRect(barX, barY, barW * pct, barH, 1, 1, 'F');
+
+  y += boxH + 6;
+
+  // Penalización en el PDF
+  if(penaltyCount > 0){
+    doc.setFontSize(8); doc.setFont('helvetica','bold');
+    doc.setTextColor(...C.rojo);
+    doc.text('Penalización por cambio de ventana: ' + penaltyCount + ' × 0.5 = ' + penaltyTotal.toFixed(1) + ' puntos restados.', ML, y+4);
+    y += 7;
+  }
+
+  // Summary chips
+  doc.setFontSize(8.5); doc.setFont('helvetica','bold');
+  doc.setTextColor(...C.navy);
+  doc.text('Respuestas correctas por posición de letra:', ML, y+4);
+  y += 7;
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(8);
+  const distA = STATE.userAnswers.filter((a,i)=> a===0 && a===STATE.shuffledAnswers[i]).length;
+  const distB = STATE.userAnswers.filter((a,i)=> a===1 && a===STATE.shuffledAnswers[i]).length;
+  const distC = STATE.userAnswers.filter((a,i)=> a===2 && a===STATE.shuffledAnswers[i]).length;
+  const distD = STATE.userAnswers.filter((a,i)=> a===3 && a===STATE.shuffledAnswers[i]).length;
+  doc.text('A correctas: ' + distA + '  |  B correctas: ' + distB + '  |  C correctas: ' + distC + '  |  D correctas: ' + distD, ML+4, y);
+  y += 5;
+
+  // ═══════ SECTION 2: RETROALIMENTACIÓN POR PREGUNTA ═══════
+  y += 4;
+  sectionTitle(2, 'Retroalimentación por pregunta');
+
+  STATE.selectedQuestions.forEach((q,i)=>{
+    const sel = STATE.userAnswers[i];
+    const cIdx = STATE.shuffledAnswers[i];
+    const opts = STATE.shuffledOptions[i];
+    const isCorrect = sel === cIdx;
+
+    checkPage(50);
+
+    // Question header line
+    const qLabel = (i+1) + '. ';
+    doc.setFontSize(9.5); doc.setFont('helvetica','bold');
+    doc.setTextColor(...C.navy);
+    doc.text(qLabel, ML, y+4);
+
+    // Chip
+    const chipX = ML + doc.getTextWidth(qLabel) + 2;
+    doc.setFontSize(7.5); doc.setFont('helvetica','bold');
+    const chipText = isCorrect ? 'Correcta' : 'Incorrecta';
+    const chipW = doc.getTextWidth(chipText) + 6;
+    const chipType = isCorrect ? 'ok' : 'no';
+    if(chipType==='ok'){ doc.setFillColor(...C.verdeBg); doc.setDrawColor(...C.verde); doc.setTextColor(...C.verde); }
+    else { doc.setFillColor(...C.rojoBg); doc.setDrawColor(...C.rojo); doc.setTextColor(...C.rojo); }
+    doc.roundedRect(chipX, y+0.5, chipW, 5.5, 2, 2, 'FD');
+    doc.text(chipText, chipX + chipW/2, y+0.5 + 2.75, { align:'center', baseline:'middle' });
+    y += 8;
+
+    // Question text
+    doc.setFontSize(8.5); doc.setFont('helvetica','normal');
+    doc.setTextColor(...C.dark);
+    const qLines = doc.splitTextToSize(q.question, CW - 4);
+    doc.text(qLines, ML+2, y);
+    y += qLines.length * 3.8 + 2;
+
+    // Options
+    opts.forEach((opt, oi)=>{
+      checkPage(12);
+      const isC = oi === cIdx;
+      const isS = oi === sel && !isCorrect;
+      const iconType = isC ? 'correcta' : isS ? 'incorrecta' : 'neutro';
+
+      // Option background for correct/wrong
+      if(isC || isS){
+        doc.setFillColor(isC ? C.verdeBg[0] : C.rojoBg[0], isC ? C.verdeBg[1] : C.rojoBg[1], isC ? C.verdeBg[2] : C.rojoBg[2]);
+        doc.roundedRect(ML+1, y-3, CW-2, 5, 1, 1, 'F');
+      }
+
+      // Vector icon (no Unicode)
+      dibujarIconoOpcion(doc, ML+4.5, y-0.5, 2.2, iconType);
+
+      doc.setFontSize(8); doc.setFont('helvetica','bold');
+      doc.setTextColor(...C.dark);
+      doc.text(LETTERS[oi], ML+8, y);
+      doc.setFont('helvetica','normal');
+      doc.setTextColor(...C.dark);
+      const optLines = doc.splitTextToSize(opt, CW - 22);
+      doc.text(optLines, ML+16, y);
+      y += Math.max(1, optLines.length) * 3.6 + 0.8;
+    });
+
+    // Explanation · box wraps full content
+    if(q.explanation){
+      checkPage(15);
+      y += 1;
+      const expLines = doc.splitTextToSize(q.explanation, CW - 10);
+      const expBoxH = expLines.length * 3.2 + 10;
+      doc.setFillColor(C.gris[0], C.gris[1], C.gris[2]);
+      doc.setDrawColor(...C.linea); doc.setLineWidth(0.3);
+      doc.roundedRect(ML+1, y-2, CW-2, expBoxH, 1, 1, 'FD');
+      doc.setFontSize(7.5); doc.setFont('helvetica','bold');
+      doc.setTextColor(...C.navy);
+      doc.text('Explicación:', ML+4, y+2);
+      y += 6;
+      doc.setFont('helvetica','normal'); doc.setFontSize(7.5);
+      doc.setTextColor(80,80,80);
+      doc.text(expLines, ML+3, y);
+      y += expLines.length * 3.2 + 2;
+    }
+
+    y += 4;
+  });
+
+  // ═══════ SECTION 3: ANÁLISIS DE ERRORES ═══════
+  if(wrong.length > 0){
+    checkPage(20);
+    sectionTitle(3, 'Análisis de errores (' + wrong.length + ' pregunta' + (wrong.length!==1?'s':'') + ')');
+
+    wrong.forEach((w, wi)=>{
+      checkPage(20);
+      doc.setFontSize(8.5); doc.setFont('helvetica','bold');
+      doc.setTextColor(...C.burgundy);
+      doc.text((wi+1) + '. Pregunta ' + (w.i+1), ML+2, y);
+      y += 5;
+
+      doc.setFontSize(8); doc.setFont('helvetica','normal');
+      doc.setTextColor(...C.dark);
+      const wqLines = doc.splitTextToSize(w.q.question, CW - 6);
+      doc.text(wqLines, ML+4, y);
+      y += wqLines.length * 3.5 + 2;
+
+      doc.setFontSize(7.5);
+      doc.setTextColor(...C.rojo);
+      const sUserAns = 'Tu respuesta: ' + LETTERS[w.sel] + ' · ' + w.opts[w.sel];
+      const sUserLines = doc.splitTextToSize(sUserAns, CW - 10);
+      doc.text(sUserLines, ML+6, y);
+      y += sUserLines.length * 3.5 + 1;
+      doc.setTextColor(...C.verde);
+      const sCorrAns = 'Respuesta correcta: ' + LETTERS[w.cIdx] + ' · ' + w.opts[w.cIdx];
+      const sCorrLines = doc.splitTextToSize(sCorrAns, CW - 10);
+      doc.text(sCorrLines, ML+6, y);
+      y += sCorrLines.length * 3.5 + 5;
+    });
+  }
+
+  // ═══════ SIGNATURES ═══════
+  checkPage(30);
+  y += 10;
+  doc.setDrawColor(...C.dark); doc.setLineWidth(0.5);
+  const sigW = CW/2 - 10;
+  // Left signature
+  doc.line(ML, y, ML+sigW, y);
+  doc.setFontSize(8); doc.setFont('helvetica','bold');
+  doc.setTextColor(...C.navy);
+  doc.text('Mr. Alberto Ottati R.', ML + sigW/2, y+4, {align:'center'});
+  doc.setFont('helvetica','normal'); doc.setFontSize(7);
+  doc.setTextColor(100,100,100);
+  doc.text('Docente Economía IB NM', ML + sigW/2, y+8, {align:'center'});
+  // Right signature
+  doc.line(ML+sigW+20, y, ML+sigW*2+20, y);
+  doc.setFont('helvetica','bold'); doc.setFontSize(8);
+  doc.setTextColor(...C.navy);
+  doc.text(name, ML+sigW+20+sigW/2, y+4, {align:'center'});
+  doc.setFont('helvetica','normal'); doc.setFontSize(7);
+  doc.setTextColor(100,100,100);
+  doc.text('Estudiante 3BGU', ML+sigW+20+sigW/2, y+8, {align:'center'});
+
+  doc.save('Informe_Tipos_de_Cambio_3BGU_' + name.replace(/\s+/g,'_') + '.pdf');
+  } catch(e){ console.error('printPDF error:', e); alertModal('Error al generar PDF: ' + e.message); }
+}
+
+/* ═══════ GENERAR PDF PARA DOCENTE (desde datos guardados) ═══════ */
+function generateStudentPDF(row){
+  try {
+  if(!window.jspdf || !window.jspdf.jsPDF){ alertModal('jsPDF no se cargó.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:'mm',format:'a4'});
+  const W=210, ML=14, MR=196, CW=MR-ML;
+  const name = (row.student_name||row.studentName||'') + ' ' + (row.student_lastname||row.studentLastname||'');
+  const correct = row.score || row.correct || 0;
+  const total = row.total || 0;
+  const score10 = Number(row.grade || row.score_10 || 0).toFixed(1);
+  const answers = row.answers || [];
+  const wrong = answers.filter(a => !a.ok);
+  const LETTERS = ['A','B','C','D'];
+
+  // Lookup explanations from QUESTION_BANK by matching question text
+  const explanationMap = {};
+  if(typeof QUESTION_BANK !== 'undefined'){
+    QUESTION_BANK.forEach(function(q){ explanationMap[q.question] = q.explanation || ''; });
+  }
+
+  const C = {
+    navy:[31,42,90], burgundy:[142,27,58], gold:[217,177,75], blue:[46,116,181],
+    gris:[242,244,248], linea:[201,210,227], dark:[26,26,26],
+    verde:[30,122,60], verdeBg:[231,244,235], ambar:[154,106,0], ambarBg:[251,243,220],
+    rojo:[165,35,52], rojoBg:[251,233,236], white:[255,255,255]
+  };
+
+  /* ── Vector icon for options (replaces broken Unicode) ── */
+  function dibujarIconoOpcion(doc, cx, cy, r, tipo) {
+    var colores = { correcta:[30,123,79], incorrecta:[139,30,63], neutro:[196,201,212] };
+    var rgb = colores[tipo];
+    doc.setFillColor(rgb[0], rgb[1], rgb[2]);
+    doc.circle(cx, cy, r, tipo === 'neutro' ? 'D' : 'F');
+    if (tipo !== 'neutro') {
+      doc.setDrawColor(255, 255, 255);
+      doc.setLineWidth(Math.max(0.6, r * 0.18));
+      if (tipo === 'correcta') {
+        doc.line(cx - r*0.5, cy, cx - r*0.1, cy + r*0.4);
+        doc.line(cx - r*0.1, cy + r*0.4, cx + r*0.5, cy - r*0.4);
+      } else {
+        doc.line(cx - r*0.4, cy - r*0.4, cx + r*0.4, cy + r*0.4);
+        doc.line(cx - r*0.4, cy + r*0.4, cx + r*0.4, cy - r*0.4);
+      }
+    }
+  }
+
+  let y = 0, pageNum = 0;
+
+  function newPage(){
+    if(pageNum > 0) doc.addPage();
+    pageNum++; y = 0;
+    doc.setDrawColor(...C.blue); doc.setLineWidth(1.2);
+    doc.line(ML, 280, MR, 280);
+    doc.setFontSize(7.5); doc.setFont('helvetica','bold');
+    doc.setTextColor(...C.blue);
+    doc.text('Economía IB Nivel Medio – Mr. Alberto Ottati / Derechos reservados', ML, 284);
+    doc.setFont('helvetica','normal'); doc.setTextColor(120,120,120);
+    doc.text('Generado con el Sistema Hermes · ' + new Date().toLocaleDateString('es-EC'), MR, 284, {align:'right'});
+    doc.text('Página ' + pageNum, W/2, 284, {align:'center'});
+  }
+  function checkPage(n){ if(y+n>270){newPage();y=20;} }
+  function sectionTitle(num,title){
+    checkPage(14);
+    doc.setDrawColor(...C.gold); doc.setLineWidth(0.8);
+    doc.line(ML,y+11,MR,y+11);
+    doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(...C.navy);
+    doc.text(title,ML+20,y+9);
+    doc.setFillColor(...C.burgundy);doc.circle(ML+6,y+7,4,'F');
+    doc.setFontSize(8);doc.setTextColor(255,255,255);
+    doc.text(String(num),ML+6,y+7,{align:'center',baseline:'middle'});
+    y+=14;
+  }
+  function metaRow(label,value,x,w){
+    doc.setFillColor(...C.gris);doc.rect(x,y,w,7,'F');
+    doc.setDrawColor(...C.linea);doc.setLineWidth(0.3);doc.rect(x,y,w,7,'S');
+    doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(...C.navy);doc.text(label,x+2,y+5);
+    doc.setFont('helvetica','normal');doc.setTextColor(...C.dark);doc.text(value,x+w*0.38,y+5);
+  }
+
+  /* ── PAGE 1: HEADER ── */
+  newPage();
+  doc.setFillColor(...C.navy);doc.rect(0,0,W,26,'F');
+  doc.setFontSize(15);doc.setFont('helvetica','bold');doc.setTextColor(255,255,255);
+  doc.text('Informe de Retroalimentación',ML,11);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(...C.gold);
+  doc.text('ADA · Tipos de cambio · 2026 – 2027',ML,17);
+  doc.setFontSize(8);doc.setTextColor(200,210,230);
+  doc.text('Economía · 3BGU',ML,23);
+  doc.setDrawColor(...C.gold);doc.setLineWidth(1.5);doc.line(0,26,W,26);
+  y=32;
+
+  doc.setFillColor(...C.navy);
+  doc.roundedRect(ML,y-2,CW,9,2,2,'F');
+  doc.setFontSize(9.5);doc.setFont('helvetica','bold');doc.setTextColor(255,255,255);
+  doc.text('Resultado de la Evaluación · Tipos de cambio',ML+5,y+4);
+  y+=13;
+
+  const colW=CW/3;
+  metaRow('Estudiante',name.trim(),ML,colW);
+  metaRow('Curso',(row.course||'3BGU')+' · Economía',ML+colW,colW);
+  metaRow('Fecha',row.created_at?new Date(row.created_at).toLocaleDateString('es-EC'):'-',ML+colW*2,colW);
+  y+=10;
+
+  /* ═══════ SECTION 1: RESUMEN DEL RESULTADO ═══════ */
+  sectionTitle(1,'Resumen del resultado');
+  const boxW=70,boxH=28,boxX=ML+(CW-boxW)/2;
+  doc.setFillColor(253,249,238);doc.setDrawColor(...C.gold);doc.setLineWidth(0.8);
+  doc.roundedRect(boxX,y,boxW,boxH,4,4,'FD');
+  doc.setFontSize(26);doc.setFont('helvetica','bold');doc.setTextColor(...C.navy);
+  doc.text(score10+' / 10',boxX+boxW/2,y+14,{align:'center'});
+  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(...C.burgundy);
+  doc.text(correct+' correcta'+(correct!==1?'s':'')+' de '+total+' preguntas',boxX+boxW/2,y+21,{align:'center'});
+  const barX=boxX+8,barW=boxW-16,barY=y+23.5,barH=2;
+  doc.setFillColor(...C.gris);doc.roundedRect(barX,barY,barW,barH,1,1,'F');
+  const pct=correct/total;const col=pct>=0.7?C.verde:pct>=0.4?C.ambar:C.rojo;
+  doc.setFillColor(...col);doc.roundedRect(barX,barY,barW*pct,barH,1,1,'F');
+  y+=boxH+6;
+
+  // Answer distribution
+  doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(...C.navy);
+  doc.text('Respuestas correctas por posición de letra:',ML,y+4);
+  y+=7;
+  doc.setFont('helvetica','normal');doc.setFontSize(8);
+  const distA=answers.filter(a=>a.correct===0&&a.ok).length;
+  const distB=answers.filter(a=>a.correct===1&&a.ok).length;
+  const distC=answers.filter(a=>a.correct===2&&a.ok).length;
+  const distD=answers.filter(a=>a.correct===3&&a.ok).length;
+  doc.text('A correctas: '+distA+'  |  B correctas: '+distB+'  |  C correctas: '+distC+'  |  D correctas: '+distD,ML+4,y);
+  y+=5;
+
+  /* ═══════ SECTION 2: RETROALIMENTACIÓN POR PREGUNTA (con explicaciones) ═══════ */
+  y+=4;sectionTitle(2,'Retroalimentación por pregunta');
+  answers.forEach(function(a,i){
+    var isCorrect=a.ok;
+    checkPage(50);
+    // Question header + chip
+    doc.setFontSize(9.5);doc.setFont('helvetica','bold');doc.setTextColor(...C.navy);
+    doc.text((i+1)+'. ',ML,y+4);
+    var chipX=ML+doc.getTextWidth((i+1)+'. ')+2;
+    doc.setFontSize(7.5);doc.setFont('helvetica','bold');
+    var ct=isCorrect?'Correcta':'Incorrecta';
+    var tw=doc.getTextWidth(ct)+6;
+    if(isCorrect){doc.setFillColor(...C.verdeBg);doc.setDrawColor(...C.verde);doc.setTextColor(...C.verde);}
+    else{doc.setFillColor(...C.rojoBg);doc.setDrawColor(...C.rojo);doc.setTextColor(...C.rojo);}
+    doc.roundedRect(chipX,y+0.5,tw,5.5,2,2,'FD');doc.text(ct,chipX+tw/2,y+0.5+2.75,{align:'center',baseline:'middle'});y+=8;
+
+    // Question text
+    doc.setFontSize(8.5);doc.setFont('helvetica','normal');doc.setTextColor(...C.dark);
+    var qLines=doc.splitTextToSize(a.question,CW-4);doc.text(qLines,ML+2,y);y+=qLines.length*3.8+2;
+
+    // Options
+    if(a.options&&typeof a.correct==='number'){
+      a.options.forEach(function(opt,oi){
+        checkPage(12);
+        var isC=oi===a.correct;var isS=oi===a.selected&&!isCorrect;
+        var iconType=isC?'correcta':isS?'incorrecta':'neutro';
+        if(isC||isS){doc.setFillColor(isC?C.verdeBg[0]:C.rojoBg[0],isC?C.verdeBg[1]:C.rojoBg[1],isC?C.verdeBg[2]:C.rojoBg[2]);doc.roundedRect(ML+1,y-3,CW-2,5,1,1,'F');}
+        dibujarIconoOpcion(doc,ML+4.5,y-0.5,2.2,iconType);
+        doc.setFontSize(8);doc.setFont('helvetica','bold');doc.setTextColor(...C.dark);doc.text(LETTERS[oi],ML+8,y);
+        doc.setFont('helvetica','normal');doc.setTextColor(...C.dark);
+        var optLines=doc.splitTextToSize(opt,CW-22);doc.text(optLines,ML+16,y);y+=Math.max(1,optLines.length)*3.6+0.8;
+      });
+    }
+
+    // Explanation (lookup from QUESTION_BANK)
+    var explanation=explanationMap[a.question]||'';
+    if(explanation){
+      checkPage(15);
+      y+=1;
+      var expLines=doc.splitTextToSize(explanation,CW-10);
+      var expBoxH=expLines.length*3.2+10;
+      doc.setFillColor(C.gris[0],C.gris[1],C.gris[2]);
+      doc.setDrawColor(...C.linea);doc.setLineWidth(0.3);
+      doc.roundedRect(ML+1,y-2,CW-2,expBoxH,1,1,'FD');
+      doc.setFontSize(7.5);doc.setFont('helvetica','bold');doc.setTextColor(...C.navy);
+      doc.text('Explicación:',ML+4,y+2);
+      y+=6;
+      doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(80,80,80);
+      doc.text(expLines,ML+3,y);
+      y+=expLines.length*3.2+2;
+    }
+    y+=4;
+  });
+
+  /* ═══════ SECTION 3: ANÁLISIS DE ERRORES ═══════ */
+  if(wrong.length>0){
+    checkPage(20);
+    sectionTitle(3,'Análisis de errores ('+wrong.length+' pregunta'+(wrong.length!==1?'s':'')+')');
+
+    wrong.forEach(function(w,wi){
+      checkPage(20);
+      doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(...C.burgundy);
+      doc.text((wi+1)+'. Pregunta '+(answers.indexOf(w)+1),ML+2,y);
+      y+=5;
+
+      doc.setFontSize(8);doc.setFont('helvetica','normal');doc.setTextColor(...C.dark);
+      var wqLines=doc.splitTextToSize(w.question,CW-6);doc.text(wqLines,ML+4,y);
+      y+=wqLines.length*3.5+2;
+
+      // User answer (full text, wrapped)
+      doc.setFontSize(7.5);doc.setTextColor(...C.rojo);
+      var sUserAns='Tu respuesta: '+LETTERS[w.selected]+' · '+(w.options[w.selected]||'·');
+      var sUserLines=doc.splitTextToSize(sUserAns,CW-10);
+      doc.text(sUserLines,ML+6,y);y+=sUserLines.length*3.5+1;
+
+      // Correct answer (full text, wrapped)
+      doc.setTextColor(...C.verde);
+      var sCorrAns='Respuesta correcta: '+LETTERS[w.correct]+' · '+(w.options[w.correct]||'·');
+      var sCorrLines=doc.splitTextToSize(sCorrAns,CW-10);
+      doc.text(sCorrLines,ML+6,y);y+=sCorrLines.length*3.5+5;
+    });
+  }
+
+  /* ═══════ SIGNATURES ═══════ */
+  checkPage(30);
+  y+=10;
+  doc.setDrawColor(...C.dark);doc.setLineWidth(0.5);
+  var sigW=CW/2-10;
+  // Left signature
+  doc.line(ML,y,ML+sigW,y);
+  doc.setFontSize(8);doc.setFont('helvetica','bold');doc.setTextColor(...C.navy);
+  doc.text('Mr. Alberto Ottati R.',ML+sigW/2,y+4,{align:'center'});
+  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);
+  doc.text('Docente Economía IB NM',ML+sigW/2,y+8,{align:'center'});
+  // Right signature
+  doc.line(ML+sigW+20,y,ML+sigW*2+20,y);
+  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...C.navy);
+  doc.text(name.trim(),ML+sigW+20+sigW/2,y+4,{align:'center'});
+  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);
+  doc.text('Estudiante 3BGU',ML+sigW+20+sigW/2,y+8,{align:'center'});
+
+  doc.save('Informe_Tipos_de_Cambio_3BGU_'+name.trim().replace(/\s+/g,'_')+'.pdf');
+  } catch(e){ console.error('generateStudentPDF error:',e);alertModal('Error al generar PDF: '+e.message); }
+}
+
+/* ═══════ RANKING EN VIVO (top 10 por nota) ═══════ */
+const RANK_TOP_PATH = 'quiz_results?exam_id=eq.'+EXAM_ID+'&select=student_name,student_lastname,grade,total,timestamp&order=grade.desc,timestamp.asc&limit=10';
+
+function fetchTopRanking(){
+  return supabaseGet(RANK_TOP_PATH).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
+}
+
+function rankMedal(pos){
+  if(pos===1) return '<i class="fa-solid fa-medal medal gold"></i>';
+  if(pos===2) return '<i class="fa-solid fa-medal medal silver"></i>';
+  if(pos===3) return '<i class="fa-solid fa-medal medal bronze"></i>';
+  return '';
+}
+
+function rankFullName(r){
+  const n = String(r.student_name||r.studentName||r.name||'').trim();
+  const l = String(r.student_lastname||r.studentLastname||r.lastname||'').trim();
+  return (l && n) ? (l+', '+n) : (n || l);
+}
+
+function rankShortDate(ts){
+  if(!ts) return '-';
+  const d = new Date(ts);
+  if(isNaN(d.getTime())) return '-';
+  return d.toLocaleDateString('es-EC', {day:'2-digit', month:'2-digit'});
+}
+
+/* ── Vista del docente (panel) ── */
+function loadTeacherRanking(){
+  if(!teacherAuthenticated) return;
+  const wrap = document.getElementById('teacher-table-wrap');
+  if(!SUPABASE_CONFIGURED){
+    wrap.innerHTML='<p style="color:var(--red);text-align:center;padding:20px">Supabase no esta configurado. Revisa las credenciales en el codigo.</p>';
+    return;
+  }
+  wrap.innerHTML='<p style="color:var(--muted);text-align:center;padding:20px"><i class="fa-solid fa-spinner fa-spin"></i> Cargando ranking...</p>';
+  fetchTopRanking()
+    .then(rows=>renderTeacherRanking(rows))
+    .catch(()=>{
+      wrap.innerHTML='<p style="color:var(--red);text-align:center;padding:20px">Error de conexion con Supabase. Verifica que el proyecto este activo y las credenciales sean correctas.</p>';
+    });
+}
+
+function renderTeacherRanking(rows){
+  const wrap = document.getElementById('teacher-table-wrap');
+  if(!wrap) return;
+  let html = '<div class="teacher-rank-head"><h3><i class="fa-solid fa-ranking-star"></i> Ranking (Top 10 por nota)</h3>'
+    + '<button type="button" class="btn-back-table" onclick="loadTeacher()"><i class="fa-solid fa-table-list"></i> Volver a la tabla</button></div>';
+  if(!rows || !rows.length){
+    html += '<p class="rank-empty" style="text-align:center">No hay notas guardadas aún.</p>';
+    wrap.innerHTML = html;
+    return;
+  }
+  html += '<div class="teacher-ranking">';
+  rows.forEach((r,i)=>{
+    const pos = i+1;
+    html += '<div class="teacher-rank-row">'
+      + '<div class="rank-pos">'+rankMedal(pos)+'<span>'+pos+'</span></div>'
+      + '<div class="rank-name">'+escapeHtml(rankFullName(r))+'</div>'
+      + '<div class="rank-grade">'+Number(r.grade||0).toFixed(1)+' / 10</div>'
+      + '<div class="teacher-rank-date">'+escapeHtml(rankShortDate(r.timestamp))+'</div>'
+      + '</div>';
+  });
+  html += '</div>';
+  wrap.innerHTML = html;
+}
+
+/* ═══════ PANEL DOCENTE ═══════ */
+let teacherAuthenticated = false;
+let currentTeacherRows = [];
+
+function openTeacherPanel(){ document.getElementById('teacherOverlay').classList.add('open'); }
+function closeTeacherPanel(){ document.getElementById('teacherOverlay').classList.remove('open'); }
+
+function authenticateTeacher(){
+  const key = document.getElementById('teacherKeyInput').value.trim();
+  if(key === TEACHER_KEY){
+    teacherAuthenticated = true;
+    document.getElementById('teacherContent').style.display = 'block';
+    loadTeacher();
+  } else {
+    alertModal('Clave incorrecta.');
+  }
+}
+
+function loadTeacher(){
+  if(!teacherAuthenticated) return;
+  const wrap = document.getElementById('teacher-table-wrap');
+  if(!SUPABASE_CONFIGURED){
+    currentTeacherRows = [];
+    wrap.innerHTML='<p style="color:var(--red);text-align:center;padding:20px">Supabase no esta configurado. Revisa las credenciales en el codigo.</p>';
+    return;
+  }
+  supabaseGet('quiz_results?exam_id=eq.'+EXAM_ID+'&select=*&order=timestamp.desc')
+    .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(rows=>{
+      currentTeacherRows = rows;
+      renderTeacherTable(rows);
+      // Reaplicar el filtro activo si el docente ya está filtrando
+      const f = document.getElementById('teacherFilter');
+      if(f && f.value.trim()) filterTeacher();
+    })
+    .catch(()=>{
+      currentTeacherRows = [];
+      wrap.innerHTML='<p style="color:var(--red);text-align:center;padding:20px">Error de conexion con Supabase. Verifica que el proyecto este activo y las credenciales sean correctas.</p>';
+    });
+  // Sincronizar botón de estado con el servidor (evita que "Abrir quiz" cierre por error)
+  supabaseGet('quiz_config?exam_id=eq.'+EXAM_ID+'&select=open')
+    .then(r=> r.ok ? r.json() : null)
+    .then(rows=>{
+      if(!rows) return;
+      const isOpen = !!(rows.length && rows[0].open);
+      const hasRow = rows.length > 0;
+      document.getElementById('statusIcon').className = isOpen ? 'fa-solid fa-lock' : 'fa-solid fa-lock-open';
+      document.getElementById('statusText').textContent = hasRow ? (isOpen ? 'Cerrar quiz' : 'Abrir quiz') : 'Abrir quiz';
+    }).catch(()=>{});
+}
+
+function renderTeacherTable(rows){
+  const wrap = document.getElementById('teacher-table-wrap');
+  if(!rows.length){ wrap.innerHTML='<p style="color:var(--muted);text-align:center;padding:20px">No hay notas guardadas.</p>'; return; }
+  let html = '<table><thead><tr><th>Nombre</th><th>Apellido</th><th>Curso</th><th>Correctas</th><th>Total</th><th>Nota /10</th><th>Fecha</th><th></th></tr></thead><tbody>';
+  rows.forEach((r,idx)=>{
+    const name = r.student_name||r.studentName||r.name||'';
+    const last = r.student_lastname||r.studentLastname||r.lastname||'';
+    const date = r.timestamp||r.created_at||r.savedAt||'';
+    const dateStr = date ? new Date(date).toLocaleString('es-EC') : '-';
+    html += `<tr>
+      <td>${escapeHtml(name)}</td><td>${escapeHtml(last)}</td><td>${escapeHtml(r.course||'3BGU')}</td>
+      <td>${r.score||r.correct||0}</td><td>${r.total||0}</td><td><strong>${Number(r.grade||r.score_10||0).toFixed(1)}</strong></td>
+      <td>${dateStr}</td>
+      <td style="white-space:nowrap">
+        <button class="btn-del btn-pdf-row" data-pdfidx="${idx}" title="Descargar PDF retroalimentación"><i class="fa-solid fa-file-pdf"></i></button>
+        <button class="btn-del" data-del="${idx}" title="Desbloquear / eliminar"><i class="fa-solid fa-trash"></i></button>
+      </td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  wrap.innerHTML = html;
+
+  // Delete handlers (desbloqueo individual: DELETE en Supabase + limpieza de localStorage)
+  wrap.querySelectorAll('[data-del]').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      const idx = parseInt(this.getAttribute('data-del'));
+      if(isNaN(idx)) return;
+      const row = rows[idx]; // rows = arreglo RENDERIZADO (respeta el filtro)
+      if(!row || !row.id){ alertModal('Este registro no tiene id (guardado local).'); return; }
+      confirmModal('Se eliminará el registro de ' + escapeHtml((row.student_name||'')+' '+(row.student_lastname||'')) + ' y se desbloqueará su intento. ¿Continuar?', async function(){
+        try {
+          const res = await supabaseSend('quiz_results?id=eq.'+row.id, 'DELETE');
+          if(!res.ok) throw new Error('HTTP '+res.status);
+          // Limpiar localStorage del estudiante (ambos formatos de nombre)
+          const nm = row.student_name||row.studentName||row.name||'';
+          const lm = row.student_lastname||row.studentLastname||row.lastname||'';
+          localStorage.removeItem('quiz_'+EXAM_ID+'_'+(lm+', '+nm));
+          localStorage.removeItem('quiz_'+EXAM_ID+'_'+(nm+' '+lm));
+          loadTeacher();
+        } catch(e){
+          alertModal('Error al eliminar: '+e.message);
+        }
+      });
+    });
+  });
+
+  // PDF handlers
+  wrap.querySelectorAll('[data-pdfidx]').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      const idx = parseInt(this.getAttribute('data-pdfidx'));
+      if(rows[idx]){
+        generateStudentPDF(rows[idx]); // rows = arreglo RENDERIZADO (respeta el filtro)
+      }
+    });
+  });
+}
+
+function filterTeacher(){
+  const q = document.getElementById('teacherFilter').value.toLowerCase();
+  const filtered = currentTeacherRows.filter(r=>{
+    const name = ((r.student_name||r.studentName||r.name||'')+' '+(r.student_lastname||r.studentLastname||r.lastname||'')).toLowerCase();
+    return name.includes(q);
+  });
+  renderTeacherTable(filtered);
+}
+
+function clearAllGrades(){
+  confirmModal('Borrar TODAS las calificaciones de este quiz? Esta accion no se puede deshacer.', async function(){
+    try {
+      const res = await supabaseSend('quiz_results?exam_id=eq.'+EXAM_ID, 'DELETE');
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      // Limpiar localStorage de todos los estudiantes de este quiz
+      const prefix = 'quiz_'+EXAM_ID+'_';
+      const keys = [];
+      for(let i=0;i<localStorage.length;i++){
+        const k = localStorage.key(i);
+        if(k && k.indexOf(prefix) === 0) keys.push(k);
+      }
+      keys.forEach(k=>localStorage.removeItem(k));
+      loadTeacher();
+    } catch(e){
+      alertModal('Error al borrar: '+e.message);
+    }
+  });
+}
+
+function exportExcel(){
+  if(!currentTeacherRows.length){ alertModal('No hay notas para exportar.'); return; }
+  const header = ['Nombre','Apellido','Curso','Correctas','Total','Nota /10','Fecha'];
+  const esc = v=>{ const s=String(v??''); return /[",\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
+  const lines = [header.join(',')];
+  currentTeacherRows.forEach(r=>{
+    lines.push([esc(r.student_name||r.studentName||r.name), esc(r.student_lastname||r.studentLastname||r.lastname), esc(r.course||'3BGU'),
+      r.score||r.correct||0, r.total||0, Number(r.grade||r.score_10||0).toFixed(1),
+      new Date(r.timestamp||r.created_at||r.savedAt||Date.now()).toLocaleString('es-EC')].join(','));
+  });
+  const csv = '\uFEFF'+lines.join('\r\n');
+  const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'calificaciones_tipos_cambio_3bgu.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+async function toggleQuizStatus(){
+  try {
+    if(!SUPABASE_CONFIGURED) throw new Error('Supabase no esta configurado');
+    const res = await supabaseGet('quiz_config?exam_id=eq.'+EXAM_ID+'&select=open');
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const rows = await res.json();
+    const newOpen = !(rows.length && rows[0].open);
+    const res2 = await supabaseSend('quiz_config?on_conflict=exam_id', 'POST', { exam_id: EXAM_ID, open: newOpen }, 'resolution=merge-duplicates');
+    if(!res2.ok) throw new Error('HTTP '+res2.status);
+    document.getElementById('statusIcon').className = newOpen ? 'fa-solid fa-lock' : 'fa-solid fa-lock-open';
+    document.getElementById('statusText').textContent = newOpen ? 'Cerrar quiz' : 'Abrir quiz';
+  } catch(e){
+    alertModal('No se pudo cambiar el estado del quiz: '+e.message+'. Verifica la conexion con Supabase.');
+  }
+}
+
+/* ═══════ PARÁMETROS DEL QUIZ (panel docente) ═══════ */
+function openParamsPanel(){
+  if(!teacherAuthenticated) return;
+  const wrap = document.getElementById('teacher-table-wrap');
+  const p = QUIZ_PARAMS;
+  wrap.innerHTML = `
+    <div class="params-panel">
+      <h3><i class="fa-solid fa-sliders"></i> Parámetros de la evaluación</h3>
+      <p class="params-note">Estos valores se aplican a los intentos que comiencen después de guardar. Si la tabla <code>quiz_params</code> no existe en Supabase, los valores se guardan solo en este navegador.</p>
+      <div class="params-grid">
+        <label>Preguntas totales<input type="number" id="pTotal" min="1" max="48" value="${p.totalQuestions}"></label>
+        <label>Preguntas de lectura de modelos<input type="number" id="pRC" min="0" max="15" value="${p.rcCount}"></label>
+        <label>Preguntas de teoría<input type="number" id="pCC" min="0" max="33" value="${p.ccCount}"></label>
+        <label>Segundos por pregunta<input type="number" id="pTime" min="15" max="600" value="${p.timePerQuestion}"></label>
+      </div>
+      <div class="params-actions">
+        <button class="btn btn-primary" onclick="saveParamsFromForm()"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+        <button class="btn btn-ghost" onclick="loadTeacher()"><i class="fa-solid fa-arrow-left"></i> Volver a las notas</button>
+      </div>
+    </div>`;
+}
+
+function saveParamsFromForm(){
+  const cfg = {
+    totalQuestions: parseInt(document.getElementById('pTotal').value,10),
+    rcCount: parseInt(document.getElementById('pRC').value,10),
+    ccCount: parseInt(document.getElementById('pCC').value,10),
+    timePerQuestion: parseInt(document.getElementById('pTime').value,10)
+  };
+  if([cfg.totalQuestions,cfg.rcCount,cfg.ccCount,cfg.timePerQuestion].some(v=>isNaN(v)||v<=0)){
+    alertModal('Todos los valores deben ser números mayores que cero.'); return;
+  }
+  if(cfg.rcCount + cfg.ccCount !== cfg.totalQuestions){
+    alertModal('La suma de preguntas de lectura de modelos y de teoría debe ser igual al total de preguntas.'); return;
+  }
+  saveParams(cfg)
+    .then(function(){ showToast('Parámetros guardados.'); loadTeacher(); })
+    .catch(function(e){ showToast('Guardado local. No se pudo sincronizar con Supabase: '+e.message); loadTeacher(); });
+}
+
+/* ═══════ INFORME DE RETROALIMENTACIÓN DE LA CLASE ═══════ */
+let currentReport = null;
+
+function loadTeacherReport(){
+  if(!teacherAuthenticated) return;
+  const wrap = document.getElementById('teacher-table-wrap');
+  if(!currentTeacherRows.length){
+    wrap.innerHTML = '<p style="text-align:center;padding:20px;color:var(--ink-soft)">No hay intentos registrados. Pulsa Actualizar para cargar las notas.</p>';
+    return;
+  }
+  const rows = currentTeacherRows;
+  const n = rows.length;
+  const grades = rows.map(function(r){ return Number(r.grade||0); });
+  const avg = grades.reduce(function(a,b){ return a+b; },0)/n;
+  const maxG = Math.max.apply(null, grades);
+  const minG = Math.min.apply(null, grades);
+
+  const bandCount = IB_BANDS.map(function(b){ return { grade:b.grade, desc:b.desc, count:0 }; });
+  grades.forEach(function(g){
+    const band = getIBGrade(g/10);
+    const hit = bandCount.find(function(b){ return b.grade === band.grade; });
+    if(hit) hit.count++;
+  });
+
+  const topicStats = {};
+  rows.forEach(function(r){
+    const ans = Array.isArray(r.answers) ? r.answers : [];
+    ans.forEach(function(a){
+      const t = a && a.topic ? a.topic : 'Sin tema';
+      if(!topicStats[t]) topicStats[t] = { total:0, wrong:0 };
+      topicStats[t].total++;
+      if(!a.ok) topicStats[t].wrong++;
+    });
+  });
+  const weak = Object.keys(topicStats).map(function(t){
+    const s = topicStats[t];
+    return { topic:t, total:s.total, wrong:s.wrong, rate: s.total ? s.wrong/s.total : 0 };
+  }).sort(function(a,b){ return b.rate - a.rate; });
+
+  currentReport = { n:n, avg:avg, maxG:maxG, minG:minG, bandCount:bandCount, weak:weak, rows:rows };
+
+  let html = '<div class="report-panel">';
+  html += '<h3><i class="fa-solid fa-chart-line"></i> Informe de la clase</h3>';
+  html += '<div class="report-kpis">';
+  html += '<div class="report-kpi"><span class="kpi-num">'+n+'</span><span class="kpi-lbl">Estudiantes</span></div>';
+  html += '<div class="report-kpi"><span class="kpi-num">'+avg.toFixed(1)+'</span><span class="kpi-lbl">Promedio /10</span></div>';
+  html += '<div class="report-kpi"><span class="kpi-num">'+maxG.toFixed(1)+'</span><span class="kpi-lbl">Nota más alta</span></div>';
+  html += '<div class="report-kpi"><span class="kpi-num">'+minG.toFixed(1)+'</span><span class="kpi-lbl">Nota más baja</span></div>';
+  html += '</div>';
+  html += '<h4>Distribución por banda IB</h4><table class="report-table"><thead><tr><th>Banda</th><th>Descripción</th><th>Estudiantes</th></tr></thead><tbody>';
+  bandCount.forEach(function(b){ html += '<tr><td>'+b.grade+'</td><td>'+escapeHtml(b.desc)+'</td><td>'+b.count+'</td></tr>'; });
+  html += '</tbody></table>';
+  html += '<h4>Temas con mayor tasa de error</h4><table class="report-table"><thead><tr><th>Tema</th><th>Respuestas</th><th>Errores</th><th>Tasa</th></tr></thead><tbody>';
+  weak.slice(0,10).forEach(function(w){ html += '<tr><td>'+escapeHtml(w.topic)+'</td><td>'+w.total+'</td><td>'+w.wrong+'</td><td>'+Math.round(w.rate*100)+'%</td></tr>'; });
+  html += '</tbody></table>';
+  html += '<h4>Resultados por estudiante</h4><table class="report-table"><thead><tr><th>Estudiante</th><th>Correctas</th><th>Total</th><th>Nota /10</th><th>Banda IB</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    const g = Number(r.grade||0);
+    const band = getIBGrade(g/10);
+    html += '<tr><td>'+escapeHtml((r.student_lastname||'')+', '+(r.student_name||''))+'</td><td>'+(r.score||0)+'</td><td>'+(r.total||0)+'</td><td>'+g.toFixed(1)+'</td><td>'+band.grade+'</td></tr>';
+  });
+  html += '</tbody></table>';
+  html += '<div class="params-actions">';
+  html += '<button class="btn btn-primary" onclick="exportReportPDF()"><i class="fa-solid fa-file-pdf"></i> Exportar informe PDF</button>';
+  html += '<button class="btn btn-ghost" onclick="loadTeacher()"><i class="fa-solid fa-arrow-left"></i> Volver a las notas</button>';
+  html += '</div></div>';
+  wrap.innerHTML = html;
+}
+
+function exportReportPDF(){
+  if(!currentReport){ alertModal('Primero genera el informe.'); return; }
+  if(!window.jspdf || !window.jspdf.jsPDF){ alertModal('jsPDF no se cargó. Verifica tu conexión a internet.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:'mm',format:'a4'});
+  const ML=14, MR=196, CW=MR-ML;
+  const navy=[31,42,90], gris=[242,244,248], linea=[201,210,227];
+  let y = 20;
+  function checkPage(need){ if(y+need>275){ doc.addPage(); y=20; } }
+
+  doc.setFontSize(15); doc.setFont('helvetica','bold'); doc.setTextColor(navy[0],navy[1],navy[2]);
+  doc.text('Informe de la clase', ML, y); y+=7;
+  doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80);
+  doc.text('ADA · Tipos de cambio · 2026 – 2027', ML, y); y+=5;
+  doc.text('Economía · 3BGU · Generado el ' + new Date().toLocaleString('es-EC'), ML, y); y+=9;
+
+  const kpis = [['Estudiantes', String(currentReport.n)],['Promedio /10', currentReport.avg.toFixed(1)],['Nota más alta', currentReport.maxG.toFixed(1)],['Nota más baja', currentReport.minG.toFixed(1)]];
+  const kw = CW/4;
+  kpis.forEach(function(k,i){
+    const x = ML + i*kw;
+    doc.setFillColor(gris[0],gris[1],gris[2]);
+    doc.setDrawColor(linea[0],linea[1],linea[2]); doc.setLineWidth(0.3);
+    doc.roundedRect(x, y, kw-3, 16, 1.5, 1.5, 'FD');
+    doc.setFontSize(13); doc.setFont('helvetica','bold'); doc.setTextColor(navy[0],navy[1],navy[2]);
+    doc.text(k[1], x+(kw-3)/2, y+7, {align:'center'});
+    doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(90,90,90);
+    doc.text(k[0], x+(kw-3)/2, y+12.5, {align:'center'});
+  });
+  y += 22;
+
+  checkPage(30);
+  doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.setTextColor(navy[0],navy[1],navy[2]);
+  doc.text('Distribución por banda IB', ML, y); y+=6;
+  doc.setFontSize(8.5); doc.setFont('helvetica','normal'); doc.setTextColor(40,40,40);
+  currentReport.bandCount.forEach(function(b){
+    checkPage(6);
+    doc.text('Banda ' + b.grade + ' · ' + b.desc, ML+2, y);
+    doc.text(String(b.count) + ' estudiante' + (b.count===1?'':'s'), MR, y, {align:'right'});
+    y += 5;
+  });
+  y += 4;
+
+  checkPage(30);
+  doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.setTextColor(navy[0],navy[1],navy[2]);
+  doc.text('Temas con mayor tasa de error', ML, y); y+=6;
+  doc.setFontSize(8.5); doc.setFont('helvetica','normal'); doc.setTextColor(40,40,40);
+  currentReport.weak.slice(0,12).forEach(function(w){
+    checkPage(6);
+    const lines = doc.splitTextToSize(w.topic, CW-40);
+    doc.text(lines[0], ML+2, y);
+    doc.text(Math.round(w.rate*100)+'% ('+w.wrong+' de '+w.total+')', MR, y, {align:'right'});
+    y += 5;
+  });
+  y += 4;
+
+  checkPage(20);
+  doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.setTextColor(navy[0],navy[1],navy[2]);
+  doc.text('Resultados por estudiante', ML, y); y+=6;
+  doc.setFontSize(8.5); doc.setFont('helvetica','bold'); doc.setTextColor(60,60,60);
+  doc.text('Estudiante', ML+2, y); doc.text('Correctas', ML+110, y); doc.text('Nota /10', ML+140, y); doc.text('Banda', MR, y, {align:'right'});
+  y += 2;
+  doc.setDrawColor(linea[0],linea[1],linea[2]); doc.setLineWidth(0.3);
+  doc.line(ML, y, MR, y); y += 5;
+  doc.setFont('helvetica','normal'); doc.setTextColor(40,40,40);
+  currentReport.rows.forEach(function(r){
+    checkPage(6);
+    const g = Number(r.grade||0);
+    const band = getIBGrade(g/10);
+    const nm = ((r.student_lastname||'')+', '+(r.student_name||'')).trim();
+    const nmLines = doc.splitTextToSize(nm, 100);
+    doc.text(nmLines[0], ML+2, y);
+    doc.text(String(r.score||0)+' / '+String(r.total||0), ML+110, y);
+    doc.text(g.toFixed(1), ML+140, y);
+    doc.text(String(band.grade), MR, y, {align:'right'});
+    y += 5;
+  });
+
+  doc.save('Informe_Clase_Tipos_de_Cambio_3BGU.pdf');
+}
+</script>
+</body>
+</html>
