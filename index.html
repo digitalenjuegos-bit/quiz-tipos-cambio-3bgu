@@ -457,18 +457,13 @@ const QUESTION_BANK = [
     topic: 'Lectura de modelos y datos',
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Mercado de divisas: desplazamiento de la demanda',
-    scenario: 'El modelo presenta dos paneles del mismo mercado. El panel izquierdo muestra el mercado del dólar australiano con el tipo de cambio medido en libras esterlinas por dólar australiano. El panel derecho muestra el mercado de la libra esterlina con el tipo de cambio medido en dólares australianos por libra esterlina.',
-    question: 'En el panel izquierdo la curva de demanda se desplaza de la posición D1 a la posición D2 mientras la curva de oferta (S) se mantiene en su lugar. ¿Qué ocurre con el tipo de cambio del dólar australiano?',
-    options: [
-      'Sube, porque a cada nivel de oferta los compradores están dispuestos a pagar más libras esterlinas por dólar australiano.',
-      'Baja, porque al desplazarse la demanda hacia la derecha el precio de equilibrio disminuye.',
-      'No cambia, porque la curva de oferta de dólares australianos permanece constante.',
-      'Sube y la cantidad intercambiada disminuye, porque la oferta no responde al cambio de precio.'
-    ],
+    scenario: 'El modelo muestra el mercado del dólar australiano, con el tipo de cambio medido en libras esterlinas por dólar australiano.',
+    question: 'En el modelo, la curva de demanda se desplaza de la posición D1 a la posición D2 mientras la curva de oferta (S) se mantiene en su lugar. ¿Qué ocurre con el tipo de cambio del dólar australiano?',
+    options: ['Sube, porque a cada nivel de oferta los compradores están dispuestos a pagar más libras esterlinas por dólar australiano.', 'Baja, porque al desplazarse la curva de demanda hacia la derecha el precio de equilibrio del mercado disminuye.', 'No cambia, porque la curva de oferta de dólares australianos permanece constante y el tipo de cambio lo fija el banco central.', 'Sube y la cantidad intercambiada disminuye, porque la curva de oferta no responde al cambio de precio en el mercado.'],
     answer: 0,
     explanation: 'Al desplazarse la demanda de D1 a D2, el nuevo equilibrio se alcanza a un tipo de cambio mayor. El dólar australiano se aprecia y la cantidad intercambiada también aumenta, porque el ajuste ocurre a lo largo de la curva de oferta.',
     diagram: 'modelo1',
-    diagramCaption: 'Modelo de apreciación del dólar australiano (Hoang, Wray y Chakraborty, 2020, figura 31.3).',
+    diagramCaption: 'Modelo de apreciación del dólar australiano (adaptado de Hoang, Wray y Chakraborty, 2020, figura 31.3).',
     type: 'RC',
     always: true
   },
@@ -476,35 +471,27 @@ const QUESTION_BANK = [
     topic: 'Lectura de modelos y datos',
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Mercado de divisas: desplazamiento de la oferta',
-    scenario: 'El modelo de dos paneles muestra el mismo mercado de divisas. El panel izquierdo presenta el mercado del dólar australiano y el panel derecho el mercado de la libra esterlina.',
-    question: 'En el panel izquierdo la curva de oferta se desplaza de la posición S1 a la posición S2 mientras la curva de demanda (D) se mantiene en su lugar. ¿Qué ocurre con el tipo de cambio del dólar australiano?',
-    options: [
-      'Baja, porque a cada tipo de cambio los tenedores ofrecen más dólares australianos que antes.',
-      'Sube, porque desplazar la oferta hacia la derecha eleva el precio de equilibrio.',
-      'No cambia, porque la curva de demanda permanece constante.',
-      'Baja y la cantidad intercambiada también disminuye con respecto al equilibrio inicial.'
-    ],
+    scenario: 'El modelo muestra el mercado del dólar australiano, con el tipo de cambio medido en libras esterlinas por dólar australiano.',
+    question: 'En el modelo, la curva de oferta se desplaza de la posición S1 a la posición S2 mientras la curva de demanda (D) se mantiene en su lugar. ¿Qué ocurre con el tipo de cambio del dólar australiano?',
+    options: ['Baja, porque a cada tipo de cambio los tenedores ofrecen más dólares australianos que antes.', 'Sube, porque desplazar la curva de oferta hacia la derecha eleva el precio de equilibrio del mercado.', 'No cambia, porque la curva de demanda de dólares australianos permanece constante en su posición inicial.', 'Baja y la cantidad intercambiada también disminuye con respecto al equilibrio inicial del mercado.'],
     answer: 0,
     explanation: 'El desplazamiento de la oferta de S1 a S2 lleva el equilibrio a un tipo de cambio menor: el dólar australiano se deprecia. La cantidad intercambiada aumenta, porque el movimiento ocurre a lo largo de la curva de demanda.',
     diagram: 'modelo2',
-    diagramCaption: 'Modelo de depreciación del dólar australiano. Elaboración propia a partir de Hoang, Wray y Chakraborty (2020).',
+    diagramCaption: 'Modelo de depreciación del dólar australiano (adaptado de Hoang, Wray y Chakraborty, 2020, figura 31.3).',
     type: 'RC',
     always: true
   },
   {
     topic: 'Lectura de modelos y datos',
     unit: 'ADA · Tipos de cambio',
-    syllabus: 'Lectura del panel simétrico',
-    scenario: 'Un modelo de dos paneles representa el mercado del dólar australiano y el de la libra esterlina. En el panel de la libra esterlina, la curva de oferta de libras se desplaza hacia la derecha y la curva de demanda de libras no cambia.',
+    syllabus: 'Mercado de la libra esterlina: desplazamiento de la oferta',
+    scenario: 'El modelo muestra el mercado de la libra esterlina, con el tipo de cambio medido en dólares australianos por libra esterlina. La curva de oferta de libras se desplaza hacia la derecha y la curva de demanda de libras no cambia.',
     question: '¿Qué ocurre en el mercado de la libra esterlina con ese desplazamiento?',
-    options: [
-      'El precio de la libra baja, es decir, la libra esterlina se deprecia frente al dólar australiano.',
-      'El precio de la libra sube, es decir, la libra esterlina se aprecia frente al dólar australiano.',
-      'El precio de la libra no cambia, porque la curva de demanda permanece igual.',
-      'El precio de la libra sube y la cantidad de libras intercambiada disminuye.'
-    ],
+    options: ['El precio de la libra baja, es decir, la libra esterlina se deprecia frente al dólar australiano.', 'El precio de la libra sube, es decir, la libra esterlina se aprecia frente al dólar australiano.', 'El precio de la libra no cambia, porque la curva de demanda de libras permanece igual en su posición.', 'El precio de la libra sube y la cantidad de libras intercambiada disminuye respecto del equilibrio inicial.'],
     answer: 0,
     explanation: 'Al desplazarse la oferta de libras hacia la derecha con demanda constante, el precio de la libra baja. La libra esterlina se deprecia. Es la imagen simétrica de la apreciación del dólar australiano.',
+    diagram: 'modelo3',
+    diagramCaption: 'Modelo de depreciación de la libra esterlina (adaptado de Hoang, Wray y Chakraborty, 2020, figura 31.3).',
     type: 'RC'
   },
   {
@@ -513,12 +500,7 @@ const QUESTION_BANK = [
     syllabus: 'Interpretación de datos reales',
     scenario: 'Entre 2020 y 2021 el tipo de cambio del dólar australiano pasó de 0,52 a 0,58 libras esterlinas por dólar australiano. El movimiento coincidió con un aumento de las exportaciones australianas de mineral de hierro y carbón.',
     question: '¿Cómo se interpreta ese cambio para el dólar australiano?',
-    options: [
-      'Se apreció, porque ahora se necesitan más libras esterlinas para comprar un dólar australiano.',
-      'Se depreció, porque el número que expresa el tipo de cambio aumentó de valor.',
-      'Se devaluó, porque el banco central de Australia intervino en el mercado de divisas.',
-      'No cambió, porque la cantidad de dólares australianos intercambiada no varió.'
-    ],
+    options: ['Se apreció, porque ahora se necesitan más libras esterlinas para comprar un dólar australiano.', 'Se depreció, porque el número que expresa el tipo de cambio aumentó de valor en el mercado de divisas.', 'Se devaluó, porque el banco central de Australia intervino activamente en el mercado de divisas.', 'No cambió, porque la cantidad de dólares australianos intercambiada en el mercado no varió.'],
     answer: 0,
     explanation: 'Cuando se necesitan más libras esterlinas para comprar un dólar australiano, el precio del dólar australiano sube y hay apreciación. La variación fue de 0,06 libras esterlinas, cerca del 11,5 por ciento.',
     type: 'RC'
@@ -545,12 +527,7 @@ const QUESTION_BANK = [
     syllabus: 'Causa de un desplazamiento',
     scenario: 'Un informe señala que inversionistas extranjeros aumentaron sus compras de bonos del gobierno australiano porque las tasas de interés de Australia subieron respecto a las del Reino Unido.',
     question: '¿Qué curva se desplaza en el mercado del dólar australiano y por qué razón?',
-    options: [
-      'La curva de demanda, porque para comprar bonos australianos los inversionistas extranjeros necesitan dólares australianos.',
-      'La curva de oferta, porque los residentes australianos compran más bonos británicos con sus libras esterlinas.',
-      'La curva de demanda, porque aumenta la oferta de bonos australianos en el mercado financiero.',
-      'Ninguna curva, porque las tasas de interés no afectan al mercado de divisas.'
-    ],
+    options: ['La curva de demanda, porque para comprar bonos australianos los inversionistas extranjeros necesitan dólares australianos.', 'La curva de oferta, porque los residentes australianos compran más bonos británicos con sus libras esterlinas.', 'La curva de demanda, porque aumenta la oferta de bonos australianos en el mercado financiero y eso atrae capital extranjero del exterior.', 'Ninguna curva, porque las tasas de interés no afectan al mercado de divisas ni al tipo de cambio de equilibrio.'],
     answer: 0,
     explanation: 'Para comprar activos australianos hay que demandar dólares australianos. Un aumento de la demanda, con oferta constante, aprecia la moneda del país.',
     type: 'RC'
@@ -561,12 +538,7 @@ const QUESTION_BANK = [
     syllabus: 'Causa de un desplazamiento',
     scenario: 'Las familias australianas aumentaron con fuerza sus compras de automóviles importados del Reino Unido, que se pagan en libras esterlinas.',
     question: '¿Qué efecto tiene esa decisión en el mercado del dólar australiano?',
-    options: [
-      'Aumenta la oferta de dólares australianos, porque los importadores los venden para obtener libras esterlinas.',
-      'Aumenta la demanda de dólares australianos, porque hay más importaciones de automóviles.',
-      'Disminuye la oferta de dólares australianos, porque suben las importaciones de automóviles.',
-      'No tiene efecto, porque las importaciones se pagan directamente en libras esterlinas.'
-    ],
+    options: ['Aumenta la oferta de dólares australianos, porque los importadores los venden para obtener libras esterlinas.', 'Aumenta la demanda de dólares australianos, porque hay más importaciones de automóviles en el mercado interno.', 'Disminuye la oferta de dólares australianos, porque suben las importaciones de automóviles británicos.', 'No tiene efecto, porque las importaciones se pagan directamente en libras esterlinas al proveedor.'],
     answer: 0,
     explanation: 'Para pagar importaciones los residentes ofrecen su propia moneda a cambio de divisas. Aumenta la oferta de dólares australianos y el dólar australiano se deprecia.',
     type: 'RC'
@@ -609,12 +581,7 @@ const QUESTION_BANK = [
     syllabus: 'Consecuencias para el exportador',
     scenario: 'El dólar australiano se aprecia frente a la libra esterlina. Una empresa australiana exporta vinos a Londres y sus precios están fijados en libras esterlinas.',
     question: '¿Qué consecuencia enfrenta esa empresa exportadora?',
-    options: [
-      'Sus vinos resultan más caros para los compradores británicos y sus ventas pueden disminuir.',
-      'Sus vinos resultan más baratos para los compradores británicos y sus ventas aumentan.',
-      'Sus costos en libras esterlinas suben y su margen de ganancia mejora.',
-      'No hay ningún efecto, porque el contrato está fijado en libras esterlinas.'
-    ],
+    options: ['Sus vinos resultan más caros para los compradores británicos y sus ventas pueden disminuir.', 'Sus vinos resultan más baratos para los compradores británicos y sus ventas aumentan en el mercado.', 'Sus costos en libras esterlinas suben y su margen de ganancia mejora en cada operación.', 'No hay ningún efecto, porque el contrato de exportación está fijado en libras esterlinas.'],
     answer: 0,
     explanation: 'Con el dólar australiano más caro, cada unidad exportada cuesta más libras esterlinas al comprador británico. La cantidad demandada de exportaciones tiende a caer.',
     type: 'RC'
@@ -625,12 +592,7 @@ const QUESTION_BANK = [
     syllabus: 'Consecuencias para el residente',
     scenario: 'El dólar australiano se aprecia frente a la libra esterlina. Un turista australiano planea un viaje a Londres y pagará sus gastos en libras esterlinas.',
     question: '¿Qué efecto tiene la apreciación sobre el costo de ese viaje?',
-    options: [
-      'Le resulta más barato, porque con cada dólar australiano obtiene más libras esterlinas.',
-      'Le resulta más caro, porque cada libra esterlina cuesta más dólares australianos.',
-      'Le resulta igual, porque el precio de los pasajes no depende del tipo de cambio.',
-      'Le resulta más caro, porque la oferta de libras esterlinas en el mercado disminuye.'
-    ],
+    options: ['Le resulta más barato, porque con cada dólar australiano obtiene más libras esterlinas.', 'Le resulta más caro, porque cada libra esterlina cuesta más dólares australianos en el mercado.', 'Le resulta igual, porque el precio de los pasajes aéreos no depende del tipo de cambio.', 'Le resulta más caro, porque la oferta de libras esterlinas en el mercado de divisas disminuye.'],
     answer: 0,
     explanation: 'Al apreciarse el dólar australiano, cada dólar australiano compra más libras esterlinas. Los bienes y servicios británicos se abaratan para el residente australiano.',
     type: 'RC'
@@ -641,12 +603,7 @@ const QUESTION_BANK = [
     syllabus: 'Defensa de una paridad fija',
     scenario: 'Un país mantiene un tipo de cambio fijo y su moneda empieza a presionar a la baja. Para sostener el valor anunciado, el banco central compra su propia moneda en el mercado de divisas.',
     question: '¿Cómo actúa el banco central para sostener el tipo de cambio fijo?',
-    options: [
-      'Compra su propia moneda, con lo que reduce su oferta y sostiene su precio.',
-      'Vende su propia moneda, con lo que aumenta su oferta y eleva su precio.',
-      'Emite más moneda local para elevar su valor en el mercado de divisas.',
-      'Prohíbe a los residentes comprar cualquier divisa extranjera.'
-    ],
+    options: ['Compra su propia moneda, con lo que reduce su oferta y sostiene su precio.', 'Vende su propia moneda, con lo que aumenta su oferta y eleva su precio.', 'Emite más moneda local para elevar su valor en el mercado de divisas.', 'Prohíbe a los residentes comprar cualquier divisa extranjera en el mercado.'],
     answer: 0,
     explanation: 'Para sostener una paridad el banco central opera en sentido contrario a la presión del mercado. Si la moneda presiona a la baja, compra su propia moneda y reduce la oferta.',
     type: 'RC'
@@ -657,12 +614,7 @@ const QUESTION_BANK = [
     syllabus: 'Inflación importada',
     scenario: 'La moneda de un país se deprecia de forma pronunciada y ese país importa la mayor parte de sus alimentos y combustibles.',
     question: '¿Qué efecto es más probable sobre la inflación interna?',
-    options: [
-      'Aumenta, porque las importaciones se encarecen en moneda local, lo que se conoce como inflación importada.',
-      'Disminuye, porque las importaciones se abaratan en moneda local.',
-      'No cambia, porque la inflación depende solo de la demanda interna.',
-      'Aumenta, porque las exportaciones se encarecen para los compradores extranjeros.'
-    ],
+    options: ['Aumenta, porque las importaciones se encarecen en moneda local, lo que se conoce como inflación importada.', 'Disminuye, porque las importaciones se abaratan en moneda local cuando la moneda pierde valor.', 'No cambia, porque la inflación depende solo de la demanda interna y no del sector externo.', 'Aumenta, porque las exportaciones se encarecen para los compradores extranjeros y eso eleva los precios internos.'],
     answer: 0,
     explanation: 'Con la moneda depreciada, cada unidad importada cuesta más moneda local. Ese encarecimiento se traslada a los precios internos y se conoce como inflación importada.',
     type: 'RC'
@@ -670,17 +622,12 @@ const QUESTION_BANK = [
   {
     topic: 'Lectura de modelos y datos',
     unit: 'ADA · Tipos de cambio',
-    syllabus: 'Lectura conjunta de los dos paneles',
+    syllabus: 'Relación entre los dos mercados de divisas',
     scenario: 'Un modelo señala que la demanda de dólares australianos aumentó y que, en el mercado de la libra esterlina, la oferta de libras aumentó en la misma medida.',
     question: '¿Qué relación existe entre los dos desplazamientos?',
-    options: [
-      'Son las dos caras de la misma operación, porque comprar dólares australianos es vender libras esterlinas.',
-      'Son hechos independientes que no guardan relación entre sí.',
-      'Son contradictorios, porque una moneda se aprecia y la otra también.',
-      'Ninguno de los dos desplazamientos afecta al tipo de cambio de equilibrio.'
-    ],
+    options: ['Son las dos caras de la misma operación, porque comprar dólares australianos es vender libras esterlinas.', 'Son hechos independientes que no guardan relación entre sí, porque cada mercado se ajusta por separado.', 'Son contradictorios, porque una moneda se aprecia y la otra también debería depreciarse en el mismo período.', 'Ninguno de los dos desplazamientos afecta al tipo de cambio de equilibrio del mercado de divisas.'],
     answer: 0,
-    explanation: 'Cada transacción en el mercado de divisas tiene dos lados. Comprar dólares australianos con libras esterlinas es a la vez demandar dólares australianos y ofrecer libras esterlinas, así que los dos paneles cuentan la misma historia.',
+    explanation: 'Cada transacción en el mercado de divisas tiene dos lados. Comprar dólares australianos con libras esterlinas es a la vez demandar dólares australianos y ofrecer libras esterlinas, así que los dos mercados cuentan la misma historia.',
     type: 'RC'
   },
   {
@@ -705,12 +652,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Tipo de cambio nominal',
     question: '¿Qué expresa el tipo de cambio nominal entre dos monedas?',
-    options: [
-      'El precio de una moneda expresado en unidades de otra moneda.',
-      'La cantidad de bienes y servicios que se pueden comprar con una unidad de moneda.',
-      'El total de reservas internacionales que mantiene el banco central de un país.',
-      'La diferencia entre el valor de las exportaciones y el de las importaciones.'
-    ],
+    options: ['El precio de una moneda expresado en unidades de otra moneda.', 'La cantidad de bienes que se compran con una unidad de moneda.', 'El total de reservas que mantiene el banco central.', 'La diferencia entre el valor de las exportaciones y las importaciones.'],
     answer: 0,
     explanation: 'El tipo de cambio nominal es un precio relativo: indica cuántas unidades de una moneda se necesitan para obtener una unidad de otra.',
     type: 'CC'
@@ -720,12 +662,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Tipo de cambio real',
     question: '¿Qué mide el tipo de cambio real?',
-    options: [
-      'La relación entre los precios de los bienes nacionales y los bienes extranjeros expresados en una misma moneda.',
-      'El precio de la moneda nacional en el mercado informal de divisas.',
-      'La cantidad de moneda extranjera que el banco central mantiene en reserva.',
-      'El tipo de cambio que el gobierno anuncia oficialmente cada día.'
-    ],
+    options: ['La relación entre los precios de los bienes nacionales y los bienes extranjeros expresados en una misma moneda.', 'El precio de la moneda nacional en el mercado informal de divisas, que se fija libremente cada día.', 'La cantidad de moneda extranjera que el banco central mantiene guardada en sus reservas internacionales.', 'El tipo de cambio que el gobierno anuncia oficialmente cada día mediante un decreto publicado en el diario oficial.'],
     answer: 0,
     explanation: 'El tipo de cambio real ajusta el tipo de cambio nominal por la diferencia de precios entre países, así que refleja la competitividad de precio de los bienes nacionales.',
     type: 'CC'
@@ -735,12 +672,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Eje del modelo de divisas',
     question: 'En el modelo de oferta y demanda de divisas, ¿qué variable se representa en el eje vertical?',
-    options: [
-      'El precio de la moneda, expresado como la cantidad de la otra moneda por una unidad.',
-      'La cantidad de moneda nacional que circula en la economía.',
-      'El nivel general de precios del país.',
-      'El saldo de la balanza comercial del país.'
-    ],
+    options: ['El precio de la moneda, expresado como la cantidad de la otra moneda por una unidad.', 'La cantidad de moneda nacional que circula en la economía durante un período.', 'El nivel general de precios de los bienes y servicios que se producen y se venden en el país.', 'El saldo de la balanza comercial del país registrado en el último trimestre.'],
     answer: 0,
     explanation: 'En el modelo del mercado de divisas el eje vertical es el tipo de cambio, es decir, el precio de una moneda expresado en la otra. El eje horizontal es la cantidad de esa moneda.',
     type: 'CC'
@@ -750,12 +682,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Concepto de apreciación',
     question: '¿Qué significa que una moneda se aprecie frente a otra?',
-    options: [
-      'Que su precio sube, es decir, se necesitan más unidades de la otra moneda para comprarla.',
-      'Que su precio baja, es decir, se necesitan menos unidades de la otra moneda para comprarla.',
-      'Que el gobierno fija un precio más alto mediante un decreto.',
-      'Que aumenta la cantidad de moneda en circulación dentro del país.'
-    ],
+    options: ['Que su precio sube, es decir, se necesitan más unidades de la otra moneda para comprarla.', 'Que su precio baja, es decir, se necesitan menos unidades de la otra moneda para comprarla.', 'Que el gobierno fija un precio más alto mediante un decreto oficial publicado en el diario.', 'Que aumenta la cantidad de moneda en circulación dentro del país durante el año.'],
     answer: 0,
     explanation: 'La apreciación es un aumento del precio de la moneda en el mercado de divisas: hace falta más moneda extranjera para comprar una unidad de la moneda nacional.',
     type: 'CC'
@@ -765,12 +692,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Concepto de depreciación',
     question: '¿Qué significa que una moneda se deprecie frente a otra?',
-    options: [
-      'Que su precio baja, es decir, se necesitan menos unidades de la otra moneda para comprarla.',
-      'Que su precio sube, es decir, se necesitan más unidades de la otra moneda para comprarla.',
-      'Que el banco central devalúa la moneda por decisión administrativa.',
-      'Que el país abandona su participación en el mercado de divisas.'
-    ],
+    options: ['Que su precio baja, es decir, se necesitan menos unidades de la otra moneda para comprarla.', 'Que su precio sube, es decir, se necesitan más unidades de la otra moneda para comprarla.', 'Que el banco central devalúa la moneda por una decisión administrativa oficial del gobierno.', 'Que el país abandona su participación activa en el mercado de divisas internacional.'],
     answer: 0,
     explanation: 'La depreciación es una caída del precio de la moneda en el mercado de divisas. La devaluación, en cambio, es una decisión oficial dentro de un régimen de tipo de cambio fijo.',
     type: 'CC'
@@ -780,12 +702,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Revaluación frente a apreciación',
     question: '¿Cuál es la diferencia entre revaluación y apreciación?',
-    options: [
-      'La revaluación es una decisión oficial en un tipo de cambio fijo y la apreciación es un resultado del mercado en un tipo de cambio flotante.',
-      'La revaluación es un resultado del mercado y la apreciación es una decisión del banco central.',
-      'Son términos equivalentes y se usan de manera indistinta en cualquier régimen cambiario.',
-      'La revaluación se refiere a los precios internos y la apreciación al comercio exterior.'
-    ],
+    options: ['La revaluación es una decisión oficial en un tipo de cambio fijo y la apreciación es un resultado del mercado en un tipo de cambio flotante.', 'La revaluación es un resultado del mercado que ocurre en un tipo de cambio flotante y la apreciación es una decisión del banco central en un tipo de cambio fijo.', 'Son términos equivalentes y se usan de manera indistinta en cualquier régimen cambiario, sea fijo o flotante.', 'La revaluación se refiere a los precios internos de la economía y la apreciación al comercio exterior del país.'],
     answer: 0,
     explanation: 'La revaluación y la devaluación son actos administrativos propios de un régimen cambiario fijo. La apreciación y la depreciación son resultados del mercado cuando el tipo de cambio fluctúa.',
     type: 'CC'
@@ -795,12 +712,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Régimen en que aplica la devaluación',
     question: '¿En qué régimen cambiario tiene sentido hablar de devaluación?',
-    options: [
-      'En un tipo de cambio fijo, porque el banco central modifica el precio oficial de la moneda.',
-      'En un tipo de cambio flotante, porque el mercado fija el precio cada día.',
-      'En cualquier régimen, porque devaluación y depreciación son términos equivalentes.',
-      'Solo cuando el país aplica controles de capital a los residentes.'
-    ],
+    options: ['En un tipo de cambio fijo, porque el banco central modifica el precio oficial de la moneda.', 'En un tipo de cambio flotante, porque el mercado fija libremente el precio de la moneda cada día.', 'En cualquier régimen cambiario, porque devaluación y depreciación son términos equivalentes en la práctica.', 'Solo cuando el país aplica controles de capital a los residentes y limita la compra de divisas.'],
     answer: 0,
     explanation: 'La devaluación implica que la autoridad monetaria cambia el valor oficial de la moneda. En un régimen flotante ese precio lo determina el mercado, así que corresponde hablar de depreciación.',
     type: 'CC'
@@ -810,12 +722,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Efectos de la devaluación',
     question: 'En un régimen de tipo de cambio fijo, una devaluación tiende a producir que...',
-    options: [
-      'se reduzca el valor oficial de la moneda, mejore la competitividad de las exportaciones y se encarezcan las importaciones.',
-      'se eleve el valor oficial de la moneda, se abaraten las importaciones y se encarezcan las exportaciones.',
-      'no exista efecto alguno, porque el precio de la moneda ya estaba fijado por el gobierno.',
-      'aumente el valor de la moneda sin que se altere el comercio exterior del país.'
-    ],
+    options: ['se reduzca el valor oficial de la moneda, mejore la competitividad de las exportaciones y se encarezcan las importaciones.', 'se eleve el valor oficial de la moneda, se abaraten las importaciones y se encarezcan las exportaciones del país en el mercado mundial.', 'no exista efecto alguno, porque el precio de la moneda ya estaba fijado por el gobierno y el comercio no reacciona.', 'aumente el valor de la moneda sin que se altere el comercio exterior del país en el corto plazo.'],
     answer: 0,
     explanation: 'Devaluar es abaratar oficialmente la moneda. Las exportaciones se vuelven más competitivas en precio y las importaciones más caras, con el consiguiente efecto sobre la inflación.',
     type: 'CC'
@@ -825,12 +732,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Quiénes demandan divisas',
     question: '¿Quiénes demandan dólares australianos en el mercado de divisas?',
-    options: [
-      'Los extranjeros que compran exportaciones australianas, los que invierten en activos australianos y los que especulan con una apreciación.',
-      'Los residentes australianos que compran bienes importados del Reino Unido.',
-      'Los residentes australianos que viajan al exterior y pagan sus gastos en libras esterlinas.',
-      'Los residentes australianos que pagan sus impuestos en moneda local.'
-    ],
+    options: ['Los extranjeros que compran exportaciones australianas, los que invierten en activos australianos y los que especulan con una apreciación.', 'Los residentes australianos que compran bienes importados del Reino Unido y pagan con libras esterlinas en el mercado de divisas internacional.', 'Los residentes australianos que viajan al exterior y pagan sus gastos en libras esterlinas durante sus vacaciones de verano en el extranjero.', 'Los residentes australianos que pagan sus impuestos en moneda local al gobierno de Australia cada año fiscal.'],
     answer: 0,
     explanation: 'Demandan dólares australianos quienes necesitan pagar algo en Australia: compradores de exportaciones, inversionistas y especuladores. Los residentes que importan o viajan al exterior ofrecen dólares australianos.',
     type: 'CC'
@@ -840,12 +742,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Quiénes ofrecen divisas',
     question: '¿Quiénes ofrecen dólares australianos en el mercado de divisas?',
-    options: [
-      'Los residentes australianos que compran importaciones, los que invierten en el exterior y el banco central cuando interviene vendiendo su moneda.',
-      'Los extranjeros que compran bonos y acciones australianos.',
-      'Los exportadores australianos que reciben sus pagos en libras esterlinas.',
-      'Los turistas extranjeros que llegan a Australia y gastan en dólares australianos.'
-    ],
+    options: ['Los residentes australianos que compran importaciones, los que invierten en el exterior y el banco central cuando interviene vendiendo su moneda.', 'Los extranjeros que compran bonos y acciones australianos y necesitan dólares australianos para pagarlos en el mercado financiero y en las bolsas de valores.', 'Los exportadores australianos que reciben sus pagos en libras esterlinas y las cambian por su moneda local en el banco comercial.', 'Los turistas extranjeros que llegan a Australia y gastan en dólares australianos durante su estadía en el país entero.'],
     answer: 0,
     explanation: 'Ofrecen dólares australianos quienes necesitan moneda extranjera: importadores, inversionistas que envían capital al exterior y el banco central cuando vende su propia moneda.',
     type: 'CC'
@@ -855,12 +752,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Desplazamiento frente a movimiento',
     question: '¿Qué distingue un desplazamiento de la curva de demanda de divisas de un movimiento a lo largo de esa curva?',
-    options: [
-      'El desplazamiento lo causa un factor distinto del tipo de cambio y el movimiento a lo largo lo causa un cambio en el propio tipo de cambio.',
-      'El desplazamiento ocurre solo en el corto plazo y el movimiento a lo largo solo en el largo plazo.',
-      'Son expresiones equivalentes y solo cambia el nombre según el manual que se consulte.',
-      'El movimiento a lo largo lo causa el ingreso de los consumidores y el desplazamiento la cantidad demandada.'
-    ],
+    options: ['El desplazamiento lo causa un factor distinto del tipo de cambio y el movimiento a lo largo lo causa un cambio en el propio tipo de cambio.', 'El desplazamiento ocurre solo en el corto plazo y el movimiento a lo largo solo en el largo plazo del mercado de divisas internacional y en el largo plazo.', 'Son expresiones equivalentes y solo cambia el nombre según el manual de economía que se consulte en cada caso particular.', 'El movimiento a lo largo lo causa el ingreso de los consumidores y el desplazamiento la cantidad demandada en el mercado de divisas.'],
     answer: 0,
     explanation: 'La regla es general: la curva se desplaza cuando cambia un determinante distinto del precio, como el ingreso, las preferencias, las tasas de interés o las expectativas. La cantidad cambia cuando cambia el precio, que aquí es el tipo de cambio.',
     type: 'CC'
@@ -870,14 +762,9 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Dos caras de una operación',
     question: '¿Por qué el mercado del dólar australiano y el mercado de la libra esterlina son las dos caras de una misma operación?',
-    options: [
-      'Porque comprar dólares australianos con libras esterlinas es a la vez demandar dólares australianos y ofrecer libras esterlinas.',
-      'Porque los dos países comparten la misma moneda en sus transacciones.',
-      'Porque ambos mercados son fijados por el mismo banco central.',
-      'Porque el tipo de cambio entre las dos monedas nunca cambia.'
-    ],
+    options: ['Porque comprar dólares australianos con libras esterlinas es a la vez demandar dólares australianos y ofrecer libras esterlinas.', 'Porque los dos países comparten la misma moneda en sus transacciones comerciales y financieras internacionales del mundo.', 'Porque ambos mercados son fijados por el mismo banco central de manera coordinada y simultánea cada día en el mercado.', 'Porque el tipo de cambio entre las dos monedas nunca cambia en el mercado de divisas internacional ni en el local en ningún momento.'],
     answer: 0,
-    explanation: 'Cada transacción en el mercado de divisas involucra dos monedas. Por eso un mismo hecho aparece como desplazamiento de la demanda en un panel y de la oferta en el otro.',
+    explanation: 'Cada transacción en el mercado de divisas involucra dos monedas. Por eso un mismo hecho aparece como desplazamiento de la demanda en un mercado y de la oferta en el otro.',
     type: 'CC'
   },
   {
@@ -885,12 +772,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Cantidad intercambiada en el nuevo equilibrio',
     question: 'Cuando la demanda de dólares australianos aumenta y la oferta no cambia, ¿qué ocurre con la cantidad intercambiada?',
-    options: [
-      'Aumenta, porque el nuevo equilibrio se alcanza en un punto más alto de la misma curva de oferta.',
-      'Disminuye, porque la oferta se reduce cuando sube el precio.',
-      'No cambia, porque la curva de oferta permanece constante.',
-      'Aumenta solo si el banco central interviene en el mercado.'
-    ],
+    options: ['Aumenta, porque el nuevo equilibrio se alcanza en un punto más alto de la misma curva de oferta.', 'Disminuye, porque la oferta se reduce cuando sube el precio de la moneda en el mercado de divisas.', 'No cambia, porque la curva de oferta permanece constante en su posición inicial del mercado.', 'Aumenta solo si el banco central interviene en el mercado comprando divisas extranjeras.'],
     answer: 0,
     explanation: 'La curva de oferta no se mueve, así que el ajuste ocurre a lo largo de ella. Al subir el tipo de cambio, la cantidad ofrecida aumenta hasta el nuevo equilibrio.',
     type: 'CC'
@@ -930,12 +812,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Apreciación y balanza comercial',
     question: 'Si una moneda se aprecia de forma sostenida, ¿qué efecto tiende a producirse en la balanza comercial?',
-    options: [
-      'Un deterioro, porque las exportaciones se encarecen y las importaciones se abaratan.',
-      'Una mejora, porque las exportaciones se abaratan y las importaciones se encarecen.',
-      'Ningún cambio, porque la balanza comercial no depende del tipo de cambio.',
-      'Una mejora, porque el país puede importar más bienes de capital para producir.'
-    ],
+    options: ['Un deterioro, porque las exportaciones se encarecen y las importaciones se abaratan.', 'Una mejora, porque las exportaciones se abaratan y las importaciones se encarecen en el mercado.', 'Ningún cambio, porque la balanza comercial no depende del tipo de cambio de la moneda.', 'Una mejora, porque el país puede importar más bienes de capital para producir en el largo plazo.'],
     answer: 0,
     explanation: 'La apreciación encarece las exportaciones y abarata las importaciones. Con todo lo demás constante, la balanza comercial tiende a deteriorarse.',
     type: 'CC'
@@ -960,12 +837,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Inflación importada',
     question: '¿Por qué una depreciación de la moneda nacional tiende a aumentar la inflación interna?',
-    options: [
-      'Porque encarece las importaciones y, con ellas, los insumos y los bienes finales que se compran en el exterior.',
-      'Porque abarata las importaciones y aumenta la competencia entre las empresas locales.',
-      'Porque reduce la demanda agregada y eso presiona los precios al alza.',
-      'Porque aumenta la recaudación tributaria del gobierno sobre el comercio exterior.'
-    ],
+    options: ['Porque encarece las importaciones y, con ellas, los insumos y los bienes finales que se compran en el exterior.', 'Porque abarata las importaciones y aumenta la competencia entre las empresas locales en el mercado interno del país.', 'Porque reduce la demanda agregada y eso presiona los precios al alza en el corto plazo de la economía.', 'Porque aumenta la recaudación tributaria del gobierno sobre el comercio exterior y eso eleva los precios.'],
     answer: 0,
     explanation: 'Con la moneda depreciada cada importación cuesta más en moneda local, incluidos los insumos y los combustibles. Ese aumento de costos se traslada a los precios internos.',
     type: 'CC'
@@ -975,12 +847,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Curva en J',
     question: '¿Qué describe la curva en J en el comercio internacional?',
-    options: [
-      'Que después de una depreciación la balanza comercial puede deteriorarse primero y mejorar más adelante.',
-      'Que las exportaciones aumentan de inmediato cada vez que la moneda se deprecia.',
-      'Que el tipo de cambio se aprecia y se deprecia en ciclos regulares y previsibles.',
-      'Que la inversión extranjera directa aumenta de forma sostenida en el largo plazo.'
-    ],
+    options: ['Que después de una depreciación la balanza comercial puede deteriorarse primero y mejorar más adelante.', 'Que las exportaciones aumentan de inmediato cada vez que la moneda se deprecia en el mercado de divisas.', 'Que el tipo de cambio se aprecia y se deprecia en ciclos regulares y previsibles de largo plazo en el mercado.', 'Que la inversión extranjera directa aumenta de forma sostenida en el largo plazo del país receptor.'],
     answer: 0,
     explanation: 'Los contratos de comercio se fijan con antelación, así que en el corto plazo una depreciación encarece las importaciones sin aumentar todavía las exportaciones. La mejora llega cuando los volúmenes se ajustan.',
     type: 'CC'
@@ -990,12 +857,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Tipo de cambio fijo',
     question: '¿Qué caracteriza a un régimen de tipo de cambio fijo?',
-    options: [
-      'El banco central se compromete a mantener un precio determinado de la moneda y interviene para lograrlo.',
-      'El precio de la moneda lo determina únicamente la oferta y la demanda del mercado.',
-      'El gobierno prohíbe a los residentes comprar cualquier divisa extranjera.',
-      'El precio de la moneda cambia según un calendario que se anuncia con antelación.'
-    ],
+    options: ['El banco central se compromete a mantener un precio determinado de la moneda y interviene para lograrlo.', 'El precio de la moneda lo determina únicamente la oferta y la demanda del mercado de divisas sin intervención.', 'El gobierno prohíbe a los residentes comprar cualquier divisa extranjera en el mercado interno del país.', 'El precio de la moneda cambia según un calendario que se anuncia con antelación por el gobierno central.'],
     answer: 0,
     explanation: 'En un régimen fijo la autoridad monetaria anuncia un valor y lo defiende comprando o vendiendo divisas, y ajustando las tasas de interés cuando es necesario.',
     type: 'CC'
@@ -1005,12 +867,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Tipo de cambio flotante',
     question: '¿Qué caracteriza a un régimen de tipo de cambio flotante?',
-    options: [
-      'El precio de la moneda se determina por la oferta y la demanda en el mercado de divisas, sin intervención sistemática.',
-      'El banco central fija el precio de la moneda cada mañana.',
-      'El precio de la moneda solo cambia cuando el gobierno lo autoriza expresamente.',
-      'El precio se mantiene dentro de un rango anunciado con intervención permanente del banco central.'
-    ],
+    options: ['El precio de la moneda se determina por la oferta y la demanda en el mercado de divisas, sin intervención sistemática.', 'El banco central fija el precio de la moneda cada mañana mediante un anuncio oficial publicado en la prensa.', 'El precio de la moneda solo cambia cuando el gobierno lo autoriza expresamente mediante un decreto oficial.', 'El precio se mantiene dentro de un rango anunciado con intervención permanente del banco central en el mercado de divisas.'],
     answer: 0,
     explanation: 'En un régimen flotante el mercado determina el tipo de cambio. La opción que describe un rango con intervención permanente corresponde a las bandas cambiarias.',
     type: 'CC'
@@ -1020,12 +877,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Bandas cambiarias',
     question: '¿Qué es una banda cambiaria?',
-    options: [
-      'Un rango dentro del cual se permite fluctuar al tipo de cambio, con intervención del banco central en los extremos.',
-      'Un impuesto que se aplica a las transacciones con moneda extranjera.',
-      'Un acuerdo por el cual un país usa como propia la moneda de otro país.',
-      'Un tipo de cambio fijo que por definición nunca se modifica.'
-    ],
+    options: ['Un rango dentro del cual se permite fluctuar al tipo de cambio, con intervención del banco central en los extremos.', 'Un impuesto que se aplica a las transacciones con moneda extranjera en el mercado cambiario nacional.', 'Un acuerdo por el cual un país usa como propia la moneda de otro país en todas sus transacciones internas y en el exterior.', 'Un tipo de cambio fijo que por definición nunca se modifica ni se ajusta en el tiempo ni en el espacio.'],
     answer: 0,
     explanation: 'La banda cambiaria combina elementos de los dos regímenes: el mercado fija el precio dentro de un rango y el banco central interviene cuando el valor se acerca a los límites.',
     type: 'CC'
@@ -1035,12 +887,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Ventaja del tipo de cambio fijo',
     question: '¿Cuál es una ventaja de un régimen de tipo de cambio fijo?',
-    options: [
-      'Aporta estabilidad y previsibilidad a las transacciones internacionales y ayuda a contener la inflación.',
-      'Permite absorber los choques externos mediante ajustes automáticos del tipo de cambio.',
-      'Deja la política monetaria completamente libre para atender objetivos internos.',
-      'Elimina la necesidad de que el banco central mantenga reservas internacionales.'
-    ],
+    options: ['Aporta estabilidad y previsibilidad a las transacciones internacionales y ayuda a contener la inflación.', 'Permite absorber los choques externos mediante ajustes automáticos del tipo de cambio en el mercado de divisas.', 'Deja la política monetaria completamente libre para atender objetivos internos de la economía nacional.', 'Elimina la necesidad de que el banco central mantenga reservas internacionales para defender el precio de la moneda.'],
     answer: 0,
     explanation: 'La estabilidad del tipo de cambio reduce la incertidumbre para exportadores e inversionistas y ayuda a anclar las expectativas de precios. Su costo es la pérdida de autonomía de la política monetaria.',
     type: 'CC'
@@ -1050,12 +897,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Costo del tipo de cambio fijo',
     question: '¿Cuál es un costo de mantener un régimen de tipo de cambio fijo?',
-    options: [
-      'El banco central pierde autonomía para usar la tasa de interés con fines internos y debe mantener reservas internacionales.',
-      'La incertidumbre cambiaria aumenta de manera significativa para los exportadores.',
-      'El gobierno queda impedido de intervenir en el mercado de divisas.',
-      'La inflación se vuelve incontrolable en el corto plazo.'
-    ],
+    options: ['El banco central pierde autonomía para usar la tasa de interés con fines internos y debe mantener reservas internacionales.', 'La incertidumbre cambiaria aumenta de manera significativa para los exportadores y los importadores del país en el comercio exterior.', 'El gobierno queda impedido de intervenir en el mercado de divisas para sostener el precio de la moneda en el mercado.', 'La inflación se vuelve incontrolable en el corto plazo y afecta a toda la economía del país entero y a los hogares.'],
     answer: 0,
     explanation: 'Defender una paridad obliga a mover la tasa de interés en función del objetivo externo y a sostener reservas internacionales. Ambas cosas reducen el margen de la política monetaria interna.',
     type: 'CC'
@@ -1065,12 +907,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Ventaja del tipo de cambio flotante',
     question: '¿Cuál es una ventaja de un régimen de tipo de cambio flotante?',
-    options: [
-      'La política monetaria recupera autonomía y el propio tipo de cambio absorbe parte de los choques externos.',
-      'Elimina por completo la incertidumbre en el comercio internacional.',
-      'Impide toda actividad especulativa en el mercado de divisas.',
-      'Garantiza el equilibrio de la balanza comercial en el largo plazo.'
-    ],
+    options: ['La política monetaria recupera autonomía y el propio tipo de cambio absorbe parte de los choques externos.', 'Elimina por completo la incertidumbre en el comercio internacional y en la inversión extranjera.', 'Impide toda actividad especulativa en el mercado de divisas y en los mercados financieros internacionales del mundo.', 'Garantiza el equilibrio de la balanza comercial en el largo plazo de manera automática y permanente.'],
     answer: 0,
     explanation: 'Con tipo de cambio flotante la tasa de interés puede orientarse a objetivos internos, como la inflación o el desempleo, mientras el tipo de cambio se ajusta ante los choques.',
     type: 'CC'
@@ -1080,12 +917,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Adopción de una moneda extranjera',
     question: '¿Qué implica que un país adopte como propia la moneda de otro país?',
-    options: [
-      'Renuncia a su política monetaria propia y a la posibilidad de modificar el tipo de cambio.',
-      'Conserva su política monetaria y además gana estabilidad cambiaria.',
-      'Aumenta su autonomía para fijar la tasa de interés interna.',
-      'Mantiene un tipo de cambio flexible frente a la moneda que adopta.'
-    ],
+    options: ['Renuncia a su política monetaria propia y a la posibilidad de modificar el tipo de cambio.', 'Conserva su política monetaria y además gana estabilidad cambiaria en el comercio exterior.', 'Aumenta su autonomía para fijar la tasa de interés interna y la política monetaria del país.', 'Mantiene un tipo de cambio flexible frente a la moneda que adopta en sus transacciones externas.'],
     answer: 0,
     explanation: 'Al adoptar una moneda extranjera el país deja de emitir la suya y pierde los instrumentos de política monetaria y cambiaria. Gana estabilidad y credibilidad, a cambio de ese margen de acción.',
     type: 'CC'
@@ -1110,12 +942,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Especulación',
     question: '¿Cómo actúa la especulación en el mercado de divisas?',
-    options: [
-      'Compra la moneda que espera que se aprecie y vende la que espera que se deprecie, con lo que refuerza el movimiento esperado.',
-      'Compra únicamente la moneda que ya se apreció, sin anticipar movimientos futuros.',
-      'Elimina por completo la volatilidad del tipo de cambio.',
-      'Opera solo a través del banco central y de las reservas internacionales.'
-    ],
+    options: ['Compra la moneda que espera que se aprecie y vende la que espera que se deprecie, con lo que refuerza el movimiento esperado.', 'Compra únicamente la moneda que ya se apreció, sin anticipar movimientos futuros del mercado de divisas internacional y en el exterior.', 'Elimina por completo la volatilidad del tipo de cambio en el mercado de divisas internacional y local.', 'Opera solo a través del banco central y de las reservas internacionales del país en el mercado cambiario nacional.'],
     answer: 0,
     explanation: 'La especulación consiste en anticipar el precio futuro. Si muchos agentes esperan una apreciación, compran ahora y esa compra misma presiona el precio al alza.',
     type: 'CC'
@@ -1155,12 +982,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Paridad del poder adquisitivo',
     question: '¿Qué sostiene la teoría de la paridad del poder adquisitivo?',
-    options: [
-      'Que en el largo plazo el tipo de cambio tiende a igualar el poder de compra de dos monedas.',
-      'Que el tipo de cambio fijo es superior al tipo de cambio flotante.',
-      'Que la inflación no tiene ningún efecto sobre el tipo de cambio.',
-      'Que el tipo de cambio lo fija el banco central según el nivel de reservas.'
-    ],
+    options: ['Que en el largo plazo el tipo de cambio tiende a igualar el poder de compra de dos monedas.', 'Que el tipo de cambio fijo es superior al tipo de cambio flotante en todos los casos posibles.', 'Que la inflación no tiene ningún efecto sobre el tipo de cambio de equilibrio del mercado.', 'Que el tipo de cambio lo fija el banco central según el nivel de reservas internacionales del país.'],
     answer: 0,
     explanation: 'La paridad del poder adquisitivo es una referencia de largo plazo: si un país tiene una inflación más alta, su moneda tiende a depreciarse para mantener un poder de compra comparable.',
     type: 'CC'
@@ -1170,12 +992,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Paridad de las tasas de interés',
     question: 'Según la paridad de las tasas de interés, una moneda con tasas más bajas tiende a...',
-    options: [
-      'depreciarse frente a la moneda con tasas más altas, para compensar la diferencia de rendimiento.',
-      'apreciarse, porque las tasas bajas atraen capital especulativo del exterior.',
-      'mantenerse igual, porque el mercado solo observa la balanza comercial.',
-      'revaluarse por decisión del banco central del país.'
-    ],
+    options: ['depreciarse frente a la moneda con tasas más altas, para compensar la diferencia de rendimiento.', 'apreciarse, porque las tasas bajas atraen capital especulativo del exterior en el corto plazo del mercado.', 'mantenerse igual, porque el mercado solo observa la balanza comercial del país y no las tasas.', 'revaluarse por decisión del banco central del país en cualquier momento del año fiscal.'],
     answer: 0,
     explanation: 'La paridad de tasas vincula el diferencial de rendimiento con la variación esperada del tipo de cambio. La moneda de menor tasa debe depreciarse para igualar el retorno esperado en la moneda de mayor tasa.',
     type: 'CC'
@@ -1185,12 +1002,7 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Precio de las materias primas',
     question: '¿Por qué un auge en los precios de las materias primas que exporta un país tiende a apreciar su moneda?',
-    options: [
-      'Porque aumentan los ingresos por exportaciones y la demanda de su moneda para pagarlas.',
-      'Porque se reducen las importaciones y con ellas la oferta de su moneda.',
-      'Porque el banco central vende su propia moneda al recibir las divisas.',
-      'Porque bajan las tasas de interés internas del país.'
-    ],
+    options: ['Porque aumentan los ingresos por exportaciones y la demanda de su moneda para pagarlas.', 'Porque se reducen las importaciones y con ellas la oferta de su moneda en el mercado de divisas.', 'Porque el banco central vende su propia moneda al recibir las divisas de los exportadores nacionales.', 'Porque bajan las tasas de interés internas del país y eso atrae capital extranjero de corto plazo.'],
     answer: 0,
     explanation: 'Un auge de precios de las materias primas eleva el valor de las exportaciones. Los compradores extranjeros demandan más la moneda del país para pagar, y la moneda se aprecia. Es el caso del dólar australiano con el hierro y el carbón.',
     type: 'CC'
@@ -1208,6 +1020,11 @@ const SVG_DIAGRAMS = {
      y el tipo de cambio baja, es decir, el dólar australiano se deprecia. */
   modelo2: function(){
     return `<img class="diagram-img" src="img/modelo2-depreciacion-aud.png" alt="Modelo de depreciación del dólar australiano: la curva de oferta se desplaza a la derecha y el tipo de cambio baja">`;
+  },
+  /* Modelo 3: la curva de oferta de libras esterlinas se desplaza a la derecha
+     y el tipo de cambio baja, es decir, la libra esterlina se deprecia. */
+  modelo3: function(){
+    return `<img class="diagram-img" src="img/modelo3-depreciacion-gbp.png" alt="Modelo de depreciación de la libra esterlina: la curva de oferta se desplaza a la derecha y el tipo de cambio baja">`;
   }
 };
 
