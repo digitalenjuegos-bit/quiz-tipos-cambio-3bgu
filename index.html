@@ -131,7 +131,7 @@ body::before{content:"";position:fixed;inset:0;background-image:url("data:image/
 .btn-ghost.full{width:100%;margin-top:14px}
 .btn-excel{color:var(--ok);border-color:#cfe6da}.btn-excel:hover{background:#eef6f1}
 /* Panel docente */
-.teacher-panel-opener{position:fixed;right:20px;bottom:20px;width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;opacity:.3;z-index:100}
+.teacher-panel-opener{position:fixed;right:20px;bottom:20px;width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;opacity:.3;z-index:600}
 .teacher-panel-opener:hover{opacity:1;background:var(--gold)}
 .teacher-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
 .teacher-overlay.open{display:flex}
@@ -1221,8 +1221,10 @@ document.addEventListener('visibilitychange', function(){
   checkQuizStatus();
   loadParams().then(function(p){
     const n = (p.rcCount||0) + (p.ccCount||0);
-    if(n > 0) document.getElementById('totalQDisplay').textContent = n;
-    document.getElementById('rulesTimer').textContent = (p.timePerQuestion||90) + ' segundos';
+    const totalEl = document.getElementById('totalQDisplay');
+    if(totalEl && n > 0) totalEl.textContent = n;
+    const timerEl = document.getElementById('rulesTimer');
+    if(timerEl) timerEl.textContent = (p.timePerQuestion||90) + ' segundos';
   });
 })();
 
