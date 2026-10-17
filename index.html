@@ -50,11 +50,17 @@ body::before{content:"";position:fixed;inset:0;background-image:url("data:image/
 .skills-list{list-style:none;font-size:14px;color:var(--ink-soft)}
 .skills-list li{margin-bottom:6px;padding-left:18px;position:relative}
 .skills-list li::before{content:"\f00c";font-family:"Font Awesome 6 Free";font-weight:900;color:var(--gold-brand);font-size:10px;position:absolute;left:0;top:5px}
-.rules-box{background:rgba(217,177,75,.07);border:1px solid rgba(217,177,75,.4);border-radius:8px;padding:16px 18px;margin-bottom:36px;max-width:620px}
-.rules-title{font-size:12px;font-weight:600;color:var(--navy);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.rules-list{list-style:none;font-size:14px;color:var(--ink-soft)}
-.rules-list li{margin-bottom:6px;padding-left:18px;position:relative}
-.rules-list li::before{content:"\f05a";font-family:"Font Awesome 6 Free";font-weight:900;color:var(--gold-brand);font-size:10px;position:absolute;left:0;top:5px}
+.rules-modal-overlay{position:fixed;inset:0;background:rgba(20,28,45,.72);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;transition:opacity .3s ease}
+.rules-modal-overlay.hidden{opacity:0;pointer-events:none}
+.rules-modal{background:var(--paper);border-radius:12px;max-width:560px;width:100%;padding:34px 32px;box-shadow:0 30px 70px -20px rgba(0,0,0,.5);max-height:90vh;overflow-y:auto;text-align:center;border-top:4px solid var(--gold-brand)}
+.rules-modal-icon{font-size:38px;color:var(--gold-brand);margin-bottom:12px}
+.rules-modal-title{font-family:Fraunces,serif;font-size:24px;color:var(--forest-deep);margin-bottom:8px}
+.rules-modal-sub{font-size:14px;color:var(--muted);margin-bottom:20px}
+.rules-modal-list{list-style:none;text-align:left;font-size:14px;color:var(--ink-soft);margin-bottom:24px}
+.rules-modal-list li{margin-bottom:10px;padding-left:22px;position:relative}
+.rules-modal-list li::before{content:"\f05a";font-family:"Font Awesome 6 Free";font-weight:900;color:var(--gold-brand);font-size:11px;position:absolute;left:0;top:4px}
+.rules-modal-btn{width:100%}
+.quiz-form.locked{display:none}
 .welcome-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px}
 .meta-item{background:rgba(255,255,255,.5);border:1px solid var(--border);border-radius:8px;padding:16px 18px}
 .meta-item.num{font-family:'Fraunces',serif;font-weight:700;font-size:28px;color:var(--navy);line-height:1}
@@ -303,28 +309,21 @@ body::before{content:"";position:fixed;inset:0;background-image:url("data:image/
       <li>Lectura de modelos de oferta y demanda de divisas para identificar qué moneda se aprecia y cuál se deprecia</li>
     </ul>
   </div>
-  <div class="rules-box">
-    <div class="rules-title"><i class="fa-solid fa-circle-info"></i> Reglas de la evaluación</div>
-    <ul class="rules-list">
-      <li>Temporizador por pregunta: <strong id="rulesTimer">90 segundos</strong> para responder cada ítem. Al agotarse el tiempo, la pregunta se cuenta como no respondida.</li>
-      <li>Un intento por estudiante: la evaluación queda cerrada hasta que el docente la habilite nuevamente.</li>
-      <li>Penalización por cambio de pestaña o minimizar: la primera salida es solo un recordatorio; desde la segunda, se descuentan 0,5 puntos por salida.</li>
-      <li>Promedio con Blooket: la nota del quiz se promedia con el control de Blooket solo si la nota de Blooket es mayor; de lo contrario se mantiene la nota del quiz.</li>
-    </ul>
-  </div>
   <div class="welcome-meta">
     <div class="meta-item"><div class="meta-item num" id="totalQDisplay">20</div><div class="meta-item lb">Preguntas</div></div>
     <div class="meta-item"><div class="meta-item num">/10</div><div class="meta-item lb">Puntaje</div></div>
     <div class="meta-item"><div class="meta-item num">1 intento</div><div class="meta-item lb">Por estudiante</div></div>
   </div>
-  <div class="form-group">
-    <label for="studentName"><i class="fa-solid fa-user"></i> Selecciona tu nombre</label>
-    <select id="studentName">
-      <option value="">Selecciona...</option>
-    </select>
-    <div id="nameError" class="name-error"></div>
+  <div id="quizForm" class="quiz-form locked">
+    <div class="form-group">
+      <label for="studentName"><i class="fa-solid fa-user"></i> Selecciona tu nombre</label>
+      <select id="studentName">
+        <option value="">Selecciona...</option>
+      </select>
+      <div id="nameError" class="name-error"></div>
+    </div>
+    <button class="btn btn-primary" onclick="startQuiz()" style="width:100%"><i class="fa-solid fa-play"></i> Comenzar evaluación</button>
   </div>
-  <button class="btn btn-primary" onclick="startQuiz()" style="width:100%"><i class="fa-solid fa-play"></i> Comenzar evaluación</button>
 </div>
 </section>
 
@@ -456,6 +455,22 @@ body::before{content:"";position:fixed;inset:0;background-image:url("data:image/
 </div>
 
 <!-- TOAST -->
+<!-- ═══════ MODAL: REGLAS OBLIGATORIAS ═══════ -->
+<div class="rules-modal-overlay" id="rulesModal">
+  <div class="rules-modal" role="dialog" aria-modal="true" aria-labelledby="rulesModalTitle">
+    <div class="rules-modal-icon"><i class="fa-solid fa-circle-info"></i></div>
+    <h2 class="rules-modal-title" id="rulesModalTitle">Reglas de la evaluación</h2>
+    <p class="rules-modal-sub">Lee las reglas antes de comenzar. Debes aceptarlas para continuar.</p>
+    <ul class="rules-modal-list">
+      <li>Temporizador por pregunta: <strong id="rulesTimer">90 segundos</strong> para responder cada ítem. Al agotarse el tiempo, la pregunta se cuenta como no respondida.</li>
+      <li>Un intento por estudiante: la evaluación queda cerrada hasta que el docente la habilite nuevamente.</li>
+      <li>Penalización por cambio de pestaña o minimizar: la primera salida es solo un recordatorio; desde la segunda, se descuentan 0,5 puntos por salida.</li>
+      <li>Promedio con Blooket: la nota del quiz se promedia con el control de Blooket solo si la nota de Blooket es mayor; de lo contrario se mantiene la nota del quiz.</li>
+    </ul>
+    <button class="btn btn-primary rules-modal-btn" onclick="acceptRules()"><i class="fa-solid fa-check"></i> Acepto las reglas y continúo</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1230,12 +1245,23 @@ function checkQuizStatus(){
     .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(rows=>{
       if(rows.length && rows[0].open === false){
+        const modal = document.getElementById('rulesModal');
+        if(modal) modal.classList.add('hidden');
         document.querySelector('.welcome-card').innerHTML='<div style="text-align:center;padding:40px"><i class="fa-solid fa-lock" style="font-size:48px;color:var(--gold);margin-bottom:16px;display:block"></i><h2 style="font-family:Fraunces,serif;color:var(--forest-deep)">Evaluación cerrada</h2><p style="color:var(--muted);margin-top:8px">El docente abrirá la evaluación cuando esté listo. Espera instrucciones.</p></div>';
       }
     }).catch(()=>{ /* backend no disponible: no bloquear el quiz */ });
 }
 
 /* ═══════ START ═══════ */
+function acceptRules(){
+  const modal = document.getElementById('rulesModal');
+  if(modal) modal.classList.add('hidden');
+  const form = document.getElementById('quizForm');
+  if(form) form.classList.remove('locked');
+  const sel = document.getElementById('studentName');
+  if(sel) sel.focus();
+}
+
 function startQuiz(){
   const sel = document.getElementById('studentName');
   const errorEl = document.getElementById('nameError');
