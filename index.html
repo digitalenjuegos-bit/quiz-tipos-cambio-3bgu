@@ -50,6 +50,11 @@ body::before{content:"";position:fixed;inset:0;background-image:url("data:image/
 .skills-list{list-style:none;font-size:14px;color:var(--ink-soft)}
 .skills-list li{margin-bottom:6px;padding-left:18px;position:relative}
 .skills-list li::before{content:"\f00c";font-family:"Font Awesome 6 Free";font-weight:900;color:var(--gold-brand);font-size:10px;position:absolute;left:0;top:5px}
+.rules-box{background:rgba(217,177,75,.07);border:1px solid rgba(217,177,75,.4);border-radius:8px;padding:16px 18px;margin-bottom:36px;max-width:620px}
+.rules-title{font-size:12px;font-weight:600;color:var(--navy);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.rules-list{list-style:none;font-size:14px;color:var(--ink-soft)}
+.rules-list li{margin-bottom:6px;padding-left:18px;position:relative}
+.rules-list li::before{content:"\f05a";font-family:"Font Awesome 6 Free";font-weight:900;color:var(--gold-brand);font-size:10px;position:absolute;left:0;top:5px}
 .welcome-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px}
 .meta-item{background:rgba(255,255,255,.5);border:1px solid var(--border);border-radius:8px;padding:16px 18px}
 .meta-item.num{font-family:'Fraunces',serif;font-weight:700;font-size:28px;color:var(--navy);line-height:1}
@@ -298,6 +303,15 @@ body::before{content:"";position:fixed;inset:0;background-image:url("data:image/
       <li>Lectura de modelos de oferta y demanda de divisas para identificar qué moneda se aprecia y cuál se deprecia</li>
     </ul>
   </div>
+  <div class="rules-box">
+    <div class="rules-title"><i class="fa-solid fa-circle-info"></i> Reglas de la evaluación</div>
+    <ul class="rules-list">
+      <li>Temporizador por pregunta: <strong id="rulesTimer">90 segundos</strong> para responder cada ítem. Al agotarse el tiempo, la pregunta se cuenta como no respondida.</li>
+      <li>Un intento por estudiante: la evaluación queda cerrada hasta que el docente la habilite nuevamente.</li>
+      <li>Penalización por cambio de pestaña o minimizar: la primera salida es solo un recordatorio; desde la segunda, se descuentan 0,5 puntos por salida.</li>
+      <li>Promedio con Blooket: la nota del quiz se promedia con el control de Blooket solo si la nota de Blooket es mayor; de lo contrario se mantiene la nota del quiz.</li>
+    </ul>
+  </div>
   <div class="welcome-meta">
     <div class="meta-item"><div class="meta-item num" id="totalQDisplay">20</div><div class="meta-item lb">Preguntas</div></div>
     <div class="meta-item"><div class="meta-item num">/10</div><div class="meta-item lb">Puntaje</div></div>
@@ -458,10 +472,10 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Mercado de divisas: desplazamiento de la demanda',
     scenario: 'El modelo muestra el mercado del dólar australiano, con el tipo de cambio medido en libras esterlinas por dólar australiano.',
-    question: 'En el modelo, la curva de demanda se desplaza de la posición D1 a la posición D2 mientras la curva de oferta (S) se mantiene en su lugar. ¿Qué ocurre con el tipo de cambio del dólar australiano?',
-    options: ['Sube, porque a cada nivel de oferta los compradores están dispuestos a pagar más libras esterlinas por dólar australiano.', 'Baja, porque al desplazarse la curva de demanda hacia la derecha el precio de equilibrio del mercado disminuye.', 'No cambia, porque la curva de oferta de dólares australianos permanece constante y el tipo de cambio lo fija el banco central.', 'Sube y la cantidad intercambiada disminuye, porque la curva de oferta no responde al cambio de precio en el mercado.'],
+    question: 'En el modelo, la curva de demanda de dólares australianos se desplaza de D1 a D2 mientras la oferta (S) se mantiene. ¿Qué ocurre con el tipo de cambio de la libra esterlina, medido en dólares australianos por libra (A$/£)?',
+    options: ['Baja, porque al apreciarse el dólar australiano cada libra esterlina se cambia por menos dólares australianos.', 'Sube, porque al apreciarse el dólar australiano cada libra esterlina se cambia por más dólares australianos.', 'No cambia, porque el tipo de cambio de la libra lo fija el banco central y no el mercado de divisas.', 'Sube y la cantidad de libras intercambiada disminuye, porque la oferta de libras no responde al cambio de precio.'],
     answer: 0,
-    explanation: 'Al desplazarse la demanda de D1 a D2, el nuevo equilibrio se alcanza a un tipo de cambio mayor. El dólar australiano se aprecia y la cantidad intercambiada también aumenta, porque el ajuste ocurre a lo largo de la curva de oferta.',
+    explanation: 'Si el dólar australiano se aprecia, cada libra esterlina vale menos dólares australianos, por lo que el tipo de cambio de la libra (A$/£) baja. Es el movimiento inverso al del dólar australiano en el modelo.',
     diagram: 'modelo1',
     diagramCaption: 'Modelo de apreciación del dólar australiano (adaptado de Hoang, Wray y Chakraborty, 2020, figura 31.3).',
     type: 'RC',
@@ -472,10 +486,10 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Mercado de divisas: desplazamiento de la oferta',
     scenario: 'El modelo muestra el mercado del dólar australiano, con el tipo de cambio medido en libras esterlinas por dólar australiano.',
-    question: 'En el modelo, la curva de oferta se desplaza de la posición S1 a la posición S2 mientras la curva de demanda (D) se mantiene en su lugar. ¿Qué ocurre con el tipo de cambio del dólar australiano?',
-    options: ['Baja, porque a cada tipo de cambio los tenedores ofrecen más dólares australianos que antes.', 'Sube, porque desplazar la curva de oferta hacia la derecha eleva el precio de equilibrio del mercado.', 'No cambia, porque la curva de demanda de dólares australianos permanece constante en su posición inicial.', 'Baja y la cantidad intercambiada también disminuye con respecto al equilibrio inicial del mercado.'],
+    question: 'En el modelo, la curva de oferta de dólares australianos se desplaza de S1 a S2 mientras la demanda (D) se mantiene. ¿Qué ocurre con el tipo de cambio de la libra esterlina, medido en dólares australianos por libra (A$/£)?',
+    options: ['Sube, porque al depreciarse el dólar australiano cada libra esterlina se cambia por más dólares australianos.', 'Baja, porque al depreciarse el dólar australiano cada libra esterlina se cambia por menos dólares australianos.', 'No cambia, porque el tipo de cambio de la libra lo fija el banco central y no el mercado de divisas.', 'Baja y la cantidad de libras intercambiada disminuye, porque la oferta de libras no responde al cambio de precio.'],
     answer: 0,
-    explanation: 'El desplazamiento de la oferta de S1 a S2 lleva el equilibrio a un tipo de cambio menor: el dólar australiano se deprecia. La cantidad intercambiada aumenta, porque el movimiento ocurre a lo largo de la curva de demanda.',
+    explanation: 'Si el dólar australiano se deprecia, cada libra esterlina vale más dólares australianos, por lo que el tipo de cambio de la libra (A$/£) sube. Es el movimiento inverso al del dólar australiano en el modelo.',
     diagram: 'modelo2',
     diagramCaption: 'Modelo de depreciación del dólar australiano (adaptado de Hoang, Wray y Chakraborty, 2020, figura 31.3).',
     type: 'RC',
@@ -486,10 +500,10 @@ const QUESTION_BANK = [
     unit: 'ADA · Tipos de cambio',
     syllabus: 'Mercado de la libra esterlina: desplazamiento de la oferta',
     scenario: 'El modelo muestra el mercado de la libra esterlina, con el tipo de cambio medido en dólares australianos por libra esterlina. La curva de oferta de libras se desplaza hacia la derecha y la curva de demanda de libras no cambia.',
-    question: '¿Qué ocurre en el mercado de la libra esterlina con ese desplazamiento?',
-    options: ['El precio de la libra baja, es decir, la libra esterlina se deprecia frente al dólar australiano.', 'El precio de la libra sube, es decir, la libra esterlina se aprecia frente al dólar australiano.', 'El precio de la libra no cambia, porque la curva de demanda de libras permanece igual en su posición.', 'El precio de la libra sube y la cantidad de libras intercambiada disminuye respecto del equilibrio inicial.'],
+    question: 'En el modelo, la oferta de libras esterlinas se desplaza hacia la derecha mientras la demanda de libras no cambia. ¿Qué ocurre con el tipo de cambio del dólar australiano, medido en libras esterlinas por dólar (£/A$)?',
+    options: ['Sube, porque al depreciarse la libra esterlina cada dólar australiano se cambia por más libras esterlinas.', 'Baja, porque al depreciarse la libra esterlina cada dólar australiano se cambia por menos libras esterlinas.', 'No cambia, porque el tipo de cambio del dólar lo fija el banco central y no el mercado de divisas.', 'Sube y la cantidad de dólares australianos intercambiada disminuye, porque la demanda de dólares no responde al precio.'],
     answer: 0,
-    explanation: 'Al desplazarse la oferta de libras hacia la derecha con demanda constante, el precio de la libra baja. La libra esterlina se deprecia. Es la imagen simétrica de la apreciación del dólar australiano.',
+    explanation: 'Si la libra esterlina se deprecia, cada dólar australiano vale más libras esterlinas, por lo que el tipo de cambio del dólar australiano (£/A$) sube. Es el movimiento inverso al de la libra esterlina en el modelo.',
     diagram: 'modelo3',
     diagramCaption: 'Modelo de depreciación de la libra esterlina (adaptado de Hoang, Wray y Chakraborty, 2020, figura 31.3).',
     type: 'RC'
@@ -1193,6 +1207,7 @@ document.addEventListener('visibilitychange', function(){
   loadParams().then(function(p){
     const n = (p.rcCount||0) + (p.ccCount||0);
     if(n > 0) document.getElementById('totalQDisplay').textContent = n;
+    document.getElementById('rulesTimer').textContent = (p.timePerQuestion||90) + ' segundos';
   });
 })();
 
