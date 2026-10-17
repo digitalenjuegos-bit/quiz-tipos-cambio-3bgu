@@ -1058,7 +1058,7 @@ const SVG_DIAGRAMS = {
 };
 
 /* ═══════ STATE & CONFIG ═══════ */
-const STATE = {studentName:"", studentLastname:"", selectedQuestions:[], currentIndex:0, userAnswers:[], answered:false, shuffledAnswers:[], shuffledOptions:[], timePerQuestion:90, timer:null, timerSeconds:0, perQuestionTimer:null, perQuestionTimeLeft:90, startTime:null};
+const STATE = {studentName:"", studentLastname:"", selectedQuestions:[], currentIndex:0, userAnswers:[], answered:false, shuffledAnswers:[], shuffledOptions:[], timePerQuestion:90, timer:null, timerSeconds:0, perQuestionTimer:null, perQuestionTimeLeft:90, startTime:null, timeoutAdvanceTimer:null};
 const TOTAL_QUESTIONS = 20;
 const EXAM_ID = 'tipos-cambio-3bgu';
 /* ═══ SUPABASE (guardado de notas) ═══
@@ -1370,12 +1370,19 @@ function updatePerQuestionDisplay(){
 function clearPerQuestionTimer(){
   clearInterval(STATE.perQuestionTimer);
 }
+function clearTimeoutAdvance(){
+  if(STATE.timeoutAdvanceTimer !== null){
+    clearTimeout(STATE.timeoutAdvanceTimer);
+    STATE.timeoutAdvanceTimer = null;
+  }
+}
 function handleTimeout(){
   const idx = STATE.currentIndex;
   if(STATE.userAnswers[idx] !== null) return;
   STATE.userAnswers[idx] = -1;
   renderQuestion();
-  setTimeout(()=>{ nextQuestion(); }, 2500);
+  clearTimeoutAdvance();
+  STATE.timeoutAdvanceTimer = setTimeout(()=>{ STATE.timeoutAdvanceTimer = null; nextQuestion(); }, 2500);
 }
 function startGlobalTimer(){
   clearInterval(STATE.timer);
@@ -1386,6 +1393,7 @@ function startGlobalTimer(){
 
 /* ═══════ RENDER ═══════ */
 function renderQuestion(){
+  clearTimeoutAdvance();
   const q = STATE.selectedQuestions[STATE.currentIndex];
   const shuffled = shuffleWithOptions(q.options, q.answer);
   // Store the correct answer index and shuffled options (only if not already stored)
@@ -1434,6 +1442,7 @@ function renderQuestion(){
 
 function selectOption(idx){
   if(STATE.userAnswers[STATE.currentIndex] !== null) return;
+  clearTimeoutAdvance();
   clearPerQuestionTimer();
   STATE.userAnswers[STATE.currentIndex] = idx;
   renderQuestion();
@@ -1441,6 +1450,7 @@ function selectOption(idx){
 
 /* ═══════ NAVIGATION ═══════ */
 function nextQuestion(){
+  clearTimeoutAdvance();
   clearPerQuestionTimer();
   if(STATE.currentIndex < STATE.selectedQuestions.length - 1){
     STATE.currentIndex++;
@@ -1451,6 +1461,7 @@ function nextQuestion(){
   }
 }
 function prevQuestion(){
+  clearTimeoutAdvance();
   clearPerQuestionTimer();
   if(STATE.currentIndex > 0){
     STATE.currentIndex--;
@@ -1461,6 +1472,7 @@ function prevQuestion(){
 
 /* ═══════ FINISH ═══════ */
 function finishQuiz(){
+  clearTimeoutAdvance();
   clearPerQuestionTimer();
   clearInterval(STATE.timer);
   let correct = 0;
