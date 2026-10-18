@@ -462,10 +462,11 @@ body::before{content:"";position:fixed;inset:0;background-image:url("data:image/
     <h2 class="rules-modal-title" id="rulesModalTitle">Reglas de la evaluación</h2>
     <p class="rules-modal-sub">Lee las reglas antes de comenzar. Debes aceptarlas para continuar.</p>
     <ul class="rules-modal-list">
-      <li>Temporizador por pregunta: <strong id="rulesTimer">90 segundos</strong> para responder cada ítem. Al agotarse el tiempo, la pregunta se cuenta como no respondida.</li>
+      <li>Temporizador por pregunta: <strong id="rulesTimer">50 segundos</strong> para responder cada ítem. Al agotarse el tiempo, la pregunta se cuenta como no respondida.</li>
       <li>Un intento por estudiante: la evaluación queda cerrada hasta que el docente la habilite nuevamente.</li>
       <li>Penalización por cambio de pestaña o minimizar: la primera salida es solo un recordatorio; desde la segunda, se descuentan 0,5 puntos por salida.</li>
       <li>Promedio con Blooket: la nota del quiz se promedia con el control de Blooket solo si la nota de Blooket es mayor; de lo contrario se mantiene la nota del quiz.</li>
+      <li>La nota se guarda automáticamente al finalizar la evaluación. No es necesario enviar ningún comprobante al docente.</li>
     </ul>
     <button class="btn btn-primary rules-modal-btn" onclick="acceptRules()"><i class="fa-solid fa-check"></i> Acepto las reglas y continúo</button>
   </div>
@@ -1058,7 +1059,7 @@ const SVG_DIAGRAMS = {
 };
 
 /* ═══════ STATE & CONFIG ═══════ */
-const STATE = {studentName:"", studentLastname:"", selectedQuestions:[], currentIndex:0, userAnswers:[], answered:false, shuffledAnswers:[], shuffledOptions:[], timePerQuestion:90, timer:null, timerSeconds:0, perQuestionTimer:null, perQuestionTimeLeft:90, startTime:null, timeoutAdvanceTimer:null};
+const STATE = {studentName:"", studentLastname:"", selectedQuestions:[], currentIndex:0, userAnswers:[], answered:false, shuffledAnswers:[], shuffledOptions:[], timePerQuestion:50, timer:null, timerSeconds:0, perQuestionTimer:null, perQuestionTimeLeft:50, startTime:null, timeoutAdvanceTimer:null};
 const TOTAL_QUESTIONS = 20;
 const EXAM_ID = 'tipos-cambio-3bgu';
 /* ═══ SUPABASE (guardado de notas) ═══
@@ -1104,7 +1105,7 @@ function getIBGrade(pct){
 /* ═══ PARÁMETROS CONFIGURABLES (Supabase con respaldo local) ═══
    Si la tabla quiz_params no existe todavía, la app usa los valores
    por defecto y los guarda en el navegador del docente. */
-const DEFAULT_PARAMS = { totalQuestions:20, rcCount:7, ccCount:13, timePerQuestion:90 };
+const DEFAULT_PARAMS = { totalQuestions:20, rcCount:7, ccCount:13, timePerQuestion:50 };
 let QUIZ_PARAMS = Object.assign({}, DEFAULT_PARAMS);
 const PARAMS_LOCAL_KEY = 'quiz_params_' + EXAM_ID;
 
@@ -1224,7 +1225,7 @@ document.addEventListener('visibilitychange', function(){
     const totalEl = document.getElementById('totalQDisplay');
     if(totalEl && n > 0) totalEl.textContent = n;
     const timerEl = document.getElementById('rulesTimer');
-    if(timerEl) timerEl.textContent = (p.timePerQuestion||90) + ' segundos';
+    if(timerEl) timerEl.textContent = (p.timePerQuestion||50) + ' segundos';
   });
 })();
 
