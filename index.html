@@ -465,7 +465,7 @@ body::before{content:"";position:fixed;inset:0;background-image:url("data:image/
       <li>Temporizador por pregunta: <strong id="rulesTimer">50 segundos</strong> para responder cada ítem. Al agotarse el tiempo, la pregunta se cuenta como no respondida.</li>
       <li>Un intento por estudiante: la evaluación queda cerrada hasta que el docente la habilite nuevamente.</li>
       <li>Penalización por cambio de pestaña o minimizar: la primera salida es solo un recordatorio; desde la segunda, se descuentan 0,5 puntos por salida.</li>
-      <li>Promedio con Blooket: solo se promedia si supera la nota de Blooket; de lo contrario se conserva la de Blooket.</li>
+      <li>Promedio con Blooket: solo se promedia este resultado si es mayor que la nota del control anterior; de lo contrario se conserva la de Blooket.</li>
       <li>La nota se guarda automáticamente al finalizar la evaluación. No es necesario enviar ningún comprobante al docente.</li>
     </ul>
     <button class="btn btn-primary rules-modal-btn" onclick="acceptRules()"><i class="fa-solid fa-check"></i> Acepto las reglas y continúo</button>
